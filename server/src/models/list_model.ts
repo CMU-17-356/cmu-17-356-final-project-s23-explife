@@ -7,6 +7,7 @@ const listSchema = new Schema({
   date: { type: Date, required: true },
   items: { type: [listItemSchema], required: true },
   story: { type: String, required: false },
+  image_url: { type: String, required: false },
   user: { type: userSchema, required: true }
 });
 
