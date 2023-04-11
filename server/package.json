@@ -4,7 +4,7 @@
   "description": "API for EXPLife backend",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -r ts-node/register 'src/test/*.ts'",
+    "test": "mocha --require node_modules/ts-node/register 'src/test/*.ts'",
     "build": "npx tsc",
     "start": "node dist/routes.js"
   },

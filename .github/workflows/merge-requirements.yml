@@ -15,5 +15,5 @@ jobs:
           cd server
           npm install
           npm install -g mocha
-          npm i ts-node --save-dev
+          npm i ts-node
           npm run test
