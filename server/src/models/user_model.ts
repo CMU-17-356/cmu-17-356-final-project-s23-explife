@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const { Model, Schema } = mongoose;
 
-const userSchema = new Schema({
+export const userSchema = new Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   password: { type: String, required: true },
@@ -10,5 +10,5 @@ const userSchema = new Schema({
 });
 
 
-var Usesr: typeof Model = mongoose.model('list', userSchema);
-export default Usesr;
+var User: typeof Model = mongoose.model('user', userSchema);
+export default User;

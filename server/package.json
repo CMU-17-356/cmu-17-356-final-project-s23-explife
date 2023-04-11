@@ -4,7 +4,7 @@
   "description": "API for EXPLife backend",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha -r ts-node/register 'src/test/*.ts'",
     "build": "npx tsc",
     "start": "node dist/routes.js"
   },
@@ -17,8 +17,10 @@
     "mongoose": "^7.0.3"
   },
   "devDependencies": {
+    "@types/chai": "^4.3.4",
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.17",
+    "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
   }
 }
