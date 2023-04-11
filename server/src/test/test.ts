@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import 'mocha';
 
 import User from '../models/user_model';
 describe('user', function() {

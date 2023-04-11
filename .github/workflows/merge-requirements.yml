@@ -16,4 +16,5 @@ jobs:
           npm install
           npm install -g mocha
           npm i ts-node
+          npm i --save-dev @types/mocha
           npm run test
