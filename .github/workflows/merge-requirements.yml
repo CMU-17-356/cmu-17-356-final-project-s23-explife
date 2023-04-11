@@ -14,7 +14,9 @@ jobs:
       - run: |
           cd server
           npm install
-          npm install -g mocha
+          npm i mocha
           npm i ts-node
           npm i --save-dev @types/mocha
+          npm i --save-dev @types/chai
+          npm i chai
           npm run test
