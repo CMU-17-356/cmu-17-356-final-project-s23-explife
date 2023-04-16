@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const { Model, Schema } = mongoose;
 
-const listItemSchema = new Schema({
+export const listItemSchema = new Schema({
   deadline: { type: Date, required: true },
   completed: { type: Boolean, required: true },
   taskName: { type: String, required: true },
@@ -10,5 +10,5 @@ const listItemSchema = new Schema({
 });
 
 
-var ListItem: typeof Model = mongoose.model('list', listItemSchema);
+var ListItem: typeof Model = mongoose.model('listItem', listItemSchema);
 export default ListItem;

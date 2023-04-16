@@ -1,0 +1,22 @@
+name: Master branch Merge Requirements
+run-name: Testing if merge is valid
+on: 
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - run: |
+          cd server
+          npm install
+          npm i mocha
+          npm i ts-node
+          npm i --save-dev @types/mocha
+          npm i --save-dev @types/chai
+          npm i chai
+          npm run test
