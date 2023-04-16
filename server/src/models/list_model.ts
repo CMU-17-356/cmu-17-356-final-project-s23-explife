@@ -8,7 +8,7 @@ export const listSchema = new Schema({
   items: { type: [listItemSchema], required: true },
   story: { type: String, required: false },
   imageURL: { type: String, required: false },
-  user: { type: userSchema, required: true }
+  user: { type: String, required: true }
 });
 
 
