@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 import { CheckBox } from 'react-native-elements';
-import ProgressCircle from 'react-native-progress/Circle';
+// import ProgressCircle from 'react-native-progress/Circle';
 
 const ArchivedDay = ({tasks}) => {
     const [completedCount, setCompletedCount] = useState(0); // TODO: Need to actually update the completed count
@@ -19,7 +19,7 @@ const ArchivedDay = ({tasks}) => {
     return (
             <View style={styles.container}>
                 <View style={styles.progressContainer}>
-                    <ProgressCircle
+                    {/*<ProgressCircle
                         size={80}
                         progress={completedCount / tasks.length}
                         showsText={true}
@@ -27,7 +27,7 @@ const ArchivedDay = ({tasks}) => {
                         style={styles.progressCircle}
                     >
                         <Text style={styles.progressText}>April 1, 2023</Text>
-                    </ProgressCircle>
+    </ProgressCircle>*/}
                     <View>
                         <Text style={styles.summaryText}>{`On this day you...`}</Text>
                         <Text style={styles.summaryText}>{`Completed ${completedCount} out of ${tasks.length} tasks`}</Text>

@@ -1,8 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
 
-import { ActionSheetProvider } from '@expo/react-native-action-sheet';
+// import all the components we are going to use
+import { SafeAreaView, StyleSheet, View, Text } from 'react-native';
+
+//import basic react native components
+import { BottomSheet } from 'react-native-btr';
 
 function AddTaskInfo() {
   const [taskInput, setTaskInput] = React.useState('');
@@ -23,21 +26,19 @@ function AddTaskInfo() {
   );
 }
 
-export default function AddTaskMenu({ isPanelActive, setIsPanelActive }) {
+export default function AddTaskMenu({isPanelActive, setIsPanelActive}) {
 
   return (
-    <View style={styles.content}>
-      <View style={styles.menu}>
-        {/*<BottomSheet
-          ref={sheetRef}
-          snapPoints={snapPoints}
-          onChange={handleSheetChange}
-        >
-          <BottomSheetView>
-            <Text>Awesome 🔥</Text>
-          </BottomSheetView>
-  </BottomSheet>*/}
-      </View>
+    <View>
+      <BottomSheet
+        visible={isPanelActive}
+        onBackButtonPress={() => setIsPanelActive(false)}
+        onBackdropPress={() => setIsPanelActive(false)}
+      >
+        <SafeAreaView style={styles.bottomNavigationView}>
+          <AddTaskInfo />
+        </SafeAreaView>
+      </BottomSheet>
     </View>
   );
 }
@@ -52,4 +53,10 @@ const styles = StyleSheet.create({
     paddingRight: '5%',
     paddingLeft: '5%',
   },
+  bottomNavigationView: {
+    backgroundColor: '#fff',
+    width: '100%',
+    height: 250,
+    paddingTop: '5%'
+  }
 });
