@@ -16,7 +16,7 @@ import { BottomSheet } from 'react-native-btr';
 function Graph() {
   return (
     <View style={styles.graph}>
-      <Graph />
+      <Text>Graph</Text>
     </View>
   );
 }
