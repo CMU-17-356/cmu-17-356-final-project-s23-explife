@@ -12,11 +12,21 @@ import { Ionicons } from '@expo/vector-icons';
 import Checkbox from 'expo-checkbox';
 import { TextInput } from 'react-native-paper';
 import { BottomSheet } from 'react-native-btr';
+import ProgressCircle from 'react-native-progress/Circle';
 
-function Graph() {
+function Graph({ tasks }) {
+  const completedCount = 2; // tasks.reduce(({ name, deadline, completed }, count) => completed ? count + 1 : count, 0);
   return (
     <View style={styles.graph}>
-      <Text>Graph</Text>
+      <ProgressCircle
+        size={80}
+        progress={completedCount / tasks.length}
+        showsText={true}
+        formatText={() => `${Math.round((completedCount / tasks.length) * 100)}%`}
+        style={styles.progressCircle}
+      >
+        <Text style={styles.progressText}>April 1, 2023</Text>
+      </ProgressCircle>
     </View>
   );
 }
@@ -97,7 +107,7 @@ export default function Todo({ tasks }) {
     <Provider>
       <View style={styles.content}>
         <View style={styles.progress}>
-          <Graph />
+          <Graph tasks={tasks} />
           <HeaderText tasks={tasks} />
         </View>
         <TaskList tasks={tasks} setIsPanelActive={setIsPanelActive} />
@@ -116,10 +126,11 @@ const styles = StyleSheet.create({
   },
   graph: {
     justifyContent: 'center',
+    alignItems: 'center',
     width: 150,
-    backgroundColor: 'pink',
   },
   headerText: {
+    paddingLeft: '5%',
     justifyContent: 'center'
   },
   menu: {
