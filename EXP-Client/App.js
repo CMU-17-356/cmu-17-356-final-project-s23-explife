@@ -28,18 +28,7 @@ export default function App() {
     { name: 'Task 1', deadline: 'April 20, 2023', completed: true },
     { name: 'Task 2', deadline: 'April 22, 2023', completed: false },
     { name: 'Task 3', deadline: 'April 21, 2023', completed: false },
-    { name: 'Task 4', deadline: 'April 22, 2023', completed: true },
-    { name: 'Task 5', deadline: 'April 20, 2023', completed: true },
-    { name: 'Task 6', deadline: 'April 22, 2023', completed: false },
-    { name: 'Task 7', deadline: 'April 21, 2023', completed: false },
-    { name: 'Task 8', deadline: 'April 22, 2023', completed: true },
-    { name: 'Task 9', deadline: 'April 20, 2023', completed: true },
-    { name: 'Task 10', deadline: 'April 22, 2023', completed: false },
-    { name: 'Task 11', deadline: 'April 21, 2023', completed: false },
-    { name: 'Task 12', deadline: 'April 22, 2023', completed: true },
-    { name: 'Task 13', deadline: 'April 22, 2023', completed: false },
-    { name: 'Task 14', deadline: 'April 21, 2023', completed: false },
-    { name: 'Task 15', deadline: 'April 22, 2023', completed: true },
+    { name: 'Task 4', deadline: 'April 22, 2023', completed: true }
   ];
 
   return (
