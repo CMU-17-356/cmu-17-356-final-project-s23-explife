@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Provider } from 'react-native-paper';
 import {
   StyleSheet,
+  Button,
   Text,
   SafeAreaView,
   ScrollView,
@@ -10,9 +11,11 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Checkbox from 'expo-checkbox';
-import { TextInput } from 'react-native-paper';
+import { TextInput, DatePicker } from 'react-native-paper';
 import { BottomSheet } from 'react-native-btr';
 import ProgressCircle from 'react-native-progress/Circle';
+import { Rating } from 'react-native-ratings';
+import axios from "axios";
 
 function Graph({ tasks }) {
   const completedCount = 2; // tasks.reduce(({ name, deadline, completed }, count) => completed ? count + 1 : count, 0);
@@ -42,9 +45,51 @@ function HeaderText({ tasks }) {
   );
 }
 
+let instance = axios.create({
+  baseURL: "http://localhost:19006/",
+});
+
+const [tasks, setTasks] = React.useState([]);
+
+const getTasks = () => {
+  instance.get("/lists/:id").then((response) => {
+    setTasks(response.data.items);
+  });
+};
+getTasks();
+
 function AddTaskMenu({ isPanelActive, setIsPanelActive }) {
-  const [taskInput, setTaskInput] = React.useState('');
-  const [date, setDate] = React.useState(new Date(1598051730000));
+  const [name, setName] = React.useState('');
+  const [deadline, setDeadline] = React.useState(new Date());
+  const [rating, setRating] = React.useState(0);
+
+  const handleAddTask = () => {
+    const newTask = {
+      taskName: name,
+      deadline: deadline,
+      priority: rating,
+      completed: false
+    };
+    console.log(newTask)
+
+    // Make API call here to update the list model
+
+    // instance
+    //   .post("/lists/:id", newDonut)
+    //   .then(() => {
+    //     // Clear inputs
+    //     setName('')
+    //     setDeadline(new Date())
+    //     setRating(0)
+
+    //     // Refresh list
+    //     getTasks()
+    //   })
+    //   .catch((error) => {
+    //     console.log(error)
+    //   })
+  };
+
   return (
     <View>
       <BottomSheet
@@ -54,16 +99,30 @@ function AddTaskMenu({ isPanelActive, setIsPanelActive }) {
       >
         <SafeAreaView style={styles.bottomNavigationView}>
           <View style={styles.popup}>
-            <Text>new task info here</Text>
             <TextInput
               label="Task"
               dense={true}
-              value={taskInput}
-              onChangeText={(text) => setTaskInput(text)}
+              value={name}
+              onChangeText={(text) => setName(text)}
             />
-            <Text>deadline info here</Text>
-            <Text>prio information here</Text>
-            <Text>button here to save info and close panel</Text>
+            {/* TODO: Need to make this a date input */}
+            <TextInput
+              label="Deadline"
+              dense={true}
+              value={deadline.toISOString()}
+              onChangeText={(text) => setDeadline(new Date())}
+            />
+            <Text>Priority</Text>
+            <Rating
+              imageSize={25}
+              ratingCount={5}
+              startingValue={rating}
+              onFinishRating={() => setRating(rating)}
+            />
+            <Button
+              title="Add Task"
+              onPress={handleAddTask}
+            />
           </View>
         </SafeAreaView>
       </BottomSheet>
@@ -91,7 +150,10 @@ function TaskList({ tasks, setIsPanelActive }) {
               />
             </View>
             <View style={styles.text}>
-              <Text style={{ fontSize: 20 }}>{name}</Text>
+              <Text
+                multiline
+                style={{ fontSize: 20 }}
+              >{name}</Text>
               <Text style={{ fontSize: 10 }}>{deadline}</Text>
             </View>
           </View>
@@ -101,7 +163,7 @@ function TaskList({ tasks, setIsPanelActive }) {
   );
 }
 
-export default function Todo({ tasks }) {
+export default function Todo() {
   const [isPanelActive, setIsPanelActive] = React.useState(false);
   return (
     <Provider>

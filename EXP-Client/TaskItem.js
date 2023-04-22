@@ -41,7 +41,8 @@ const TaskItem = ({ task }) => {
                             <Rating
                                 style={styles.rating}
                                 imageSize={30}
-                                rating={task.rating}
+                                ratingCount={5}
+                                startingValue={rating}
                                 readonly={true}
                             />
                         </View>
@@ -75,7 +76,8 @@ const TaskItem = ({ task }) => {
                         <Rating
                             style={styles.rating}
                             imageSize={35}
-                            rating={rating}
+                            ratingCount={5}
+                            startingValue={rating}
                             onFinishRating={setRating}
                         />
                         <Button title="Save" onPress={() => handleSave(task.name)} />
