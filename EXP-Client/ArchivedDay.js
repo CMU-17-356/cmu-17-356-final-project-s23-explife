@@ -3,12 +3,12 @@ import { View, Text, FlatList, StyleSheet } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import ProgressCircle from 'react-native-progress/Circle';
 
-const ArchivedDay = ({tasks}) => {
+const ArchivedDay = ({ tasks }) => {
     const [completedCount, setCompletedCount] = useState(0); // TODO: Need to actually update the completed count
 
     const renderTask = ({ item }) => (
         <View style={styles.task}>
-            <CheckBox checked={item.completed} disabled={item.completed}/>
+            <CheckBox checked={item.completed} disabled={item.completed} />
             <View style={styles.taskDetails}>
                 <Text style={styles.taskName}>{item.name}</Text>
                 <Text>{item.deadline}</Text>
@@ -17,30 +17,30 @@ const ArchivedDay = ({tasks}) => {
     );
 
     return (
-            <View style={styles.container}>
-                <View style={styles.progressContainer}>
-                    <ProgressCircle
-                        size={80}
-                        progress={completedCount / tasks.length}
-                        showsText={true}
-                        formatText={() => `${Math.round((completedCount / tasks.length) * 100)}%`}
-                        style={styles.progressCircle}
-                    >
-                        <Text style={styles.progressText}>April 1, 2023</Text>
-                    </ProgressCircle>
-                    <View>
-                        <Text style={styles.summaryText}>{`On this day you...`}</Text>
-                        <Text style={styles.summaryText}>{`Completed ${completedCount} out of ${tasks.length} tasks`}</Text>
-                    </View>
+        <View style={styles.container}>
+            <View style={styles.progressContainer}>
+                <ProgressCircle
+                    size={80}
+                    progress={completedCount / tasks.length}
+                    showsText={true}
+                    formatText={() => `${Math.round((completedCount / tasks.length) * 100)}%`}
+                    style={styles.progressCircle}
+                >
+                    <Text style={styles.progressText}>April 1, 2023</Text>
+                </ProgressCircle>
+                <View>
+                    <Text style={styles.summaryText}>{`On this day you...`}</Text>
+                    <Text style={styles.summaryText}>{`Completed ${completedCount} out of ${tasks.length} tasks`}</Text>
                 </View>
-                <FlatList
-                    data={tasks}
-                    renderItem={renderTask}
-                    keyExtractor={(task, index) => index.toString()}
-                />
             </View>
-        );
-    };
+            <FlatList
+                data={tasks}
+                renderItem={renderTask}
+                keyExtractor={(task, index) => index.toString()}
+            />
+        </View>
+    );
+};
 
 const styles = StyleSheet.create({
     container: {
