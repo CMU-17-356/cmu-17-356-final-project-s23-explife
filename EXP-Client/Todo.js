@@ -15,7 +15,11 @@ import { TextInput, DatePicker } from 'react-native-paper';
 import { BottomSheet } from 'react-native-btr';
 import ProgressCircle from 'react-native-progress/Circle';
 import { Rating } from 'react-native-ratings';
+import { en, registerTranslation, DatePickerInput } from 'react-native-paper-dates';
 import axios from "axios";
+
+// for date picker
+registerTranslation('en', en);
 
 function Graph({ tasks }) {
   const completedCount = 2; // tasks.reduce(({ name, deadline, completed }, count) => completed ? count + 1 : count, 0);
@@ -45,25 +49,26 @@ function HeaderText({ tasks }) {
   );
 }
 
-let instance = axios.create({
-  baseURL: "http://localhost:19006/",
-});
+// let instance = axios.create({
+//   baseURL: "http://localhost:19006/",
+// });
 
-const [tasks, setTasks] = React.useState([]);
+// const [tasks, setTasks] = React.useState([]);
 
-const getTasks = () => {
-  instance.get("/lists/:id").then((response) => {
-    setTasks(response.data.items);
-  });
-};
-getTasks();
+// const getTasks = () => {
+//   instance.get("/lists/:id").then((response) => {
+//     setTasks(response.data.items);
+//   });
+// };
+// getTasks();
 
 function AddTaskMenu({ isPanelActive, setIsPanelActive }) {
   const [name, setName] = React.useState('');
-  const [deadline, setDeadline] = React.useState(new Date());
+  const [deadline, setDeadline] = React.useState();
   const [rating, setRating] = React.useState(0);
 
   const handleAddTask = () => {
+    setIsPanelActive(false);
     const newTask = {
       taskName: name,
       deadline: deadline,
@@ -99,26 +104,41 @@ function AddTaskMenu({ isPanelActive, setIsPanelActive }) {
       >
         <SafeAreaView style={styles.bottomNavigationView}>
           <View style={styles.popup}>
-            <TextInput
-              label="Task"
-              dense={true}
-              value={name}
-              onChangeText={(text) => setName(text)}
-            />
-            {/* TODO: Need to make this a date input */}
+            <View>
+              <Text>Task</Text>
+              <TextInput
+                dense={true}
+                value={name}
+                onChangeText={(text) => setName(text)}
+              />
+            </View>
+            <View>
+              <Text>Deadline</Text>
+              <DatePickerInput
+                dense={true}
+                locale="en"
+                value={deadline}
+                onChange={(d) => setDeadline(d)}
+                inputMode="start"
+              />
+
+            </View>
+            {/* TODO: Need to make this a date input 
             <TextInput
               label="Deadline"
               dense={true}
               value={deadline.toISOString()}
               onChangeText={(text) => setDeadline(new Date())}
-            />
-            <Text>Priority</Text>
-            <Rating
-              imageSize={25}
-              ratingCount={5}
-              startingValue={rating}
-              onFinishRating={() => setRating(rating)}
-            />
+            />*/}
+            <View>
+              <Text>Priority</Text>
+              <Rating
+                imageSize={50}
+                ratingCount={5}
+                startingValue={rating}
+                onFinishRating={(newRating) => setRating(newRating)}
+              />
+            </View>
             <Button
               title="Add Task"
               onPress={handleAddTask}
@@ -142,9 +162,17 @@ function TaskList({ tasks, setIsPanelActive }) {
             <Text style={{ fontSize: 20 }}>Add Task</Text>
           </View>
         </Pressable>
-        {tasks.map(({ name, deadline, completed }) => (
+        {tasks.map(({ name, deadline, completed }, index) => (
           <View key={name} style={styles.entry}>
             <View style={styles.checkbox}>
+              { /* Need to set tasks w/ backend
+                onValueChange={(check) => {
+                  tasks = [
+                    ...tasks.slice(0, index),
+                    { name, deadline, check },
+                    ...tasks.slice(index + 1)
+                  ]
+                }}*/}
               <Checkbox
                 value={completed}
               />
@@ -163,7 +191,7 @@ function TaskList({ tasks, setIsPanelActive }) {
   );
 }
 
-export default function Todo() {
+export default function Todo({ tasks }) {
   const [isPanelActive, setIsPanelActive] = React.useState(false);
   return (
     <Provider>
@@ -203,12 +231,14 @@ const styles = StyleSheet.create({
   popup: {
     paddingRight: '5%',
     paddingLeft: '5%',
+    flexDirection: 'column',
+    gap: 20
   },
   bottomNavigationView: {
     backgroundColor: '#fff',
     width: '100%',
-    height: 250,
-    paddingTop: '5%'
+    paddingTop: '5%',
+    paddingBottom: '5%'
   },
   content: {
     height: "100%"
