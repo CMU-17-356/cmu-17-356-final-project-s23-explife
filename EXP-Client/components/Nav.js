@@ -3,9 +3,9 @@ import { Text, StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
 import { BottomNavigation } from 'react-native-paper';
 
-export default function Nav({ Todo, Progress }) {
+export default function Nav({ Todo, Progress, Stories }) {
   const TodoRoute = () => Todo;
-  const StoriesRoute = () => <Text>Stories</Text>;
+  const StoriesRoute = () => Stories;
   const ProgressRoute = () => Progress;
 
   const [index, setIndex] = React.useState(0);
