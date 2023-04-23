@@ -50,7 +50,7 @@ export default function TaskList({ tasks, setIsPanelActive }) {
   );
 }
 
-  const styles = StyleSheet.create({
+const styles = StyleSheet.create({
   checkbox: {
     width: '10%',
     alignItems: 'center',

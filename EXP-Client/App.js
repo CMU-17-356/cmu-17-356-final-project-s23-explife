@@ -34,7 +34,10 @@ export default function App() {
   return (
     <Provider theme={MD3LightTheme}>
       <View style={styles.nav}>
-        <Nav Todo={<Todo tasks={tasks} />} />
+        <Nav
+          Todo={<Todo tasks={tasks} />}
+          Progress={<ArchivedDay tasks={tasks} />}
+        />
       </View>
     </Provider>
   );
