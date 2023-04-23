@@ -32,10 +32,17 @@ export default function App() {
     { name: 'Task 4', deadline: 'April 22, 2023', completed: true }
   ];
 
+  const pastLists = [
+    { date: '3/31/2023'},
+    { date: '3/30/2023'},
+    { date: '3/28/2023'},
+    { date: '3/27/2023'}
+  ];
+
   return (
     <Provider theme={MD3LightTheme}>
       <View style={styles.nav}>
-        <Nav Todo={<Todo tasks={tasks}  />} Progress={<Progress tasks={tasks}  />}  />
+        <Nav Todo={<Todo tasks={tasks}  />} Progress={<Progress pastLists={pastLists}  />}  />
       </View>
     </Provider>
   );

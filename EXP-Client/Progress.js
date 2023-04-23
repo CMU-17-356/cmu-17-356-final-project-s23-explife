@@ -8,91 +8,30 @@ import {
   View,
   Pressable,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import Checkbox from 'expo-checkbox';
 import { TextInput } from 'react-native-paper';
 import { BottomSheet } from 'react-native-btr';
-import ProgressCircle from 'react-native-progress/Circle';
 
-function Graph({ tasks }) {
-  const completedCount = 2; // tasks.reduce(({ name, deadline, completed }, count) => completed ? count + 1 : count, 0);
-  return (
-    <View style={styles.graph}>
-      <ProgressCircle
-        size={80}
-        progress={completedCount / tasks.length}
-        showsText={true}
-        formatText={() => `${Math.round((completedCount / tasks.length) * 100)}%`}
-        style={styles.progressCircle}
-      >
-        <Text style={styles.progressText}>April 1, 2023</Text>
-      </ProgressCircle>
-    </View>
-  );
-}
-
-function HeaderText({ tasks }) {
+function HeaderText() {
   return (
     <View style={styles.headerText}>
-      <Text style={{ fontSize: 20 }}>PRAGRESSSS Today you have...</Text>
-      {tasks.map(({ name, deadline, completed }) =>
-        <Text style={{ fontSize: 15 }} key={name}>{name}</Text>
-      )}
+      <Text style={{ fontSize: 20 }}>View your TODO lists from...</Text>
     </View>
   );
 }
 
-function AddTaskMenu({ isPanelActive, setIsPanelActive }) {
-  const [taskInput, setTaskInput] = React.useState('');
-  const [date, setDate] = React.useState(new Date(1598051730000));
-  return (
-    <View>
-      <BottomSheet
-        visible={isPanelActive}
-        onBackButtonPress={() => setIsPanelActive(false)}
-        onBackdropPress={() => setIsPanelActive(false)}
-      >
-        <SafeAreaView style={styles.bottomNavigationView}>
-          <View style={styles.popup}>
-            <Text>new task info here</Text>
-            <TextInput
-              label="Task"
-              dense={true}
-              value={taskInput}
-              onChangeText={(text) => setTaskInput(text)}
-            />
-            <Text>deadline info here</Text>
-            <Text>prio information here</Text>
-            <Text>button here to save info and close panel</Text>
-          </View>
-        </SafeAreaView>
-      </BottomSheet>
-    </View>
-  );
-}
-
-function TaskList({ tasks, setIsPanelActive }) {
+function ProgressList({ pastLists }) {
   return (
     <SafeAreaView>
       <ScrollView bounces={false}>
-        <Pressable onPress={() => setIsPanelActive(true)}>
-          <View style={styles.entry}>
+        {pastLists.map(({ date }) => (
+          <View key={date} style={styles.entry}>
             <View style={styles.checkbox}>
-              <Ionicons name="add-outline" size={30} color="black" />
+              <MaterialIcons name="date-range" size={30} color="black" />
             </View>
-            <Text style={{ fontSize: 20 }}>Add Task</Text>
-          </View>
-        </Pressable>
-        {tasks.map(({ name, deadline, completed }) => (
-          <View key={name} style={styles.entry}>
-            <View style={styles.checkbox}>
-              <Checkbox
-                value={completed}
-              />
-            </View>
-            <View style={styles.text}>
-              <Text style={{ fontSize: 20 }}>{name}</Text>
-              <Text style={{ fontSize: 10 }}>{deadline}</Text>
+            <View>
+              <Text style={{ fontSize: 20 }}>{date}</Text>
             </View>
           </View>
         ))}
@@ -101,33 +40,26 @@ function TaskList({ tasks, setIsPanelActive }) {
   );
 }
 
-export default function Progress ({ tasks }) {
+export default function Progress ({ pastLists }) {
   const [isPanelActive, setIsPanelActive] = React.useState(false);
   return (
     <Provider>
       <View style={styles.content}>
-        <View style={styles.progress}>
-          <Graph tasks={tasks} />
-          <HeaderText tasks={tasks} />
+        <View style={styles.header}>
+          <HeaderText/>
         </View>
-        <TaskList tasks={tasks} setIsPanelActive={setIsPanelActive} />
-        <AddTaskMenu isPanelActive={isPanelActive} setIsPanelActive={setIsPanelActive} />
+        <ProgressList pastLists={pastLists} />
       </View>
     </Provider>
   );
 }
 
 const styles = StyleSheet.create({
-  progress: {
-    height: 150,
+  header: {
+    height: 80,
     backgroundColor: '#D9D9D9',
     flexDirection: 'row',
     borderBottomWidth: 1
-  },
-  graph: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 150,
   },
   headerText: {
     paddingLeft: '5%',
