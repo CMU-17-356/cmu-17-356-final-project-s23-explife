@@ -6,6 +6,7 @@ import Constants from 'expo-constants';
 import TaskItem from './TaskItem'
 import ArchivedDay from './ArchivedDay'
 import Todo from './Todo'
+import Progress from './Progress'
 import Nav from './Nav'
 
 function testingCode() {
@@ -34,7 +35,7 @@ export default function App() {
   return (
     <Provider theme={MD3LightTheme}>
       <View style={styles.nav}>
-        <Nav Todo={<Todo tasks={tasks} />} />
+        <Nav Todo={<Todo tasks={tasks}  />} Progress={<Progress tasks={tasks}  />}  />
       </View>
     </Provider>
   );

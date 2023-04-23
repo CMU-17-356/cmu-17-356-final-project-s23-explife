@@ -5,11 +5,12 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { BottomNavigation } from 'react-native-paper';
+import TaskItem from './TaskItem';
 
-export default function Nav({ Todo }) {
+export default function Nav({ Todo, Progress }) {
   const TodoRoute = () => Todo;
   const StoriesRoute = () => <Text>Stories</Text>;
-  const ProgressRoute = () => <Text>Progress</Text>;
+  const ProgressRoute = () => Progress;
 
   const [index, setIndex] = React.useState(0);
   const routes = [
