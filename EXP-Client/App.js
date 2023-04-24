@@ -44,7 +44,7 @@ export default function App() {
   return (
     <Provider theme={MD3LightTheme}>
       <View style={styles.nav}>
-      <Nav Todo={<Todo tasks={tasks}  />} Stories={<Stories stories={stories}  />}  />
+      <Nav Todo={<Todo tasks={tasks}  />} Stories={<Stories stories={stories} />}  />
       </View>
     </Provider>
   );

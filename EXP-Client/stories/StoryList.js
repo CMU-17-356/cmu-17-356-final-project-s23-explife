@@ -10,10 +10,10 @@ import {
 } from 'react-native';
 
 // Navigation import
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+// import {NavigationContainer} from '@react-navigation/native';
+// import {createStackNavigator} from '@react-navigation/stack';
 
-export default function StoryList({ story, setIsPanelActive }) {
+export default function StoryList({ stories, setIsPanelActive }) {
   return (
     <SafeAreaView>
       <ScrollView bounces={false}>
