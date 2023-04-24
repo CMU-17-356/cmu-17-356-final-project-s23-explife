@@ -2,6 +2,7 @@ import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { MD3LightTheme, Provider } from 'react-native-paper';
 import Constants from 'expo-constants';
+import axios from 'axios';
 
 import TaskItem from './todo/TaskList';
 import ArchivedDay from './progress/ArchivedDay';
@@ -30,6 +31,21 @@ export default function App() {
     { name: 'Task 3', deadline: 'April 21, 2023', completed: false },
     { name: 'Task 4', deadline: 'April 22, 2023', completed: true }
   ];
+
+  const [todayList, setTodayList] = React.useState([]);
+
+  let instance = axios.create({
+    baseURL: "https://explife-backend.fly.dev"
+  });
+
+  instance
+    .get("/lists/:id")
+    .then((res) => {
+      setTodayList(res.data)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
 
   return (
     <Provider theme={MD3LightTheme}>

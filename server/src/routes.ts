@@ -13,7 +13,7 @@ app.use( (req, res, next) => {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
-app.use(cors({ origin: ['http://localhost:8080'] , methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH'] }));
+app.use(cors({ origin: ['http://localhost:19006'] , methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH'] }));
 app.use(express.json());
 
 app.get('/', (req: Request, res: Response)=>{
