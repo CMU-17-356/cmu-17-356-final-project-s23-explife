@@ -1,11 +1,7 @@
 import * as React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
-import { MaterialIcons } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { BottomNavigation } from 'react-native-paper';
-import TaskItem from './TaskItem';
 
 export default function Nav({ Todo, Progress }) {
   const TodoRoute = () => Todo;
