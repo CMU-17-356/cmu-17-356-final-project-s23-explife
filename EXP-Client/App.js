@@ -1,12 +1,13 @@
-import { StatusBar } from 'expo-status-bar';
+import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { MD3LightTheme, Provider } from 'react-native-paper';
 import Constants from 'expo-constants';
+import axios from 'axios';
 
-import TaskItem from './TaskItem'
-import ArchivedDay from './ArchivedDay'
-import Todo from './Todo'
-import Nav from './Nav'
+import TaskItem from './todo/TaskList';
+import ArchivedDay from './progress/ArchivedDay';
+import Todo from './todo/Todo';
+import Nav from './components/Nav';
 
 function testingCode() {
   return (
@@ -31,10 +32,28 @@ export default function App() {
     { name: 'Task 4', deadline: 'April 22, 2023', completed: true }
   ];
 
+  const [todayList, setTodayList] = React.useState([]);
+
+  let instance = axios.create({
+    baseURL: "https://explife-backend.fly.dev"
+  });
+
+  instance
+    .get("/lists/:id")
+    .then((res) => {
+      setTodayList(res.data)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+
   return (
     <Provider theme={MD3LightTheme}>
       <View style={styles.nav}>
-        <Nav Todo={<Todo tasks={tasks} />} />
+        <Nav
+          Todo={<Todo tasks={tasks} />}
+          Progress={<ArchivedDay tasks={tasks} />}
+        />
       </View>
     </Provider>
   );
