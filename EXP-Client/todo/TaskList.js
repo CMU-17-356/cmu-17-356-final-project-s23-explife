@@ -10,7 +10,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import Checkbox from 'expo-checkbox';
 
-export default function TaskList({ tasks, setIsPanelActive }) {
+export default function TaskList({ tasks, setIsPanelActive, setViewingTask }) {
   return (
     <SafeAreaView>
       <ScrollView bounces={false}>
@@ -36,13 +36,18 @@ export default function TaskList({ tasks, setIsPanelActive }) {
               <Checkbox
                 value={completed} />
             </View>
-            <View style={styles.text}>
-              <Text
-                multiline
-                style={{ fontSize: 20 }}  
-              >{name}</Text>
-              <Text style={{ fontSize: 10 }}>{deadline}</Text>
-            </View>
+            <Pressable style={styles.pressable} onPress={() => {
+              setViewingTask({ name, deadline, completed });
+              console.log("viewing task: " + name);
+            }}>
+              <View style={styles.text}>
+                <Text
+                  multiline
+                  style={{ fontSize: 20 }}
+                >{name}</Text>
+                <Text style={{ fontSize: 10 }}>{deadline}</Text>
+              </View>
+            </Pressable>
           </View>
         ))}
       </ScrollView>
@@ -62,4 +67,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#D9D9D9',
     borderBottomWidth: 1,
   },
+  pressable: {
+    width: '90%'
+  }
 });
