@@ -2,12 +2,16 @@ import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { MD3LightTheme, Provider } from 'react-native-paper';
 import Constants from 'expo-constants';
-import axios from 'axios';
+
+import Todo from './todo/Todo'
+import Stories from './stories/Stories'
 import Progress from './progress/Progress'
-import TaskItem from './todo/TaskList';
-import ArchivedDay from './progress/ArchivedDay';
-import Todo from './todo/Todo';
-import Nav from './components/Nav';
+import TaskItem from './progress/TaskItem'
+import ArchivedDay from './progress/ArchivedDay'
+
+import Nav from './components/Nav'
+import axios from 'axios';
+
 
 function testingCode() {
   return (
@@ -30,6 +34,13 @@ export default function App() {
     { name: 'Task 2', deadline: 'April 22, 2023', completed: false },
     { name: 'Task 3', deadline: 'April 21, 2023', completed: false },
     { name: 'Task 4', deadline: 'April 22, 2023', completed: true }
+  ];
+
+  const stories = [
+    { name: "Dish Monster Story", date: "April 22 2023", completed: true },
+    { name: "Room Spider Story", date: "April 30 2023", completed: true },
+    { name: "Vacuum Ghost Story", date: "May 17 2023", completed: true },
+    { name: "Running Shoes Story", date: "August 34 2023", completed: true }
   ];
 
   const pastLists = [
@@ -57,7 +68,11 @@ export default function App() {
   return (
     <Provider theme={MD3LightTheme}>
       <View style={styles.nav}>
-        <Nav Todo={<Todo tasks={tasks}  />} Progress={<Progress pastLists={pastLists}  />}  />
+        <Nav
+          Todo={<Todo tasks={tasks} />}
+          Stories={<Stories stories={stories} />}
+          Progress={<Progress pastLists={pastLists} />}
+        />
       </View>
     </Provider>
   );

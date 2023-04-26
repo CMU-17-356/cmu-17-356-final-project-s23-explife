@@ -6,12 +6,8 @@ import {
   SafeAreaView,
   ScrollView,
   View,
-  Pressable,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import Checkbox from 'expo-checkbox';
-import { TextInput } from 'react-native-paper';
-import { BottomSheet } from 'react-native-btr';
 
 function HeaderText() {
   return (
