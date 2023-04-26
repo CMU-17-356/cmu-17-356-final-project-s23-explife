@@ -7,10 +7,10 @@ import {
 import StoryList from "./StoryList";
 import RoundedButton from "../components/button.js";
 
-function Heading() {
+function HeaderText() {
   return (
     <View style={styles.headerText}>
-      <Text style={styles.entry}>Stories</Text>
+      <Text style={{ fontSize: 20 }}>Stories</Text>
     </View>
   );
 }
@@ -20,12 +20,12 @@ export default function Stories({ stories }) {
 
   return (
     <View style={styles.content}>
-      <View style={styles.progress}>
-        <Heading stories={stories} />
+      <View style={styles.header}>
+        <HeaderText/>
       </View>
       <StoryList stories={stories} setIsPanelActive={setIsPanelActive} />
-      <View style={[styles.myObject, { alignSelf: "flex-end" }]}>
-        <View style={styles.myObject}>
+      <View style={{ alignSelf: "flex-end" }}>
+        <View>
           <RoundedButton text="Create Today's Story" />
         </View>
       </View>
@@ -34,36 +34,17 @@ export default function Stories({ stories }) {
 }
 
 const styles = StyleSheet.create({
-  app: {
-    marginHorizontal: "auto",
-    maxWidth: 500
-  },
-  logo: {
-    height: 80
-  },
   header: {
-    padding: 20
+    height: 80,
+    backgroundColor: '#D9D9D9',
+    flexDirection: 'row',
+    borderBottomWidth: 1
   },
-  title: {
-    fontWeight: "bold",
-    fontSize: "1.5rem",
-    marginVertical: "1em",
-    textAlign: "center"
-  },
-  text: {
-    lineHeight: "1.5em",
-    fontSize: "1.125rem",
-    marginVertical: "1em",
-    textAlign: "center"
-  },
-  link: {
-    color: "#1B95E0"
-  },
-  code: {
-    fontFamily: "monospace, monospace"
+  headerText: {
+    paddingLeft: '5%',
+    justifyContent: 'center'
   },
   entry: {
-    fontSize: 20,
     alignItems: 'center',
     height: 60,
     flexDirection: 'row',

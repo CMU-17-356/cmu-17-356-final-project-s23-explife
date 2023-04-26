@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { Text, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
 import { BottomNavigation } from 'react-native-paper';
 
-export default function Nav({ Todo, Stories }) {
+export default function Nav({ Todo, Stories, Progress }) {
   const TodoRoute = () => Todo;
   const StoriesRoute = () => Stories;
-  const ProgressRoute = () => <Text>Progress</Text>;
+  const ProgressRoute = () => Progress;
 
   const [index, setIndex] = React.useState(0);
   const routes = [
