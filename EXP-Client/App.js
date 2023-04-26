@@ -3,7 +3,7 @@ import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { MD3LightTheme, Provider } from 'react-native-paper';
 import Constants from 'expo-constants';
-import axios from 'axios';
+// import axios from 'axios';
 
 import TaskItem from './progress/TaskItem'
 import ArchivedDay from './progress/ArchivedDay'

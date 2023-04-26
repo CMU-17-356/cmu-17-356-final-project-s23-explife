@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Provider } from 'react-native-paper';
 import {
   StyleSheet,
   Text,
@@ -8,12 +7,10 @@ import {
 import StoryList from "./StoryList";
 import RoundedButton from "../components/button.js";
 
-// import { MongoClient } from 'mongodb';
-
 function Heading() {
   return (
     <View style={styles.headerText}>
-      <Text style={{ fontSize: 20 }}>Stories</Text>
+      <Text style={styles.entry}>Stories</Text>
     </View>
   );
 }
@@ -64,6 +61,14 @@ const styles = StyleSheet.create({
   },
   code: {
     fontFamily: "monospace, monospace"
+  },
+  entry: {
+    fontSize: 20,
+    alignItems: 'center',
+    height: 60,
+    flexDirection: 'row',
+    backgroundColor: '#D9D9D9',
+    borderBottomWidth: 1,
   }
 });
 

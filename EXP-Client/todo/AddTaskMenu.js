@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { Provider } from 'react-native-paper';
+import * as React from 'react';;
 import {
   StyleSheet,
   Button,
@@ -7,7 +6,7 @@ import {
   SafeAreaView,
   View
 } from 'react-native';
-import { TextInput, DatePicker } from 'react-native-paper';
+import { TextInput } from 'react-native-paper';
 import { BottomSheet } from 'react-native-btr';
 import { Rating } from 'react-native-ratings';
 import { en, registerTranslation, DatePickerInput } from 'react-native-paper-dates';

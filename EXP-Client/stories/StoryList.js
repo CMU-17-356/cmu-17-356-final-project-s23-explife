@@ -1,11 +1,9 @@
 import * as React from 'react';
 import {
   Text,
-  TouchableOpacity,
   SafeAreaView,
   ScrollView,
   View,
-  Pressable,
   StyleSheet
 } from 'react-native';
 
