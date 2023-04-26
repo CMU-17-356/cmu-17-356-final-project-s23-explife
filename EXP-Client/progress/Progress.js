@@ -16,7 +16,7 @@ import { BottomSheet } from 'react-native-btr';
 function HeaderText() {
   return (
     <View style={styles.headerText}>
-      <Text style={{ fontSize: 20 }}>View your TODO lists from...</Text>
+      <Text style={{ fontSize: 20 }}>Progress</Text>
     </View>
   );
 }
