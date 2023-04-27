@@ -4,16 +4,41 @@ import { IconButton } from 'react-native-paper';
 import { Rating } from 'react-native-ratings';
 import EditTaskMenu from '../todo/EditTaskMenu.js'
 
-export default function TaskItem({ task, setViewingTask }) {
-  const [isEditing, setIsEditing] = React.useState(false);
+import Dialog, { DialogFooter, DialogButton, DialogContent } from 'react-native-popup-dialog';
+
+function DeleteItem({ task, isDeleting, setIsDeleting, setViewingTask }) {
 
   const onDelete = (name) => {
+    setIsDeleting(false);
     console.log(`Deleted ${name}`)
   };
 
-  const onUpdate = (name) => {
-    console.log(`Updated ${name}`)
-  };
+  return (
+    <Dialog
+      visible={isDeleting}
+      footer={
+        <DialogFooter>
+          <DialogButton
+            text="CANCEL"
+            onPress={() => setIsDeleting(false)}
+          />
+          <DialogButton
+            text="OK"
+            onPress={() => { onDelete(task) }}
+          />
+        </DialogFooter>
+      }
+    >
+      <DialogContent>
+        <Text>Are you sure you want to delete this item?</Text>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+export default function TaskItem({ task, setViewingTask }) {
+  const [isEditing, setIsEditing] = React.useState(false);
+  const [isDeleting, setIsDeleting] = React.useState(false);
 
   return (
     <View style={styles.container}>
@@ -21,7 +46,7 @@ export default function TaskItem({ task, setViewingTask }) {
         <IconButton icon="keyboard-backspace" onPress={() => setViewingTask(null)} />
         <View style={styles.actionButtons}>
           <IconButton icon="pencil" onPress={() => setIsEditing(true)} />
-          <IconButton icon="delete" onPress={() => onDelete(task.name)} />
+          <IconButton icon="delete" onPress={() => setIsDeleting(true)} />
         </View>
       </View>
       <View>
@@ -40,6 +65,7 @@ export default function TaskItem({ task, setViewingTask }) {
         </View>
       </View>
       <EditTaskMenu task={task} isEditing={isEditing} setIsEditing={setIsEditing} />
+      <DeleteItem task={task} isDeleting={isDeleting} setIsDeleting={setIsDeleting} setViewingTask={setViewingTask} />
     </View>
   );
 };
