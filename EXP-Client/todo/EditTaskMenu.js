@@ -1,11 +1,12 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { en, registerTranslation, DatePickerInput } from 'react-native-paper-dates';
 import {
   StyleSheet,
   Button,
   Text,
   SafeAreaView,
-  View
+  View,
+  TouchableOpacity
 } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { BottomSheet } from 'react-native-btr';
@@ -15,32 +16,33 @@ import axios from "axios";
 // for date picker
 registerTranslation('en', en);
 
-export default function AddTaskMenu({ isPanelActive, setIsPanelActive }) {
-  const [taskName, setTaskName] = React.useState('');
-  const [deadline, setDeadline] = React.useState(undefined);
-  const [rating, setRating] = React.useState(0);
+// prob want to get the task w/ axios instead but need detailed task info to exist
+export default function EditTaskMenu({ task, isEditing, setIsEditing }) {
 
-  const handleAddTask = () => {
-    // Clear inputs
-    setTaskName('')
-    setDeadline(undefined)
-    setRating(0)
-    setIsPanelActive(false);
+  // Populate with existing task data
+  const [taskName, setTaskName] = React.useState(task.name);
+  const [deadline, setDeadline] = React.useState(new Date(task.deadline));
+  const [isCompleted, setIsCompleted] = useState(task.completed);
+  const [rating, setRating] = React.useState(task.rating);
 
-    const newTask = {
-      taskName: taskName,
+  const handleEditTask = () => {
+    setIsEditing(false);
+
+    const updatedTask = {
+      name: taskName,
       deadline: deadline,
       priority: rating,
-      completed: false
+      completed: isCompleted
     };
-    console.log(newTask);
+
+    console.log(updatedTask);
 
     let instance = axios.create({
       baseURL: "https://explife-backend.fly.dev"
     });
 
     instance
-      .post("/lists/:id", newTask)
+      .post("/lists/:id", updatedTask)
       .then(() => {
 
         // Refresh list
@@ -53,17 +55,16 @@ export default function AddTaskMenu({ isPanelActive, setIsPanelActive }) {
   return (
     <View>
       <BottomSheet
-        visible={isPanelActive}
-        onBackButtonPress={() => setIsPanelActive(false)}
-        onBackdropPress={() => setIsPanelActive(false)}
+        visible={isEditing}
+        onBackButtonPress={() => setIsEditing(false)}
+        onBackdropPress={() => setIsEditing(false)}
       >
         <SafeAreaView style={styles.bottomNavigationView}>
           <View style={styles.popup}>
             <View>
               <Text>Task</Text>
               <TextInput
-                placeholder="Task Name"
-                dense
+                dense={true}
                 value={taskName}
                 onChangeText={(text) => setTaskName(text)}
               />
@@ -78,21 +79,14 @@ export default function AddTaskMenu({ isPanelActive, setIsPanelActive }) {
                 inputMode="start"
               />
             </View>
-            {/* TODO: Need to make this a date input 
-            <TextInput
-              label="Deadline"
-              dense={true}
-              value={deadline.toISOString()}
-              onChangeText={(text) => setDeadline(new Date())}
-            />
-            <Text>Priority</Text>
-            <Rating
-              imageSize={25}
-              ratingCount={5}
-              startingValue={rating}
-              onFinishRating={() => setRating(rating)}
-            />
-            />*/}
+            <View>
+              <TouchableOpacity
+                style={[styles.statusButton, isCompleted && styles.completed]}
+                onPress={() => setIsCompleted(!isCompleted)}
+              >
+                <Text style={styles.buttonText}>{isCompleted ? 'Complete' : 'Incomplete'}</Text>
+              </TouchableOpacity>
+            </View>
             <View>
               <Text>Priority</Text>
               <Rating
@@ -103,8 +97,8 @@ export default function AddTaskMenu({ isPanelActive, setIsPanelActive }) {
               />
             </View>
             <Button
-              title="Add Task"
-              onPress={handleAddTask}
+              title="Save"
+              onPress={handleEditTask}
             />
           </View>
         </SafeAreaView>

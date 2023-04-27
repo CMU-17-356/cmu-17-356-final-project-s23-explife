@@ -10,7 +10,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import Checkbox from 'expo-checkbox';
 
-export default function TaskList({ tasks, setIsPanelActive }) {
+export default function TaskList({ tasks, setIsPanelActive, setViewingTask }) {
   return (
     <SafeAreaView>
       <ScrollView bounces={false}>
@@ -22,7 +22,7 @@ export default function TaskList({ tasks, setIsPanelActive }) {
             <Text style={{ fontSize: 20 }}>Add Task</Text>
           </View>
         </Pressable>
-        {tasks.map(({ name, deadline, completed }, index) => (
+        {tasks.map(({ name, deadline, priority, completed }, index) => (
           <View key={name} style={styles.entry}>
             <View style={styles.checkbox}>
               {/* TODO: Need to set tasks w/ backend
@@ -36,13 +36,17 @@ export default function TaskList({ tasks, setIsPanelActive }) {
               <Checkbox
                 value={completed} />
             </View>
-            <View style={styles.text}>
-              <Text
-                multiline
-                style={{ fontSize: 20 }}  
-              >{name}</Text>
-              <Text style={{ fontSize: 10 }}>{deadline}</Text>
-            </View>
+            <Pressable style={styles.pressable} onPress={() => {
+              setViewingTask({ name, deadline, priority, completed });
+            }}>
+              <View style={styles.text}>
+                <Text
+                  multiline
+                  style={{ fontSize: 20 }}
+                >{name}</Text>
+                <Text style={{ fontSize: 10 }}>{new Date(deadline).toDateString()}</Text>
+              </View>
+            </Pressable>
           </View>
         ))}
       </ScrollView>
@@ -62,4 +66,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#D9D9D9',
     borderBottomWidth: 1,
   },
+  pressable: {
+    width: '90%'
+  }
 });

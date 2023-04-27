@@ -8,6 +8,7 @@ import {
 import ProgressCircle from 'react-native-progress/Circle';
 import AddTaskMenu from './AddTaskMenu';
 import TaskList from './TaskList';
+import TaskItem from '../progress/TaskItem.js';
 
 function Graph({ tasks }) {
   const completedCount = 2; // tasks.reduce(({ name, deadline, completed }, count) => completed ? count + 1 : count, 0);
@@ -37,18 +38,27 @@ function HeaderText({ tasks }) {
   );
 }
 
-export default function Todo({ tasks }) {
+function TodoPage({ tasks, setViewingTask }) {
   const [isPanelActive, setIsPanelActive] = React.useState(false);
   return (
-    <Provider>
-      <View style={styles.content}>
-        <View style={styles.progress}>
-          <Graph tasks={tasks} />
-          <HeaderText tasks={tasks} />
-        </View>
-        <TaskList tasks={tasks} setIsPanelActive={setIsPanelActive} />
-        <AddTaskMenu isPanelActive={isPanelActive} setIsPanelActive={setIsPanelActive} />
+    <View style={styles.content}>
+      <View style={styles.progress}>
+        <Graph tasks={tasks} />
+        <HeaderText tasks={tasks} />
       </View>
+      <TaskList tasks={tasks} setIsPanelActive={setIsPanelActive} setViewingTask={setViewingTask} />
+      <AddTaskMenu isPanelActive={isPanelActive} setIsPanelActive={setIsPanelActive} />
+    </View>
+  );
+}
+
+export default function Todo({ tasks }) {
+  const [viewingTask, setViewingTask] = React.useState(null);
+
+  return (
+    <Provider>
+      {viewingTask == null && <TodoPage tasks={tasks} setViewingTask={ setViewingTask } />}
+      {viewingTask != null && <TaskItem task={viewingTask} setViewingTask={ setViewingTask } />}
     </Provider>
   );
 }
