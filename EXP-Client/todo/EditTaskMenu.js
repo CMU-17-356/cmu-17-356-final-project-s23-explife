@@ -1,11 +1,12 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { en, registerTranslation, DatePickerInput } from 'react-native-paper-dates';
 import {
   StyleSheet,
   Button,
   Text,
   SafeAreaView,
-  View
+  View,
+  TouchableOpacity
 } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { BottomSheet } from 'react-native-btr';
@@ -16,21 +17,24 @@ import axios from "axios";
 registerTranslation('en', en);
 
 // prob want to get the task w/ axios instead but need detailed task info to exist
-export default function EditTaskMenu({ task }) {
+export default function EditTaskMenu({ task, isEditing, setIsEditing }) {
 
   // Populate with existing task data
-  const [name, setName] = React.useState(task.taskName);
-  const [deadline, setDeadline] = React.useState(task.deadline);
+  const [taskName, setTaskName] = React.useState(task.name);
+  const [deadline, setDeadline] = React.useState(new Date(task.deadline));
+  const [isCompleted, setIsCompleted] = useState(task.completed);
   const [rating, setRating] = React.useState(task.rating);
 
   const handleEditTask = () => {
-    setIsPanelActive(false);
+    setIsEditing(false);
+
     const updatedTask = {
-      taskName: name,
+      name: taskName,
       deadline: deadline,
       priority: rating,
-      completed: task.completed
+      completed: isCompleted
     };
+
     console.log(updatedTask);
 
     let instance = axios.create({
@@ -38,12 +42,8 @@ export default function EditTaskMenu({ task }) {
     });
 
     instance
-      .put("/lists/:id", updatedTask)
+      .post("/lists/:id", updatedTask)
       .then(() => {
-        // Clear inputs
-        setName('')
-        setDeadline(new Date())
-        setRating(0)
 
         // Refresh list
         getTasks()
@@ -55,9 +55,9 @@ export default function EditTaskMenu({ task }) {
   return (
     <View>
       <BottomSheet
-        visible={isPanelActive}
-        onBackButtonPress={() => setIsPanelActive(false)}
-        onBackdropPress={() => setIsPanelActive(false)}
+        visible={isEditing}
+        onBackButtonPress={() => setIsEditing(false)}
+        onBackdropPress={() => setIsEditing(false)}
       >
         <SafeAreaView style={styles.bottomNavigationView}>
           <View style={styles.popup}>
@@ -65,8 +65,8 @@ export default function EditTaskMenu({ task }) {
               <Text>Task</Text>
               <TextInput
                 dense={true}
-                value={name}
-                onChangeText={(text) => setName(text)}
+                value={taskName}
+                onChangeText={(text) => setTaskName(text)}
               />
             </View>
             <View>
@@ -80,6 +80,14 @@ export default function EditTaskMenu({ task }) {
               />
             </View>
             <View>
+              <TouchableOpacity
+                style={[styles.statusButton, isCompleted && styles.completed]}
+                onPress={() => setIsCompleted(!isCompleted)}
+              >
+                <Text style={styles.buttonText}>{isCompleted ? 'Complete' : 'Incomplete'}</Text>
+              </TouchableOpacity>
+            </View>
+            <View>
               <Text>Priority</Text>
               <Rating
                 imageSize={50}
@@ -89,7 +97,7 @@ export default function EditTaskMenu({ task }) {
               />
             </View>
             <Button
-              title="Edit Task"
+              title="Save"
               onPress={handleEditTask}
             />
           </View>

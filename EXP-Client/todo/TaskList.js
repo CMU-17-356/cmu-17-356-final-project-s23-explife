@@ -22,7 +22,7 @@ export default function TaskList({ tasks, setIsPanelActive, setViewingTask }) {
             <Text style={{ fontSize: 20 }}>Add Task</Text>
           </View>
         </Pressable>
-        {tasks.map(({ name, deadline, completed }, index) => (
+        {tasks.map(({ name, deadline, priority, completed }, index) => (
           <View key={name} style={styles.entry}>
             <View style={styles.checkbox}>
               {/* TODO: Need to set tasks w/ backend
@@ -37,7 +37,7 @@ export default function TaskList({ tasks, setIsPanelActive, setViewingTask }) {
                 value={completed} />
             </View>
             <Pressable style={styles.pressable} onPress={() => {
-              setViewingTask({ name, deadline, completed });
+              setViewingTask({ name, deadline, priority, completed });
               console.log("viewing task: " + name);
             }}>
               <View style={styles.text}>
@@ -45,7 +45,7 @@ export default function TaskList({ tasks, setIsPanelActive, setViewingTask }) {
                   multiline
                   style={{ fontSize: 20 }}
                 >{name}</Text>
-                <Text style={{ fontSize: 10 }}>{deadline}</Text>
+                <Text style={{ fontSize: 10 }}>{new Date(deadline).toDateString()}</Text>
               </View>
             </Pressable>
           </View>

@@ -57,8 +57,8 @@ export default function Todo({ tasks }) {
 
   return (
     <Provider>
-      {viewingTask == null && <TodoPage tasks={tasks} setViewingTask = { setViewingTask } />}
-      {viewingTask != null && <TaskItem task={viewingTask} />}
+      {viewingTask == null && <TodoPage tasks={tasks} setViewingTask={ setViewingTask } />}
+      {viewingTask != null && <TaskItem task={viewingTask} setViewingTask={ setViewingTask } />}
     </Provider>
   );
 }

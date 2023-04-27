@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Button, StyleSheet } from 'react-native';
 import { IconButton } from 'react-native-paper';
 import { Rating } from 'react-native-ratings';
+import EditTaskMenu from '../todo/EditTaskMenu.js'
 
-export default function TaskItem({ task }) {
-  const [isEditing, setIsEditing] = useState(false);
-  const [name, setName] = useState(task.name);
-  const [deadline, setDeadline] = useState(task.deadline);
-  const [isCompleted, setIsCompleted] = useState(task.completed);
-  const [rating, setRating] = useState(task.rating);
+export default function TaskItem({ task, setViewingTask }) {
+  const [isEditing, setIsEditing] = React.useState(false);
+
+  console.log("viewing task: " + task.name, task.deadline, task.priority, task.completed);
 
   const onDelete = (name) => {
     console.log(`Deleted ${name}`)
@@ -18,86 +17,42 @@ export default function TaskItem({ task }) {
     console.log(`Updated ${name}`)
   };
 
-  const handleSave = () => {
-    onUpdate({
-      ...task,
-      name,
-      deadline,
-      isCompleted,
-      rating,
-    });
-    setIsEditing(false);
-  };
-
   return (
     <View style={styles.container}>
-      {!isEditing ? (
-        <>
-          <View style={{flexDirection: 'row'}}>
-            <View style={styles.content}>
-              <Text style={styles.taskName}>{task.name}</Text>
-              <Text style={styles.taskDeadline}>{task.deadline}</Text>
-              <Text style={styles.taskStatus}>{task.completed ? 'Completed' : 'Incomplete'}</Text>
-              <Rating
-                style={styles.rating}
-                imageSize={30}
-                ratingCount={5}
-                startingValue={rating}
-                readonly={true}
-              />
-            </View>
-            <View style={styles.actionButtons}>
-              <IconButton icon="pencil" onPress={() => setIsEditing(true)} />
-              <IconButton icon="delete" onPress={() => onDelete(task.name)} />
-            </View>
-          </View>
-      </>
-  ) : (
-      <>
-          <View>
-            <TextInput
-              style={styles.input}
-              value={name}
-              onChangeText={setName}
-              placeholder="Task Name"
-            />
-            <TextInput
-              style={styles.input}
-              value={deadline}
-              onChangeText={setDeadline}
-              placeholder="Deadline"
-            />
-            <TouchableOpacity 
-              style={[styles.statusButton, isCompleted && styles.completed]}
-              onPress={() => setIsCompleted(!isCompleted)}
-            >
-              <Text style={styles.buttonText}>{isCompleted ? 'Complete' : 'Incomplete'}</Text>
-            </TouchableOpacity>
-            <Rating
-              style={styles.rating}
-              imageSize={35}
-              ratingCount={5}
-              startingValue={rating}
-              onFinishRating={setRating}
-            />
-            <Button title="Save" onPress={() => handleSave(task.name)} />
-          </View>
-        </>
-      )}
+      <View style={styles.header}>
+        <IconButton icon="keyboard-backspace" onPress={() => setViewingTask(null)} />
+        <View style={styles.actionButtons}>
+          <IconButton icon="pencil" onPress={() => setIsEditing(true)} />
+          <IconButton icon="delete" onPress={() => onDelete(task.name)} />
+        </View>
+      </View>
+      <View>
+        <View style={styles.content}>
+          <Text style={styles.taskName}>{task.name}</Text>
+          <Text style={styles.taskDeadline}>{new Date(task.deadline).toDateString()}</Text>
+          <Text style={styles.taskStatus}>{task.completed ? 'Completed' : 'Incomplete'}</Text>
+          <Rating
+            style={styles.rating}
+            type='custom'
+            imageSize={30}
+            ratingCount={5}
+            startingValue={task.priority}
+            readonly={true}
+          />
+        </View>
+      </View>
+      <EditTaskMenu task={task} isEditing={isEditing} setIsEditing={setIsEditing} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
     paddingVertical: 8,
     paddingHorizontal: 16,
   },
   content: {
-    flex: 1,
-    marginRight: 16,
-    marginTop: 8,
+    marginTop: '25%',
   },
   taskName: {
     fontSize: 24,
@@ -112,11 +67,16 @@ const styles = StyleSheet.create({
   rating: {
     marginTop: 8,
     marginBottom: 8,
-    marginRight: 8,
+    marginRight: 8
   },
   input: {
     height: 40,
     margin: 8,
+  },
+  header: {
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-between'
   },
   actionButtons: {
     flexDirection: 'row',
@@ -125,9 +85,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'grey',
     padding: 10,
     borderRadius: 5,
-  },
-  completed: {
-    backgroundColor: 'green',
   },
   buttonText: {
     color: 'white',

@@ -26,10 +26,10 @@ export default function App() {
   };
 
   const tasks = [
-    { name: 'Task 1', deadline: 'April 20, 2023', completed: true },
-    { name: 'Task 2', deadline: 'April 22, 2023', completed: false },
-    { name: 'Task 3', deadline: 'April 21, 2023', completed: false },
-    { name: 'Task 4', deadline: 'April 22, 2023', completed: true }
+    { name: 'Task 1', deadline: '2023-04-20T00:00:00.000Z', priority: 4, completed: true },
+    { name: 'Task 2', deadline: '2023-04-21T00:00:00.000Z', priority: 3, completed: false },
+    { name: 'Task 3', deadline: '2023-04-22T00:00:00.000Z', priority: 2, completed: false },
+    { name: 'Task 4', deadline: '2023-04-23T00:00:00.000Z', priority: 1, completed: true }
   ];
 
   const [todayList, setTodayList] = React.useState([]);
@@ -70,6 +70,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     paddingTop: Constants.statusBarHeight,
-    backgroundColor: 'grey'
+    backgroundColor: '#D9D9D9'
   }
 });

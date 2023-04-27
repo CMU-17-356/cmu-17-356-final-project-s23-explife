@@ -16,14 +16,19 @@ import axios from "axios";
 registerTranslation('en', en);
 
 export default function AddTaskMenu({ isPanelActive, setIsPanelActive }) {
-  const [name, setName] = React.useState('');
-  const [deadline, setDeadline] = React.useState(new Date());
+  const [taskName, setTaskName] = React.useState('');
+  const [deadline, setDeadline] = React.useState(undefined);
   const [rating, setRating] = React.useState(0);
 
   const handleAddTask = () => {
+    // Clear inputs
+    setTaskName('')
+    setDeadline(undefined)
+    setRating(0)
     setIsPanelActive(false);
+
     const newTask = {
-      taskName: name,
+      taskName: taskName,
       deadline: deadline,
       priority: rating,
       completed: false
@@ -37,10 +42,6 @@ export default function AddTaskMenu({ isPanelActive, setIsPanelActive }) {
     instance
       .post("/lists/:id", newTask)
       .then(() => {
-        // Clear inputs
-        setName('')
-        setDeadline(new Date())
-        setRating(0)
 
         // Refresh list
         getTasks()
@@ -61,9 +62,10 @@ export default function AddTaskMenu({ isPanelActive, setIsPanelActive }) {
             <View>
               <Text>Task</Text>
               <TextInput
-                dense={true}
-                value={name}
-                onChangeText={(text) => setName(text)}
+                placeholder="Task Name"
+                dense
+                value={taskName}
+                onChangeText={(text) => setTaskName(text)}
               />
             </View>
             <View>
