@@ -35,7 +35,7 @@ export default function EditTaskMenu({ task, isEditing, setIsEditing }) {
       completed: isCompleted
     };
 
-    console.log(updatedTask);
+    console.log("Edited", taskName, updatedTask);
 
     let instance = axios.create({
       baseURL: "https://explife-backend.fly.dev"

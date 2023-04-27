@@ -10,9 +10,9 @@ export default function Nav({ Todo, Stories, Progress }) {
 
   const [index, setIndex] = React.useState(0);
   const routes = [
-    { key: 'todo', title: 'Todo', icon: 'format-list-checks' },
-    { key: 'stories', title: 'Stories', icon: 'book-open-variant' },
-    { key: 'progress', title: 'Progress', icon: 'progress-check' },
+    { key: 'todo', title: 'Todo', focusedIcon: 'format-list-checks' },
+    { key: 'stories', title: 'Stories', focusedIcon: 'book-open-variant' },
+    { key: 'progress', title: 'Progress', focusedIcon: 'progress-check' },
   ];
 
   const renderScene = BottomNavigation.SceneMap({
