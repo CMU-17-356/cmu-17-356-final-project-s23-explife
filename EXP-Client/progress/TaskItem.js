@@ -7,8 +7,6 @@ import EditTaskMenu from '../todo/EditTaskMenu.js'
 export default function TaskItem({ task, setViewingTask }) {
   const [isEditing, setIsEditing] = React.useState(false);
 
-  console.log("viewing task: " + task.name, task.deadline, task.priority, task.completed);
-
   const onDelete = (name) => {
     console.log(`Deleted ${name}`)
   };

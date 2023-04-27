@@ -38,7 +38,6 @@ export default function TaskList({ tasks, setIsPanelActive, setViewingTask }) {
             </View>
             <Pressable style={styles.pressable} onPress={() => {
               setViewingTask({ name, deadline, priority, completed });
-              console.log("viewing task: " + name);
             }}>
               <View style={styles.text}>
                 <Text
