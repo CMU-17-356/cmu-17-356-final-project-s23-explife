@@ -22,8 +22,8 @@ export default function TaskList({ tasks, setIsPanelActive, setViewingTask }) {
             <Text style={{ fontSize: 20 }}>Add Task</Text>
           </View>
         </Pressable>
-        {tasks.map(({ name, deadline, priority, completed }, index) => (
-          <View key={name} style={styles.entry}>
+        {tasks.map(({ taskName, deadline, priority, completed }, index) => (
+          <View key={index} style={styles.entry}>
             <View style={styles.checkbox}>
               {/* TODO: Need to set tasks w/ backend
                       onValueChange={(check) => {
@@ -37,13 +37,13 @@ export default function TaskList({ tasks, setIsPanelActive, setViewingTask }) {
                 value={completed} />
             </View>
             <Pressable style={styles.pressable} onPress={() => {
-              setViewingTask({ name, deadline, priority, completed });
+              setViewingTask({ taskName, deadline, priority, completed });
             }}>
               <View style={styles.text}>
                 <Text
                   multiline
                   style={{ fontSize: 20 }}
-                >{name}</Text>
+                >{taskName}</Text>
                 <Text style={{ fontSize: 10 }}>{new Date(deadline).toDateString()}</Text>
               </View>
             </Pressable>

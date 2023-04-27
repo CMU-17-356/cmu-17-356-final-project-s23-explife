@@ -3,14 +3,14 @@ import { StyleSheet, Text, View } from 'react-native';
 import { MD3LightTheme, Provider } from 'react-native-paper';
 import Constants from 'expo-constants';
 
-import Todo from './todo/Todo'
-import Stories from './stories/Stories'
-import Progress from './progress/Progress'
-import TaskItem from './progress/TaskItem'
-import ArchivedDay from './progress/ArchivedDay'
+import Todo from './todo/Todo';
+import Stories from './stories/Stories';
+import Progress from './progress/Progress';
+import TaskItem from './progress/TaskItem';
+import ArchivedDay from './progress/ArchivedDay';
 
-import Nav from './components/Nav'
-import axios from 'axios';
+import Nav from './components/Nav';
+import * as utils from './utils/utils'
 
 
 function testingCode() {
@@ -19,9 +19,9 @@ function testingCode() {
       {/* <TaskItem task={task} /> */}
       {/* <ArchivedDay tasks={tasks} /> */}
     </View>);
-}
+};
 
-export default function App() {
+function testData() {
   const task = {
     name: 'Finish Project',
     deadline: new Date('2023-05-01').toLocaleDateString(),
@@ -49,21 +49,42 @@ export default function App() {
     { date: '3/28/2023'},
     { date: '3/27/2023'}
   ];
+  
+  return (tasks, stories, pastLists)
+};
 
-  const [todayList, setTodayList] = React.useState([]);
+function convertToStories(tasks) {
+  return tasks.map((task, index) => {
+    return {
+      taskID: task._id,
+      date: task.date,
+      story: task.story,
+      image: task.imageURL
+    }
+  })
+};
 
-  let instance = axios.create({
-    baseURL: "https://explife-backend.fly.dev"
-  });
+export default function App() {
+  // TODO: Do we need a todayList? I think tasks is for today but we can clarify
+  // const [todayList, setTodayList] = React.useState([]);
+  const [tasks, setTasks] = React.useState([]);
+  const [stories, setStories] = React.useState([]);
+  const [pastLists, setProgress] = React.useState([]);
 
-  instance
-    .get("/lists/:id")
-    .then((res) => {
-      setTodayList(res.data)
+  // TODO: Have to make this actually grab the todayList
+  React.useEffect(() => {
+    utils.getTask("6448ccfa756fb0152e0e89b8").then((res) => {
+      setTasks(res.data.items);
     })
-    .catch((error) => {
-      console.log(error)
+
+    utils.getAllTasks().then((res) => {
+      setStories(convertToStories(res.data))
     })
+
+    utils.getAllTasks().then((res) => {
+      setProgress(res.data)
+    })
+  }, []);
 
   return (
     <Provider theme={MD3LightTheme}>

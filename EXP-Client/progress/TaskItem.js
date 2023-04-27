@@ -8,7 +8,7 @@ function DeleteItem({ task, isDeleting, setIsDeleting, setViewingTask }) {
 
   const onDelete = () => {
     setIsDeleting(false);
-    console.log(`Deleted ${task.name}`)
+    console.log(`Deleted ${task.taskName}`)
     setViewingTask(null);
   };
 
@@ -57,7 +57,7 @@ export default function TaskItem({ task, setViewingTask }) {
       </View>
       <View>
         <View style={styles.content}>
-          <Text style={styles.taskName}>{task.name}</Text>
+          <Text style={styles.taskName}>{task.taskName}</Text>
           <Text style={styles.taskDeadline}>{new Date(task.deadline).toDateString()}</Text>
           <Text style={styles.taskStatus}>{task.completed ? 'Completed' : 'Incomplete'}</Text>
           <Rating
