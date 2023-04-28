@@ -16,14 +16,14 @@ export default function StoryList({ stories, setIsPanelActive }) {
     <SafeAreaView>
       <ScrollView bounces={false}>
         {stories.map(({ name, date, completed }, index) => (
-          <View key={name} style={styles.entry}>
+          <View key={index} style={styles.entry}>
             <View style={styles.checkbox}>
-              {/* TODO: Need to set tasks w/ backend
+              {/* TODO: Need to set todos w/ backend
                       onValueChange={(check) => {
-                        tasks = [
-                          ...tasks.slice(0, index),
+                        todos = [
+                          ...todos.slice(0, index),
                           { name, deadline, check },
-                          ...tasks.slice(index + 1)
+                          ...todos.slice(index + 1)
                         ]
                       }}*/}
             </View>

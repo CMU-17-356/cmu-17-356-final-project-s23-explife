@@ -10,7 +10,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import Checkbox from 'expo-checkbox';
 
-export default function TaskList({ tasks, setIsPanelActive, setViewingTask }) {
+export default function TodoList({ todos, setIsPanelActive, setViewingTodo }) {
   return (
     <SafeAreaView>
       <ScrollView bounces={false}>
@@ -19,31 +19,31 @@ export default function TaskList({ tasks, setIsPanelActive, setViewingTask }) {
             <View style={styles.checkbox}>
               <Ionicons name="add-outline" size={30} color="black" />
             </View>
-            <Text style={{ fontSize: 20 }}>Add Task</Text>
+            <Text style={{ fontSize: 20 }}>Add Todo</Text>
           </View>
         </Pressable>
-        {tasks.map(({ taskName, deadline, priority, completed }, index) => (
+        {todos.map(({ name, deadline, priority, completed }, index) => (
           <View key={index} style={styles.entry}>
             <View style={styles.checkbox}>
-              {/* TODO: Need to set tasks w/ backend
+              {/* TODO: Need to set todos w/ backend
                       onValueChange={(check) => {
-                        tasks = [
-                          ...tasks.slice(0, index),
+                        todos = [
+                          ...todos.slice(0, index),
                           { name, deadline, check },
-                          ...tasks.slice(index + 1)
+                          ...todos.slice(index + 1)
                         ]
                       }}*/}
               <Checkbox
                 value={completed} />
             </View>
             <Pressable style={styles.pressable} onPress={() => {
-              setViewingTask({ taskName, deadline, priority, completed });
+              setViewingTodo({ name, deadline, priority, completed });
             }}>
               <View style={styles.text}>
                 <Text
                   multiline
                   style={{ fontSize: 20 }}
-                >{taskName}</Text>
+                >{name}</Text>
                 <Text style={{ fontSize: 10 }}>{new Date(deadline).toDateString()}</Text>
               </View>
             </Pressable>

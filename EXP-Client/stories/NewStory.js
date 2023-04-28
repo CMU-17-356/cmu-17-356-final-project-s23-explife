@@ -17,7 +17,7 @@ export default function AddStoryMenu({ isPanelActive, setIsPanelActive }) {
   const [name, setName] = React.useState('');
   const [dateCreated, setDeadline] = React.useState();
 
-  const handleAddTask = () => {
+  const handleAddTodo = () => {
     setIsPanelActive(false);
     const newStory = {
       storyName: name,
@@ -37,7 +37,7 @@ export default function AddStoryMenu({ isPanelActive, setIsPanelActive }) {
     //     setRating(0)
 
     //     // Refresh list
-    //     getTasks()
+    //     getTodos()
     //   })
     //   .catch((error) => {
     //     console.log(error)
@@ -64,7 +64,7 @@ export default function AddStoryMenu({ isPanelActive, setIsPanelActive }) {
             </View>
             <Button
               title="Create New Story"
-              onPress={handleAddTask}
+              onPress={handleAddTodo}
             />
           </View>
         </SafeAreaView>

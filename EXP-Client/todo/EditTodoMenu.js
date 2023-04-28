@@ -16,37 +16,37 @@ import axios from "axios";
 // for date picker
 registerTranslation('en', en);
 
-// prob want to get the task w/ axios instead but need detailed task info to exist
-export default function EditTaskMenu({ task, isEditing, setIsEditing }) {
+// prob want to get the todo w/ axios instead but need detailed todo info to exist
+export default function EditTodoMenu({ todo, isEditing, setIsEditing }) {
 
-  // Populate with existing task data
-  const [taskName, setTaskName] = React.useState(task.name);
-  const [deadline, setDeadline] = React.useState(new Date(task.deadline));
-  const [isCompleted, setIsCompleted] = useState(task.completed);
-  const [rating, setRating] = React.useState(task.rating);
+  // Populate with existing todo data
+  const [name, setname] = React.useState(todo.name);
+  const [deadline, setDeadline] = React.useState(new Date(todo.deadline));
+  const [isCompleted, setIsCompleted] = useState(todo.completed);
+  const [rating, setRating] = React.useState(todo.rating);
 
-  const handleEditTask = () => {
+  const handleEditTodo = () => {
     setIsEditing(false);
 
-    const updatedTask = {
-      name: taskName,
+    const updatedTodo = {
+      name: name,
       deadline: deadline,
       priority: rating,
       completed: isCompleted
     };
 
-    console.log("Edited", taskName, updatedTask);
+    console.log("Edited", name, updatedTodo);
 
     let instance = axios.create({
       baseURL: "https://explife-backend.fly.dev"
     });
 
     instance
-      .post("/lists/:id", updatedTask)
+      .post("/lists/:id", updatedTodo)
       .then(() => {
 
         // Refresh list
-        getTasks()
+        getTodos()
       })
       .catch((error) => {
         console.log(error)
@@ -62,11 +62,11 @@ export default function EditTaskMenu({ task, isEditing, setIsEditing }) {
         <SafeAreaView style={styles.bottomNavigationView}>
           <View style={styles.popup}>
             <View>
-              <Text>Task</Text>
+              <Text>Todo</Text>
               <TextInput
                 dense={true}
-                value={taskName}
-                onChangeText={(text) => setTaskName(text)}
+                value={name}
+                onChangeText={(text) => setName(text)}
               />
             </View>
             <View>
@@ -98,7 +98,7 @@ export default function EditTaskMenu({ task, isEditing, setIsEditing }) {
             </View>
             <Button
               title="Save"
-              onPress={handleEditTask}
+              onPress={handleEditTodo}
             />
           </View>
         </SafeAreaView>
