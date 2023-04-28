@@ -31,8 +31,8 @@ function HeaderText({ tasks }) {
   return (
     <View style={styles.headerText}>
       <Text style={{ fontSize: 20 }}>Today you have...</Text>
-      {tasks.map(({ name, deadline, completed }) =>
-        <Text style={{ fontSize: 15 }} key={name}>{name}</Text>
+      {tasks.map(({ taskName, deadline, priority, completed }) =>
+        <Text style={{ fontSize: 15 }} key={taskName}>{taskName}</Text>
       )}
     </View>
   );

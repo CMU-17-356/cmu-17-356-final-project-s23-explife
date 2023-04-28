@@ -36,19 +36,19 @@ export default function AddTaskMenu({ isPanelActive, setIsPanelActive }) {
     console.log(newTask);
 
     let instance = axios.create({
-      baseURL: "https://explife-backend.fly.dev"
+      baseURL: "https://explife-backend.fly.dev/"
     });
 
-    instance
-      .post("/lists/:id", newTask)
-      .then(() => {
+    // instance
+    //   .post("/lists/:id", newTask)
+    //   .then(() => {
 
-        // Refresh list
-        getTasks()
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+    //     // Refresh list
+    //     getTasks()
+    //   })
+    //   .catch((error) => {
+    //     console.log(error)
+    //   })
   };
   return (
     <View>
