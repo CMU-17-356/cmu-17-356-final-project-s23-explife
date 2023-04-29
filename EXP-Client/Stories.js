@@ -42,8 +42,8 @@ function HeaderText({ stories }) {
   );
 }
 
-function AddTaskMenu({ isPanelActive, setIsPanelActive }) {
-  const [taskInput, setTaskInput] = React.useState('');
+function AddTodoMenu({ isPanelActive, setIsPanelActive }) {
+  const [todoInput, setTodoInput] = React.useState('');
   const [date, setDate] = React.useState(new Date(1598051730000));
   return (
     <View>
@@ -54,12 +54,12 @@ function AddTaskMenu({ isPanelActive, setIsPanelActive }) {
       >
         <SafeAreaView style={styles.bottomNavigationView}>
           <View style={styles.popup}>
-            <Text>new task info here</Text>
+            <Text>new todo info here</Text>
             <TextInput
-              label="Task"
+              label="Todo"
               dense={true}
-              value={taskInput}
-              onChangeText={(text) => setTaskInput(text)}
+              value={todoInput}
+              onChangeText={(text) => setTodoInput(text)}
             />
             <Text>deadline info here</Text>
             <Text>prio information here</Text>
@@ -71,7 +71,7 @@ function AddTaskMenu({ isPanelActive, setIsPanelActive }) {
   );
 }
 
-function TaskList({ stories, setIsPanelActive }) {
+function TodoList({ stories, setIsPanelActive }) {
   return (
     <SafeAreaView>
       <ScrollView bounces={false}>
@@ -80,7 +80,7 @@ function TaskList({ stories, setIsPanelActive }) {
             <View style={styles.checkbox}>
               <Ionicons name="add-outline" size={30} color="black" />
             </View>
-            <Text style={{ fontSize: 20 }}>Add Task</Text>
+            <Text style={{ fontSize: 20 }}>Add Todo</Text>
           </View>
         </Pressable>
         {stories.map(({ name, deadline, completed }) => (
@@ -110,8 +110,8 @@ export default function Todo({ stories }) {
           <Graph stories={stories} />
           <HeaderText stories={stories} />
         </View>
-        <TaskList stories={stories} setIsPanelActive={setIsPanelActive} />
-        <AddTaskMenu isPanelActive={isPanelActive} setIsPanelActive={setIsPanelActive} />
+        <TodoList stories={stories} setIsPanelActive={setIsPanelActive} />
+        <AddTodoMenu isPanelActive={isPanelActive} setIsPanelActive={setIsPanelActive} />
       </View>
     </Provider>
   );

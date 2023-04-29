@@ -6,19 +6,19 @@ import {
   View,
 } from 'react-native';
 import ProgressCircle from 'react-native-progress/Circle';
-import AddTaskMenu from './AddTaskMenu';
-import TaskList from './TaskList';
-import TaskItem from '../progress/TaskItem.js';
+import AddTodoMenu from './AddTodoMenu';
+import TodoList from './TodoList';
+import TodoItem from '../progress/TodoItem.js';
 
-function Graph({ tasks }) {
-  const completedCount = 2; // tasks.reduce(({ name, deadline, completed }, count) => completed ? count + 1 : count, 0);
+function Graph({ todos }) {
+  const completedCount = 2; // todos.reduce(({ name, deadline, completed }, count) => completed ? count + 1 : count, 0);
   return (
     <View style={styles.graph}>
       <ProgressCircle
         size={80}
-        progress={completedCount / tasks.length}
+        progress={completedCount / todos.length}
         showsText={true}
-        formatText={() => `${Math.round((completedCount / tasks.length) * 100)}%`}
+        formatText={() => `${Math.round((completedCount / todos.length) * 100)}%`}
         style={styles.progressCircle}
       >
         <Text style={styles.progressText}>April 1, 2023</Text>
@@ -27,38 +27,38 @@ function Graph({ tasks }) {
   );
 }
 
-function HeaderText({ tasks }) {
+function HeaderText({ todos }) {
   return (
     <View style={styles.headerText}>
       <Text style={{ fontSize: 20 }}>Today you have...</Text>
-      {tasks.map(({ taskName, deadline, priority, completed }) =>
-        <Text style={{ fontSize: 15 }} key={taskName}>{taskName}</Text>
+      {todos.map(({ name, deadline, priority, completed }, index) =>
+        <Text style={{ fontSize: 15 }} key={index}>{name}</Text>
       )}
     </View>
   );
 }
 
-function TodoPage({ tasks, setViewingTask }) {
+function TodoPage({ todos, setViewingTodo }) {
   const [isPanelActive, setIsPanelActive] = React.useState(false);
   return (
     <View style={styles.content}>
       <View style={styles.progress}>
-        <Graph tasks={tasks} />
-        <HeaderText tasks={tasks} />
+        <Graph todos={todos} />
+        <HeaderText todos={todos} />
       </View>
-      <TaskList tasks={tasks} setIsPanelActive={setIsPanelActive} setViewingTask={setViewingTask} />
-      <AddTaskMenu isPanelActive={isPanelActive} setIsPanelActive={setIsPanelActive} />
+      <TodoList todos={todos} setIsPanelActive={setIsPanelActive} setViewingTodo={setViewingTodo} />
+      <AddTodoMenu isPanelActive={isPanelActive} setIsPanelActive={setIsPanelActive} />
     </View>
   );
 }
 
-export default function Todo({ tasks }) {
-  const [viewingTask, setViewingTask] = React.useState(null);
+export default function Todo({ todos }) {
+  const [viewingTodo, setViewingTodo] = React.useState(null);
 
   return (
     <Provider>
-      {viewingTask == null && <TodoPage tasks={tasks} setViewingTask={ setViewingTask } />}
-      {viewingTask != null && <TaskItem task={viewingTask} setViewingTask={ setViewingTask } />}
+      {viewingTodo == null && <TodoPage todos={todos} setViewingTodo={ setViewingTodo } />}
+      {viewingTodo != null && <TodoItem todo={viewingTodo} setViewingTodo={ setViewingTodo } />}
     </Provider>
   );
 }

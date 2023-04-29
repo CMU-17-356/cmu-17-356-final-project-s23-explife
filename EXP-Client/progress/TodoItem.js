@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Button, StyleSheet, Modal, Pressable } from 'react-native';
 import { IconButton } from 'react-native-paper';
 import { Rating } from 'react-native-ratings';
-import EditTaskMenu from '../todo/EditTaskMenu.js'
+import EditTodoMenu from '../todo/EditTodoMenu.js'
 
-function DeleteItem({ task, isDeleting, setIsDeleting, setViewingTask }) {
+function DeleteItem({ todo, isDeleting, setIsDeleting, setViewingTodo }) {
 
   const onDelete = () => {
     setIsDeleting(false);
-    console.log(`Deleted ${task.taskName}`)
-    setViewingTask(null);
+    console.log(`Deleted ${todo.name}`)
+    setViewingTodo(null);
   };
 
   return (
@@ -42,14 +42,14 @@ function DeleteItem({ task, isDeleting, setIsDeleting, setViewingTask }) {
   )
 }
 
-export default function TaskItem({ task, setViewingTask }) {
+export default function TodoItem({ todo, setViewingTodo }) {
   const [isEditing, setIsEditing] = React.useState(false);
   const [isDeleting, setIsDeleting] = React.useState(false);
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <IconButton icon="keyboard-backspace" onPress={() => setViewingTask(null)} />
+        <IconButton icon="keyboard-backspace" onPress={() => setViewingTodo(null)} />
         <View style={styles.actionButtons}>
           <IconButton icon="pencil" onPress={() => setIsEditing(true)} />
           <IconButton icon="delete" onPress={() => setIsDeleting(true)} />
@@ -57,21 +57,21 @@ export default function TaskItem({ task, setViewingTask }) {
       </View>
       <View>
         <View style={styles.content}>
-          <Text style={styles.taskName}>{task.taskName}</Text>
-          <Text style={styles.taskDeadline}>{new Date(task.deadline).toDateString()}</Text>
-          <Text style={styles.taskStatus}>{task.completed ? 'Completed' : 'Incomplete'}</Text>
+          <Text style={styles.todoName}>{todo.name}</Text>
+          <Text style={styles.todoDeadline}>{new Date(todo.deadline).toDateString()}</Text>
+          <Text style={styles.todoStatus}>{todo.completed ? 'Completed' : 'Incomplete'}</Text>
           <Rating
             style={styles.rating}
             type='custom'
             imageSize={30}
             ratingCount={5}
-            startingValue={task.priority}
+            startingValue={todo.priority}
             readonly={true}
           />
         </View>
       </View>
-      <EditTaskMenu task={task} isEditing={isEditing} setIsEditing={setIsEditing} />
-      <DeleteItem task={task} isDeleting={isDeleting} setIsDeleting={setIsDeleting} setViewingTask={setViewingTask} />
+      <EditTodoMenu todo={todo} isEditing={isEditing} setIsEditing={setIsEditing} />
+      <DeleteItem todo={todo} isDeleting={isDeleting} setIsDeleting={setIsDeleting} setViewingTodo={setViewingTodo} />
     </View>
   );
 };
@@ -84,14 +84,14 @@ const styles = StyleSheet.create({
   content: {
     marginTop: '25%',
   },
-  taskName: {
+  todoName: {
     fontSize: 24,
     fontWeight: 'bold',
   },
-  taskDeadline: {
+  todoDeadline: {
     fontSize: 16,
   },
-  taskStatus: {
+  todoStatus: {
     fontSize: 16,
   },
   rating: {

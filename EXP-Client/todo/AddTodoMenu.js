@@ -15,36 +15,36 @@ import axios from "axios";
 // for date picker
 registerTranslation('en', en);
 
-export default function AddTaskMenu({ isPanelActive, setIsPanelActive }) {
-  const [taskName, setTaskName] = React.useState('');
+export default function AddTodoMenu({ isPanelActive, setIsPanelActive }) {
+  const [name, setname] = React.useState('');
   const [deadline, setDeadline] = React.useState(undefined);
   const [rating, setRating] = React.useState(0);
 
-  const handleAddTask = () => {
+  const handleAddTodo = () => {
     // Clear inputs
-    setTaskName('')
+    setname('')
     setDeadline(undefined)
     setRating(0)
     setIsPanelActive(false);
 
-    const newTask = {
-      taskName: taskName,
+    const newTodo = {
+      name: name,
       deadline: deadline,
       priority: rating,
       completed: false
     };
-    console.log(newTask);
+    console.log(newTodo);
 
     let instance = axios.create({
       baseURL: "https://explife-backend.fly.dev/"
     });
 
     // instance
-    //   .post("/lists/:id", newTask)
+    //   .post("/lists/:id", newTodo)
     //   .then(() => {
 
     //     // Refresh list
-    //     getTasks()
+    //     getTodos()
     //   })
     //   .catch((error) => {
     //     console.log(error)
@@ -60,12 +60,12 @@ export default function AddTaskMenu({ isPanelActive, setIsPanelActive }) {
         <SafeAreaView style={styles.bottomNavigationView}>
           <View style={styles.popup}>
             <View>
-              <Text>Task</Text>
+              <Text>Todo</Text>
               <TextInput
-                placeholder="Task Name"
+                placeholder="Todo Name"
                 dense
-                value={taskName}
-                onChangeText={(text) => setTaskName(text)}
+                value={name}
+                onChangeText={(text) => setname(text)}
               />
             </View>
             <View>
@@ -103,8 +103,8 @@ export default function AddTaskMenu({ isPanelActive, setIsPanelActive }) {
               />
             </View>
             <Button
-              title="Add Task"
-              onPress={handleAddTask}
+              title="Add Todo"
+              onPress={handleAddTodo}
             />
           </View>
         </SafeAreaView>

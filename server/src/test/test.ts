@@ -35,7 +35,7 @@ describe('listItem', function() {
         const listItem = a.validateSync();
 
         expect(listItem.errors.deadline).to.exist;
-        expect(listItem.errors.taskName).to.exist;
+        expect(listItem.errors.name).to.exist;
         expect(listItem.errors.priority).to.exist;
         expect(listItem.errors.completed).to.exist;
     });

@@ -7,22 +7,22 @@ let instance = axios.create({
 /* **************
  List helpers
 *************** */
-export function getAllTasks() {
+export function getAllTodos() {
   return instance.get("/lists")
 };
 
-export function getTask(id) {
+export function getTodo(id) {
   return instance.get("/lists/" + id)
 };
 
-export function createTask(task) {
-  return instance.post("/lists", task)
+export function createTodo(todo) {
+  return instance.post("/lists", todo)
 };
 
-export function updateTask(id, task) {
-  return instance.post("/lists/" + id, task)
+export function updateTodo(id, todo) {
+  return instance.post("/lists/" + id, todo)
 };
 
-export function deleteTask(id) {
+export function deleteTodo(id) {
   return instance.delete("/lists/" + id)
 };

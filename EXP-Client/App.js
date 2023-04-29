@@ -6,7 +6,7 @@ import Constants from 'expo-constants';
 import Todo from './todo/Todo';
 import Stories from './stories/Stories';
 import Progress from './progress/Progress';
-import TaskItem from './progress/TaskItem';
+import TodoItem from './progress/TodoItem';
 import ArchivedDay from './progress/ArchivedDay';
 
 import Nav from './components/Nav';
@@ -16,24 +16,24 @@ import * as utils from './utils/utils'
 function testingCode() {
   return (
     <View style={styles.container}>
-      {/* <TaskItem task={task} /> */}
-      {/* <ArchivedDay tasks={tasks} /> */}
+      {/* <TodoItem todo={todo} /> */}
+      {/* <ArchivedDay todos={todos} /> */}
     </View>);
 };
 
 function testData() {
-  const task = {
+  const todo = {
     name: 'Finish Project',
     deadline: new Date('2023-05-01').toLocaleDateString(),
     completed: false,
     rating: 4
   };
 
-  const tasks = [
-    { name: 'Task 1', deadline: '2023-04-20T00:00:00.000Z', priority: 4, completed: true },
-    { name: 'Task 2', deadline: '2023-04-21T00:00:00.000Z', priority: 3, completed: false },
-    { name: 'Task 3', deadline: '2023-04-22T00:00:00.000Z', priority: 2, completed: false },
-    { name: 'Task 4', deadline: '2023-04-23T00:00:00.000Z', priority: 1, completed: true }
+  const todos = [
+    { name: 'Todo 1', deadline: '2023-04-20T00:00:00.000Z', priority: 4, completed: true },
+    { name: 'Todo 2', deadline: '2023-04-21T00:00:00.000Z', priority: 3, completed: false },
+    { name: 'Todo 3', deadline: '2023-04-22T00:00:00.000Z', priority: 2, completed: false },
+    { name: 'Todo 4', deadline: '2023-04-23T00:00:00.000Z', priority: 1, completed: true }
   ];
 
   const stories = [
@@ -50,38 +50,38 @@ function testData() {
     { date: '3/27/2023'}
   ];
   
-  return (tasks, stories, pastLists)
+  return (todos, stories, pastLists)
 };
 
-function convertToStories(tasks) {
-  return tasks.map((task, index) => {
+function convertToStories(todos) {
+  return todos.map((todo, index) => {
     return {
-      taskID: task._id,
-      date: task.date,
-      story: task.story,
-      image: task.imageURL
+      todoID: todo._id,
+      date: todo.date,
+      story: todo.story,
+      image: todo.imageURL
     }
   })
 };
 
 export default function App() {
-  // TODO: Do we need a todayList? I think tasks is for today but we can clarify
+  // TODO: Do we need a todayList? I think todos is for today but we can clarify
   // const [todayList, setTodayList] = React.useState([]);
-  const [tasks, setTasks] = React.useState([]);
+  const [todos, setTodos] = React.useState([]);
   const [stories, setStories] = React.useState([]);
   const [pastLists, setProgress] = React.useState([]);
 
   // TODO: Have to make this actually grab the todayList
   React.useEffect(() => {
-    utils.getTask("6448ccfa756fb0152e0e89b8").then((res) => {
-      setTasks(res.data.items);
+    utils.getTodo("6448ccfa756fb0152e0e89b8").then((res) => {
+      setTodos(res.data.items);
     })
 
-    utils.getAllTasks().then((res) => {
+    utils.getAllTodos().then((res) => {
       setStories(convertToStories(res.data))
     })
 
-    utils.getAllTasks().then((res) => {
+    utils.getAllTodos().then((res) => {
       setProgress(res.data)
     })
   }, []);
@@ -90,7 +90,7 @@ export default function App() {
     <Provider theme={MD3LightTheme}>
       <View style={styles.nav}>
         <Nav
-          Todo={<Todo tasks={tasks} />}
+          Todo={<Todo todos={todos} />}
           Stories={<Stories stories={stories} />}
           Progress={<Progress pastLists={pastLists} />}
         />
