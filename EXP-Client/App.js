@@ -8,7 +8,7 @@ import Stories from './stories/Stories';
 import Progress from './progress/Progress';
 import TodoItem from './progress/TodoItem';
 import ArchivedDay from './progress/ArchivedDay';
-
+import AddStoryMenu from './stories/NewStory';
 import Nav from './components/Nav';
 import * as utils from './utils/utils'
 
@@ -71,6 +71,8 @@ export default function App() {
   const [stories, setStories] = React.useState([]);
   const [pastLists, setProgress] = React.useState([]);
 
+  const [isPanelActive, setIsPanelActive] = React.useState(true); // TODO: Remove after new story testing
+
   // TODO: Have to make this actually grab the todayList
   React.useEffect(() => {
     utils.getTodo("644d8897102c5af4806c0e9c").then((res) => {
@@ -93,7 +95,8 @@ export default function App() {
       <View style={styles.nav}>
         <Nav
           Todo={<Todo todos={todos} />}
-          Stories={<Stories stories={stories} />}
+          // Stories={<Stories stories={stories} />}
+          Stories= {<AddStoryMenu isPanelActive = {isPanelActive} setIsPanelActive={setIsPanelActive} />}
           Progress={<Progress pastLists={pastLists} />}
         />
       </View>
