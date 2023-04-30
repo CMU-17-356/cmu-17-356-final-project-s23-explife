@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
-import { BottomNavigation } from 'react-native-paper';
+import { Provider, BottomNavigation } from 'react-native-paper';
 
 export default function Nav({ Todo, Stories, Progress }) {
   const TodoRoute = () => Todo;
