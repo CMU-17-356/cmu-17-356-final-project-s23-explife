@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, Modal } from 'react-native';
 import { Rating } from 'react-native-ratings';
-import EditTodoMenu from '../todo/EditTodoMenu.js'
+import StoriesItem from '../stories/StoriesItem'
+import EditTodoMenu from '../todo/EditTodoMenu'
 import { Appbar, FAB } from 'react-native-paper';
 import { Button, useTheme } from 'react-native-paper';
 

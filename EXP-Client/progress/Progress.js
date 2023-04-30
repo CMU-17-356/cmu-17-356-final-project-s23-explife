@@ -29,7 +29,7 @@ function ProgressList({ pastLists }) {
       <ScrollView bounces={false}>
         <List.AccordionGroup>
           {pastLists.map(({ _id, date }, index) => (
-            <List.Accordion id={_id} style={styles.entry}
+            <List.Accordion id={_id} key={index} style={styles.entry}
               title={new Date(date).toDateString()}
               left={props => <MaterialIcons name="date-range" size={30} color="black" />}
               expanded={expanded}
