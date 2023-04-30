@@ -8,42 +8,49 @@ import {
   View,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import { Appbar, List, DataTable } from 'react-native-paper';
 
-function HeaderText() {
+function ProgressItem() {
   return (
-    <View style={styles.headerText}>
-      <Text style={{ fontSize: 20 }}>Progress</Text>
+    <View>
+      <Text>Completed tasks: your mom</Text>
+      <Text>Unfinished tasks: your dad</Text>
     </View>
   );
 }
 
 function ProgressList({ pastLists }) {
+  console.log(pastLists);
+  const [expanded, setExpanded] = React.useState(true);
+
+  const handlePress = () => setExpanded(!expanded);
   return (
     <SafeAreaView>
       <ScrollView bounces={false}>
-        {pastLists.map(({ date }) => (
-          <View key={date} style={styles.entry}>
-            <View style={styles.checkbox}>
-              <MaterialIcons name="date-range" size={30} color="black" />
-            </View>
-            <View>
-              <Text style={{ fontSize: 20 }}>{date}</Text>
-            </View>
-          </View>
-        ))}
+        <List.AccordionGroup>
+          {pastLists.map(({ _id, date }, index) => (
+            <List.Accordion id={_id} style={styles.entry}
+              title={new Date(date).toDateString()}
+              left={props => <MaterialIcons name="date-range" size={30} color="black" />}
+              expanded={expanded}
+              onPress={handlePress}>
+              <List.Item title={<ProgressItem />}></List.Item>
+            </List.Accordion>
+          ))}
+        </List.AccordionGroup>
       </ScrollView>
     </SafeAreaView>
   );
 }
 
-export default function Progress ({ pastLists }) {
+export default function Progress({ pastLists }) {
   const [isPanelActive, setIsPanelActive] = React.useState(false);
   return (
     <Provider>
       <View style={styles.content}>
-        <View style={styles.header}>
-          <HeaderText/>
-        </View>
+        <Appbar.Header elevated>
+          <Appbar.Content title="Progress" />
+        </Appbar.Header>
         <ProgressList pastLists={pastLists} />
       </View>
     </Provider>
@@ -85,9 +92,7 @@ const styles = StyleSheet.create({
   },
   entry: {
     alignItems: 'center',
-    height: 60,
-    flexDirection: 'row',
-    backgroundColor: '#D9D9D9',
-    borderBottomWidth: 1,
-  }
+    minHeight: 75,
+    flexDirection: 'row'
+  },
 });

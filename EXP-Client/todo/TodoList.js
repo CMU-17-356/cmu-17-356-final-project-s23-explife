@@ -28,20 +28,9 @@ export default function TodoList({ todos, setIsPanelActive, setViewingTodo }) {
           {todos.map(({ name, deadline, priority, completed }, index) => (
             <DataTable.Row key={name} style={styles.entry}>
               <DataTable.Cell style={{ justifyContent: 'center', flex: 1 }}>
-                {/* TODO: Need to set todos w/ backend
-                      onValueChange={(check) => {
-                        todos = [
-                          ...todos.slice(0, index),
-                          { name, deadline, check },
-                          ...todos.slice(index + 1)
-                        ]
-                      }}*/}
-                <Checkbox
-                  value={completed} />
+                <Checkbox value={completed} />
               </DataTable.Cell>
-              <Pressable style={{ flex: 5 }} onPress={() => {
-                setViewingTodo({ name, deadline, priority, completed });
-              }}>
+              <Pressable style={{ flex: 5 }} onPress={() => setViewingTodo({ name, deadline, priority, completed })}>
                 <Text multiline style={{ fontSize: 20 }}>{name}</Text>
                 <Text style={{ fontSize: 10 }}>{new Date(deadline).toDateString()}</Text>
               </Pressable>

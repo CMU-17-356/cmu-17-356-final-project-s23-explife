@@ -44,12 +44,12 @@ function testData() {
   ];
 
   const pastLists = [
-    { date: '3/31/2023'},
-    { date: '3/30/2023'},
-    { date: '3/28/2023'},
-    { date: '3/27/2023'}
+    { date: '2023-04-20T00:00:00.000Z' },
+    { date: '2023-04-21T00:00:00.000Z' },
+    { date: '2023-04-22T00:00:00.000Z' },
+    { date: '2023-04-23T00:00:00.000Z' }
   ];
-  
+
   return (todos, stories, pastLists)
 };
 
