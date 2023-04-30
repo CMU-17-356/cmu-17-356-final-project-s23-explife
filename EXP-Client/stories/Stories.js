@@ -8,12 +8,6 @@ import AddStoryMenu from './NewStory';
 
 function StoriesPage({ stories, setViewingStory }) {
   const [isPanelActive, setIsPanelActive] = React.useState(false);
-  const handleCreateStory = () => {
-    setIsPanelActive(true);
-    console.log("create story");
-    // aaaaaaaaaa steven help
-  };
-
   return (
     <View style={styles.content}>
       <Appbar.Header elevated>
@@ -21,7 +15,7 @@ function StoriesPage({ stories, setViewingStory }) {
       </Appbar.Header>
       <StoryList stories={stories} setViewingStory={setViewingStory} />
       <AddStoryMenu isPanelActive={isPanelActive} setIsPanelActive={setIsPanelActive} />
-      <FAB style={styles.button} icon="plus" onPress={handleCreateStory} label="Create Today's Story" />
+      <FAB style={styles.button} icon="plus" onPress={() => setIsPanelActive(true)} label="Create Today's Story" />
     </View>
   );
 }
