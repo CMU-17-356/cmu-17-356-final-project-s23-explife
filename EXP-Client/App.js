@@ -8,7 +8,7 @@ import Stories from './stories/Stories';
 import Progress from './progress/Progress';
 import TodoItem from './progress/TodoItem';
 import ArchivedDay from './progress/ArchivedDay';
-import AddStoryMenu from './stories/NewStory';
+import AddStoryMenu from './stories/NewStory'; // TODO: remove
 import Nav from './components/Nav';
 import * as utils from './utils/utils'
 
@@ -95,8 +95,8 @@ export default function App() {
       <View style={styles.nav}>
         <Nav
           Todo={<Todo todos={todos} />}
-          // Stories={<Stories stories={stories} />}
-          Stories= {<AddStoryMenu isPanelActive = {isPanelActive} setIsPanelActive={setIsPanelActive} />}
+          Stories={<Stories stories={stories} />}
+          // Stories= {<AddStoryMenu isPanelActive = {isPanelActive} setIsPanelActive={setIsPanelActive} />}
           Progress={<Progress pastLists={pastLists} />}
         />
       </View>

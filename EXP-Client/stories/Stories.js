@@ -4,10 +4,12 @@ import { Provider, Appbar, FAB } from 'react-native-paper'
 
 import StoryList from "./StoryList";
 import StoriesItem from './StoriesItem';
+import AddStoryMenu from './NewStory';
 
 function StoriesPage({ stories, setViewingStory }) {
-
+  const [isPanelActive, setIsPanelActive] = React.useState(false);
   const handleCreateStory = () => {
+    setIsPanelActive(true);
     console.log("create story");
     // aaaaaaaaaa steven help
   };
@@ -18,6 +20,7 @@ function StoriesPage({ stories, setViewingStory }) {
         <Appbar.Content title="Stories" />
       </Appbar.Header>
       <StoryList stories={stories} setViewingStory={setViewingStory} />
+      <AddStoryMenu isPanelActive={isPanelActive} setIsPanelActive={setIsPanelActive} />
       <FAB style={styles.button} icon="plus" onPress={handleCreateStory} label="Create Today's Story" />
     </View>
   );
@@ -26,7 +29,6 @@ function StoriesPage({ stories, setViewingStory }) {
 
 export default function Stories({ stories }) {
   const [viewingStory, setViewingStory] = React.useState(null);
-
   console.log(stories);
 
   return (
