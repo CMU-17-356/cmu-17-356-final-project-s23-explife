@@ -4,12 +4,13 @@ import {
   StyleSheet,
   Text,
   SafeAreaView,
-  View,
-  TouchableOpacity
+  View
 } from 'react-native';
 import { Button, useTheme, TextInput } from 'react-native-paper';
 import { BottomSheet } from 'react-native-btr';
 import { Rating } from 'react-native-ratings';
+
+import { AddTodoMenu } from './AddTodoMenu';
 import axios from "axios";
 
 // for date picker

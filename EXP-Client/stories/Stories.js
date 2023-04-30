@@ -1,35 +1,39 @@
 import * as React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
-import StoryList from "./StoryList";
-import RoundedButton from "../components/button.js";
+import { StyleSheet, View } from 'react-native';
+import { Provider, Appbar, FAB } from 'react-native-paper'
 
-function HeaderText() {
+import StoryList from "./StoryList";
+import StoriesItem from './StoriesItem';
+
+function StoriesPage({ stories, setViewingStory }) {
+
+  const handleCreateStory = () => {
+    console.log("create story");
+    // aaaaaaaaaa steven help
+  };
+
   return (
-    <View style={styles.headerText}>
-      <Text style={{ fontSize: 20 }}>Stories</Text>
+    <View style={styles.content}>
+      <Appbar.Header elevated>
+        <Appbar.Content title="Stories" />
+      </Appbar.Header>
+      <StoryList stories={stories} setViewingStory={setViewingStory} />
+      <FAB style={styles.button} icon="plus" onPress={handleCreateStory} label="Create Today's Story" />
     </View>
   );
 }
 
+
 export default function Stories({ stories }) {
-  const [isPanelActive, setIsPanelActive] = React.useState(false);
+  const [viewingStory, setViewingStory] = React.useState(null);
+
+  console.log(stories);
 
   return (
-    <View style={styles.content}>
-      <View style={styles.header}>
-        <HeaderText/>
-      </View>
-      <StoryList stories={stories} setIsPanelActive={setIsPanelActive} />
-      <View style={{ alignSelf: "flex-end" }}>
-        <View>
-          <RoundedButton text="Create Today's Story" />
-        </View>
-      </View>
-    </View>
+    <Provider>
+      {viewingStory == null && <StoriesPage stories={stories} setViewingStory={setViewingStory} />}
+      {viewingStory != null && <StoriesItem story={viewingStory} setViewingStory={setViewingStory} />}
+    </Provider>
   );
 }
 
@@ -50,20 +54,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#D9D9D9',
     borderBottomWidth: 1,
-  }
-});
-
-const buttonStyles = StyleSheet.create({
-  button: {
-    backgroundColor: "#D9D9D9",
-    borderRadius: 2
   },
-  text: {
-    color: "black",
-    fontWeight: "500",
-    padding: 8,
-    textAlign: "center",
-    textTransform: "uppercase"
+  content: {
+    height: "100%"
+  },
+  button: {
+    marginTop: 'auto',
+    marginBottom: 10,
+    marginRight: 10,
+    marginLeft: 10
   }
 });
-
