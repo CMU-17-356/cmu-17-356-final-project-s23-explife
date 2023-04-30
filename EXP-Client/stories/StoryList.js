@@ -4,39 +4,30 @@ import {
   SafeAreaView,
   ScrollView,
   View,
-  StyleSheet
+  StyleSheet,
+  Pressable
 } from 'react-native';
+import { DataTable } from 'react-native-paper';
 
-// Navigation import
-// import {NavigationContainer} from '@react-navigation/native';
-// import {createStackNavigator} from '@react-navigation/stack';
-
-export default function StoryList({ stories, setIsPanelActive }) {
+export default function StoryList({ stories, setViewingStory }) {
+  console.log("stories is ", stories)
   return (
     <SafeAreaView>
       <ScrollView bounces={false}>
-        {stories.map(({ name, date, completed }, index) => (
-          <View key={index} style={styles.entry}>
-            <View style={styles.checkbox}>
-              {/* TODO: Need to set todos w/ backend
-                      onValueChange={(check) => {
-                        todos = [
-                          ...todos.slice(0, index),
-                          { name, deadline, check },
-                          ...todos.slice(index + 1)
-                        ]
-                      }}*/}
-            </View>
-            <View style={styles.text}>
-              <Text multiline style={{ fontSize: 20 }}>
-                {name}
-              </Text>
-              <Text style={{ fontSize: 10 }}>{date}</Text>
-            </View>
-          </View>
-        ))}
+        <DataTable>
+          {stories.map(({ date, image, story, todoID }, index) => (
+            <DataTable.Row key={todoID} style={styles.entry}>
+              <Pressable onPress={() => {
+                setViewingStory({ date, image, story, todoID });
+              }}>
+                <Text multiline style={{ fontSize: 20 }}>{story}</Text>
+                <Text style={{ fontSize: 10 }}>{new Date(date).toDateString()}</Text>
+              </Pressable>
+            </DataTable.Row>
+          ))}
+        </DataTable>
       </ScrollView>
-    </SafeAreaView>
+    </SafeAreaView >
   );
 }
 
@@ -47,9 +38,10 @@ const styles = StyleSheet.create({
   },
   entry: {
     alignItems: 'center',
-    height: 60,
+    height: 75,
     flexDirection: 'row',
-    backgroundColor: '#D9D9D9',
+    borderStyleBottom: 'solid',
     borderBottomWidth: 1,
+    borderColor: 'black'
   },
 });
