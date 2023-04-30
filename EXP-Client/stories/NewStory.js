@@ -56,15 +56,14 @@ export default function AddStoryMenu({ isPanelActive, setIsPanelActive }) {
             <View>
               <Text>Are you sure you would like to generate a story for 
                 today's to-do list?</Text>
-              <TextInput
-                dense={true}
-                value={name}
-                onChangeText={(text) => setName(text)}
-              />
             </View>
             <Button
               title="Create New Story"
               onPress={handleAddTodo}
+            />
+            <Button
+              title="Cancel"
+              onPress={() => setIsPanelActive(false)}
             />
           </View>
         </SafeAreaView>
