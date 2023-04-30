@@ -2,12 +2,11 @@ import * as React from 'react';
 import { en, registerTranslation, DatePickerInput } from 'react-native-paper-dates';
 import {
   StyleSheet,
-  Button,
   Text,
   SafeAreaView,
   View
 } from 'react-native';
-import { TextInput } from 'react-native-paper';
+import { Button, TextInput, useTheme } from 'react-native-paper';
 import { BottomSheet } from 'react-native-btr';
 import { Rating } from 'react-native-ratings';
 import axios from "axios";
@@ -19,6 +18,8 @@ export default function AddTodoMenu({ isPanelActive, setIsPanelActive }) {
   const [name, setname] = React.useState('');
   const [deadline, setDeadline] = React.useState(undefined);
   const [rating, setRating] = React.useState(0);
+
+  const theme = useTheme();
 
   const handleAddTodo = () => {
     // Clear inputs
@@ -63,7 +64,6 @@ export default function AddTodoMenu({ isPanelActive, setIsPanelActive }) {
               <Text>Todo</Text>
               <TextInput
                 placeholder="Todo Name"
-                dense
                 value={name}
                 onChangeText={(text) => setname(text)}
               />
@@ -71,28 +71,12 @@ export default function AddTodoMenu({ isPanelActive, setIsPanelActive }) {
             <View>
               <Text>Deadline</Text>
               <DatePickerInput
-                dense={true}
                 locale="en"
                 value={deadline}
                 onChange={(d) => setDeadline(d)}
                 inputMode="start"
               />
             </View>
-            {/* TODO: Need to make this a date input 
-            <TextInput
-              label="Deadline"
-              dense={true}
-              value={deadline.toISOString()}
-              onChangeText={(text) => setDeadline(new Date())}
-            />
-            <Text>Priority</Text>
-            <Rating
-              imageSize={25}
-              ratingCount={5}
-              startingValue={rating}
-              onFinishRating={() => setRating(rating)}
-            />
-            />*/}
             <View>
               <Text>Priority</Text>
               <Rating
@@ -100,12 +84,13 @@ export default function AddTodoMenu({ isPanelActive, setIsPanelActive }) {
                 ratingCount={5}
                 startingValue={rating}
                 onFinishRating={(newRating) => setRating(newRating)}
+                type='custom'
+                ratingColor={theme.colors.primary}
+                ratingBackgroundColor={theme.colors.backdrop}
+                tintColor={'white'}
               />
             </View>
-            <Button
-              title="Add Todo"
-              onPress={handleAddTodo}
-            />
+            <Button mode="contained" onPress={handleAddTodo} >Add Todo </Button>
           </View>
         </SafeAreaView>
       </BottomSheet>

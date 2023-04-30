@@ -73,7 +73,7 @@ export default function App() {
 
   // TODO: Have to make this actually grab the todayList
   React.useEffect(() => {
-    utils.getTodo("6448ccfa756fb0152e0e89b8").then((res) => {
+    utils.getTodo("644d8897102c5af4806c0e9c").then((res) => {
       setTodos(res.data.items);
     })
 
@@ -85,6 +85,8 @@ export default function App() {
       setProgress(res.data)
     })
   }, []);
+
+  console.log(todos);
 
   return (
     <Provider theme={MD3LightTheme}>

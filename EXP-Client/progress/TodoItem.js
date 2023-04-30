@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Button, StyleSheet, Modal, Pressable } from 'react-native';
-import { IconButton } from 'react-native-paper';
+import React from 'react';
+import { View, Text, StyleSheet, Modal } from 'react-native';
 import { Rating } from 'react-native-ratings';
 import EditTodoMenu from '../todo/EditTodoMenu.js'
+import { Appbar, FAB } from 'react-native-paper';
+import { Button, useTheme } from 'react-native-paper';
 
 function DeleteItem({ todo, isDeleting, setIsDeleting, setViewingTodo }) {
 
@@ -25,16 +26,8 @@ function DeleteItem({ todo, isDeleting, setIsDeleting, setViewingTodo }) {
         <View style={styles.modalView}>
           <Text style={styles.modalText}>Are you sure you want to delete this item?</Text>
           <View style={styles.buttons}>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setIsDeleting(false)}>
-              <Text style={styles.textStyle}>Cancel</Text>
-            </Pressable>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={onDelete}>
-              <Text style={styles.textStyle}>Yes</Text>
-            </Pressable>
+            <Button mode="contained" onPress={() => setIsDeleting(false)} style={styles.button}>Cancel</Button>
+            <Button mode="contained" onPress={onDelete} style={styles.button}>Yes</Button>
           </View>
         </View>
       </View>
@@ -43,35 +36,45 @@ function DeleteItem({ todo, isDeleting, setIsDeleting, setViewingTodo }) {
 }
 
 export default function TodoItem({ todo, setViewingTodo }) {
+  const theme = useTheme();
+
   const [isEditing, setIsEditing] = React.useState(false);
   const [isDeleting, setIsDeleting] = React.useState(false);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <IconButton icon="keyboard-backspace" onPress={() => setViewingTodo(null)} />
-        <View style={styles.actionButtons}>
-          <IconButton icon="pencil" onPress={() => setIsEditing(true)} />
-          <IconButton icon="delete" onPress={() => setIsDeleting(true)} />
-        </View>
-      </View>
-      <View>
-        <View style={styles.content}>
-          <Text style={styles.todoName}>{todo.name}</Text>
-          <Text style={styles.todoDeadline}>{new Date(todo.deadline).toDateString()}</Text>
-          <Text style={styles.todoStatus}>{todo.completed ? 'Completed' : 'Incomplete'}</Text>
-          <Rating
-            style={styles.rating}
-            type='custom'
-            imageSize={30}
-            ratingCount={5}
-            startingValue={todo.priority}
-            readonly={true}
+    <View>
+      <Appbar.Header mode="large" elevated>
+        <Appbar.BackAction onPress={() => setViewingTodo(null)} />
+        <Appbar.Content title="" />
+        <Appbar.Action icon="pencil" onPress={() => setIsEditing(true)} />
+        <Appbar.Action icon="delete" onPress={() => setIsDeleting(true)} />
+      </Appbar.Header>
+      <View style={styles.container}>
+        <View>
+          <View style={styles.content}>
+            <Text style={styles.todoName}>{todo.name}</Text>
+            <Text style={styles.todoDeadline}>{new Date(todo.deadline).toDateString()}</Text>
+            <Rating
+              style={styles.rating}
+              type='custom'
+              imageSize={50}
+              ratingCount={5}
+              startingValue={todo.priority}
+              readonly={true}
+              ratingColor={theme.colors.primary}
+              ratingBackgroundColor={theme.colors.backdrop}
+              tintColor={'white'}
+            />
+          </View>
+          <FAB
+            small
+            label={todo.completed ? 'Mark as Incomplete' : 'Mark as Complete'}
+            onPress={() => console.log('Mark as complete / incomplete')}
           />
         </View>
+        <EditTodoMenu todo={todo} isEditing={isEditing} setIsEditing={setIsEditing} />
+        <DeleteItem todo={todo} isDeleting={isDeleting} setIsDeleting={setIsDeleting} setViewingTodo={setViewingTodo} />
       </View>
-      <EditTodoMenu todo={todo} isEditing={isEditing} setIsEditing={setIsEditing} />
-      <DeleteItem todo={todo} isDeleting={isDeleting} setIsDeleting={setIsDeleting} setViewingTodo={setViewingTodo} />
     </View>
   );
 };
@@ -82,7 +85,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   content: {
-    marginTop: '25%',
+    marginTop: '5%',
   },
   todoName: {
     fontSize: 24,
@@ -95,8 +98,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   rating: {
-    marginTop: 8,
-    marginBottom: 8,
+    marginTop: 15,
+    marginBottom: 15,
     marginRight: 8
   },
   input: {
@@ -143,17 +146,10 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   button: {
-    padding: 10,
-    elevation: 2,
-    width: 100,
-  },
-  buttonClose: {
-    backgroundColor: '#B1B1B1',
-  },
-  textStyle: {
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
+    width: 100,
   },
   modalText: {
     marginBottom: 15,

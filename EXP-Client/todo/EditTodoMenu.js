@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import { en, registerTranslation, DatePickerInput } from 'react-native-paper-dates';
 import {
   StyleSheet,
-  Button,
   Text,
   SafeAreaView,
   View,
   TouchableOpacity
 } from 'react-native';
-import { TextInput } from 'react-native-paper';
+import { Button, useTheme, TextInput } from 'react-native-paper';
 import { BottomSheet } from 'react-native-btr';
 import { Rating } from 'react-native-ratings';
 import axios from "axios";
@@ -19,11 +18,15 @@ registerTranslation('en', en);
 // prob want to get the todo w/ axios instead but need detailed todo info to exist
 export default function EditTodoMenu({ todo, isEditing, setIsEditing }) {
 
+  const theme = useTheme();
+
   // Populate with existing todo data
-  const [name, setname] = React.useState(todo.name);
+  const [name, setName] = React.useState(todo.name);
   const [deadline, setDeadline] = React.useState(new Date(todo.deadline));
   const [isCompleted, setIsCompleted] = useState(todo.completed);
-  const [rating, setRating] = React.useState(todo.rating);
+  const [rating, setRating] = React.useState(todo.priority);
+
+  console.log(name, deadline, isCompleted, rating);
 
   const handleEditTodo = () => {
     setIsEditing(false);
@@ -80,26 +83,19 @@ export default function EditTodoMenu({ todo, isEditing, setIsEditing }) {
               />
             </View>
             <View>
-              <TouchableOpacity
-                style={[styles.statusButton, isCompleted && styles.completed]}
-                onPress={() => setIsCompleted(!isCompleted)}
-              >
-                <Text style={styles.buttonText}>{isCompleted ? 'Complete' : 'Incomplete'}</Text>
-              </TouchableOpacity>
-            </View>
-            <View>
               <Text>Priority</Text>
               <Rating
                 imageSize={50}
                 ratingCount={5}
                 startingValue={rating}
                 onFinishRating={(newRating) => setRating(newRating)}
+                type='custom'
+                ratingColor={theme.colors.primary}
+                ratingBackgroundColor={theme.colors.backdrop}
+                tintColor={'white'}
               />
             </View>
-            <Button
-              title="Save"
-              onPress={handleEditTodo}
-            />
+            <Button mode="contained" onPress={handleEditTodo} >Edit Todo</Button>
           </View>
         </SafeAreaView>
       </BottomSheet>

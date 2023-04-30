@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Provider } from 'react-native-paper';
+import { Provider, useTheme, Appbar } from 'react-native-paper';
 import {
   StyleSheet,
   Text,
@@ -11,7 +11,17 @@ import TodoList from './TodoList';
 import TodoItem from '../progress/TodoItem.js';
 
 function Graph({ todos }) {
-  const completedCount = 2; // todos.reduce(({ name, deadline, completed }, count) => completed ? count + 1 : count, 0);
+  const theme = useTheme();
+
+  const [completedCount, setCompletedCount] = React.useState(2);
+
+  // TODO: update completed count
+  // React.useEffect(() => {
+  //   let count = 0;
+  //   todos.forEach((todo) => todo.completed ? count + 1 : count);
+  //   setCompletedCount(count);
+  // }, [todos]);
+
   return (
     <View style={styles.graph}>
       <ProgressCircle
@@ -20,6 +30,7 @@ function Graph({ todos }) {
         showsText={true}
         formatText={() => `${Math.round((completedCount / todos.length) * 100)}%`}
         style={styles.progressCircle}
+        color={theme.colors.primary}
       >
         <Text style={styles.progressText}>April 1, 2023</Text>
       </ProgressCircle>
@@ -41,11 +52,13 @@ function HeaderText({ todos }) {
 function TodoPage({ todos, setViewingTodo }) {
   const [isPanelActive, setIsPanelActive] = React.useState(false);
   return (
-    <View style={styles.content}>
-      <View style={styles.progress}>
-        <Graph todos={todos} />
-        <HeaderText todos={todos} />
-      </View>
+    <View>
+      <Appbar.Header mode="large" elevated>
+        <View style={styles.progress}>
+          <Graph todos={todos} />
+          <HeaderText todos={todos} />
+        </View>
+      </Appbar.Header>
       <TodoList todos={todos} setIsPanelActive={setIsPanelActive} setViewingTodo={setViewingTodo} />
       <AddTodoMenu isPanelActive={isPanelActive} setIsPanelActive={setIsPanelActive} />
     </View>
@@ -55,20 +68,19 @@ function TodoPage({ todos, setViewingTodo }) {
 export default function Todo({ todos }) {
   const [viewingTodo, setViewingTodo] = React.useState(null);
 
+  console.log(todos);
+
   return (
     <Provider>
-      {viewingTodo == null && <TodoPage todos={todos} setViewingTodo={ setViewingTodo } />}
-      {viewingTodo != null && <TodoItem todo={viewingTodo} setViewingTodo={ setViewingTodo } />}
+      {viewingTodo == null && <TodoPage todos={todos} setViewingTodo={setViewingTodo} />}
+      {viewingTodo != null && <TodoItem todo={viewingTodo} setViewingTodo={setViewingTodo} />}
     </Provider>
   );
 }
 
 const styles = StyleSheet.create({
   progress: {
-    height: 150,
-    backgroundColor: '#D9D9D9',
     flexDirection: 'row',
-    borderBottomWidth: 1
   },
   graph: {
     justifyContent: 'center',
@@ -76,15 +88,12 @@ const styles = StyleSheet.create({
     width: 150,
   },
   headerText: {
-    paddingLeft: '5%',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    width: 225
   },
   menu: {
     position: 'absolute',
     bottom: 0,
     backgroundColor: '#00ff00',
-  },
-  content: {
-    height: "100%"
-  },
+  }
 });

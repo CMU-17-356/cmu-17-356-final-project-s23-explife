@@ -3,29 +3,32 @@ import {
   Text,
   SafeAreaView,
   ScrollView,
-  View,
   Pressable,
   StyleSheet
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Checkbox from 'expo-checkbox';
+import { DataTable } from 'react-native-paper';
 
 export default function TodoList({ todos, setIsPanelActive, setViewingTodo }) {
   return (
     <SafeAreaView>
       <ScrollView bounces={false}>
-        <Pressable onPress={() => setIsPanelActive(true)}>
-          <View style={styles.entry}>
-            <View style={styles.checkbox}>
-              <Ionicons name="add-outline" size={30} color="black" />
-            </View>
-            <Text style={{ fontSize: 20 }}>Add Todo</Text>
-          </View>
-        </Pressable>
-        {todos.map(({ name, deadline, priority, completed }, index) => (
-          <View key={index} style={styles.entry}>
-            <View style={styles.checkbox}>
-              {/* TODO: Need to set todos w/ backend
+        <DataTable>
+          <Pressable onPress={() => setIsPanelActive(true)}>
+            <DataTable.Row style={styles.entry}>
+              <DataTable.Cell style={{ justifyContent: 'center', flex: 1 }}>
+                <Ionicons name="add-outline" size={30} color="black" />
+              </DataTable.Cell>
+              <DataTable.Cell style={{ flex: 5 }}>
+                <Text style={{ fontSize: 20 }}>Add Todo</Text>
+              </DataTable.Cell>
+            </DataTable.Row>
+          </Pressable>
+          {todos.map(({ name, deadline, priority, completed }, index) => (
+            <DataTable.Row key={name} style={styles.entry}>
+              <DataTable.Cell style={{ justifyContent: 'center', flex: 1 }}>
+                {/* TODO: Need to set todos w/ backend
                       onValueChange={(check) => {
                         todos = [
                           ...todos.slice(0, index),
@@ -33,38 +36,35 @@ export default function TodoList({ todos, setIsPanelActive, setViewingTodo }) {
                           ...todos.slice(index + 1)
                         ]
                       }}*/}
-              <Checkbox
-                value={completed} />
-            </View>
-            <Pressable style={styles.pressable} onPress={() => {
-              setViewingTodo({ name, deadline, priority, completed });
-            }}>
-              <View style={styles.text}>
-                <Text
-                  multiline
-                  style={{ fontSize: 20 }}
-                >{name}</Text>
+                <Checkbox
+                  value={completed} />
+              </DataTable.Cell>
+              <Pressable style={{ flex: 5 }} onPress={() => {
+                setViewingTodo({ name, deadline, priority, completed });
+              }}>
+                <Text multiline style={{ fontSize: 20 }}>{name}</Text>
                 <Text style={{ fontSize: 10 }}>{new Date(deadline).toDateString()}</Text>
-              </View>
-            </Pressable>
-          </View>
-        ))}
+              </Pressable>
+            </DataTable.Row>
+          ))}
+        </DataTable>
       </ScrollView>
-    </SafeAreaView>
+    </SafeAreaView >
   );
 }
 
 const styles = StyleSheet.create({
   checkbox: {
     width: '10%',
-    alignItems: 'center',
+    justifyContent: 'center',
   },
   entry: {
     alignItems: 'center',
-    height: 60,
+    height: 75,
     flexDirection: 'row',
-    backgroundColor: '#D9D9D9',
+    borderStyleBottom: 'solid',
     borderBottomWidth: 1,
+    borderColor: 'black'
   },
   pressable: {
     width: '90%'
