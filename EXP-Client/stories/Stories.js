@@ -14,8 +14,8 @@ function StoriesPage({ stories, setViewingStory }) {
         <Appbar.Content title="Stories" />
       </Appbar.Header>
       <StoryList stories={stories} setViewingStory={setViewingStory} />
-      <AddStoryMenu isPanelActive={isPanelActive} setIsPanelActive={setIsPanelActive} />
       <FAB style={styles.button} icon="plus" onPress={() => setIsPanelActive(true)} label="Create Today's Story" />
+      <AddStoryMenu isPanelActive={isPanelActive} setIsPanelActive={setIsPanelActive} />
     </View>
   );
 }

@@ -6,19 +6,22 @@ import {
   SafeAreaView,
   View
 } from 'react-native';
-import { TextInput } from 'react-native-paper';
 import { BottomSheet } from 'react-native-btr';
 import { en, registerTranslation } from 'react-native-paper-dates';
+// import { withNavigation } from 'react-navigation';
+import { useNavigation } from '@react-navigation/native';
 
 // for date picker
 registerTranslation('en', en);
 
-export default function AddStoryMenu({ isPanelActive, setIsPanelActive }) {
+export default function AddStoryMenu({isPanelActive, setIsPanelActive }) {
+  const navigation = useNavigation();
   const [name, setName] = React.useState('');
   const [dateCreated, setDeadline] = React.useState();
 
   const handleAddTodo = () => {
-    setIsPanelActive(false);
+    // setIsPanelActive(false);
+    console.log("Creating new story");
     const newStory = {
       storyName: name,
       dateCreated: dateCreated,
@@ -59,7 +62,12 @@ export default function AddStoryMenu({ isPanelActive, setIsPanelActive }) {
             </View>
             <Button
               title="Create New Story"
-              onPress={handleAddTodo}
+              onPress={
+                () => {
+                  setIsPanelActive(false);
+                  navigation.navigate("GenerateStory", {date: dateCreated});
+                }
+              }
             />
             <Button
               title="Cancel"
@@ -86,3 +94,5 @@ const styles = StyleSheet.create({
     paddingBottom: '5%'
   }
 });
+
+// export default withNavigation(AddStoryMenu);
