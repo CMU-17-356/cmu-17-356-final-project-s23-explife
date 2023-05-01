@@ -17,7 +17,7 @@ registerTranslation('en', en);
 export default function AddStoryMenu({isPanelActive, setIsPanelActive }) {
   const navigation = useNavigation();
   const [name, setName] = React.useState('');
-  const [dateCreated, setDeadline] = React.useState();
+  const [dateCreated, setDeadline] = React.useState('23rd April 2023'); // Dummy date for testing purposes
 
   const handleAddTodo = () => {
     // setIsPanelActive(false);

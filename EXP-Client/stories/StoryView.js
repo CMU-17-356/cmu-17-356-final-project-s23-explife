@@ -1,17 +1,18 @@
 import React from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 function Heading({date}) {
   return (
     <View style={styles.headerText}>
-      <Text style={{ fontSize: 20 }}>knsd{date}kdnsk</Text>
+      <Text style={{ fontSize: 20 }}>{date}</Text>
     </View>
   );
 }
 
-export default function StoryView({route}) {
+export default function StoryView() {
   const navigation = useNavigation();
+  const route = useRoute();
   return (
     <View style={styles.app}>
       <View style={styles.progress}>
