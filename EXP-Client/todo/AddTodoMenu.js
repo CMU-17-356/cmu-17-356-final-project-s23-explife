@@ -39,7 +39,7 @@ export default function AddTodoMenu({ today, isPanelActive, setIsPanelActive }) 
     utils.updateTodo(today._id, today);
 
     // Clear inputs
-    setname('');
+    setname("");
     setDeadline(undefined);
     setRating(0);
     setIsPanelActive(false);
@@ -67,7 +67,7 @@ export default function AddTodoMenu({ today, isPanelActive, setIsPanelActive }) 
               <DatePickerInput
                 locale="en"
                 value={deadline}
-                onChange={(d) => setDeadline(d)}
+                onChange={(date) => setDeadline(date)}
                 inputMode="start"
               />
             </View>
