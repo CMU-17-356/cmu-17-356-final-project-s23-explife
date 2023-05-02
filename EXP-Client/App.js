@@ -5,16 +5,16 @@ import Constants from 'expo-constants';
 
 import Todo from './todo/Todo';
 import Stories from './stories/Stories';
+import AddStoryMenu from './stories/NewStory';
+import StoryView from './stories/StoryView';
 import Progress from './progress/Progress';
 import LoginScreen from './login/Login';
 import TodoItem from './progress/TodoItem';
 import ArchivedDay from './progress/ArchivedDay';
-
 import Nav from './components/Nav';
 import * as utils from './utils/utils'
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
 
 const Stack = createNativeStackNavigator();
 
@@ -113,7 +113,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator  initialRouteName="NavBar" >
         <Stack.Screen name="NavBar" component={NavBar} options={{headerShown: false}}/>
-        {/* <Stack.Screen name = "GenerateStory" component={StoryView} options={{headerShown: false}}/> */}
+        <Stack.Screen name = "GenerateStory" component={StoryView} options={{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
