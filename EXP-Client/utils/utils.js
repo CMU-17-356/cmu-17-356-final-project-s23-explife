@@ -29,6 +29,19 @@ export function deleteTodo(id) {
 };
 
 /* **************
+ User helpers
+ *************** */
+
+export function getAllUsers() {
+  return instance.get("/users")
+};
+
+export function getUser(id) {
+  return instance.get("/users/" + id)
+};
+
+
+/* **************
  Function helpers
 *************** */
 export function sameDay(first, second) {
