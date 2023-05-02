@@ -53,6 +53,17 @@ function testData() {
   return (todos, stories, pastLists)
 };
 
+function convertToToday(todos) {
+  const todayDate = new Date();
+  let todayTodos;
+  todos.forEach((todo, index) => {
+    if (utils.sameDay(new Date(todo.date), todayDate)) {
+      todayTodos = todo;
+    };
+  });
+  return todayTodos;
+};
+
 function convertToStories(todos) {
   return todos.map((todo, index) => {
     return {
@@ -65,34 +76,39 @@ function convertToStories(todos) {
 };
 
 export default function App() {
-  // TODO: Do we need a todayList? I think todos is for today but we can clarify
-  // const [todayList, setTodayList] = React.useState([]);
+  const [today, setToday] = React.useState({ items: new Array() });
   const [todos, setTodos] = React.useState([]);
   const [stories, setStories] = React.useState([]);
   const [pastLists, setProgress] = React.useState([]);
 
+  const fetchData = () => {
+    utils.getAllTodos().then((res) => {
+      let todayTodos = convertToToday(res.data);
+      if (!todayTodos) {
+        todayTodos = {
+          date: new Date(),
+          items: [],
+          user: "Test"
+        };
+        utils.createTodo(todayTodos)
+      };
+      setToday(todayTodos)
+      setTodos(todayTodos.items);
+      setStories(convertToStories(res.data));
+      setProgress(res.data);
+    });
+  };
+
   // TODO: Have to make this actually grab the todayList
   React.useEffect(() => {
-    utils.getTodo("644d8897102c5af4806c0e9c").then((res) => {
-      setTodos(res.data.items);
-    })
-
-    utils.getAllTodos().then((res) => {
-      setStories(convertToStories(res.data))
-    })
-
-    utils.getAllTodos().then((res) => {
-      setProgress(res.data)
-    })
+    fetchData()
   }, []);
-
-  console.log(todos);
 
   return (
     <Provider theme={MD3LightTheme}>
       <View style={styles.nav}>
         <Nav
-          Todo={<Todo todos={todos} />}
+          Todo={<Todo today={today} todos={todos} />}
           Stories={<Stories stories={stories} />}
           Progress={<Progress pastLists={pastLists} />}
         />

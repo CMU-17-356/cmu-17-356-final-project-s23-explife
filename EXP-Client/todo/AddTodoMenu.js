@@ -9,48 +9,42 @@ import {
 import { Button, TextInput, useTheme } from 'react-native-paper';
 import { BottomSheet } from 'react-native-btr';
 import { Rating } from 'react-native-ratings';
+import * as utils from '../utils/utils';
 import axios from "axios";
 
 // for date picker
 registerTranslation('en', en);
 
-export default function AddTodoMenu({ isPanelActive, setIsPanelActive }) {
-  const [name, setname] = React.useState('');
+export default function AddTodoMenu({ today, isPanelActive, setIsPanelActive }) {
+  const [name, setname] = React.useState("");
   const [deadline, setDeadline] = React.useState(undefined);
   const [rating, setRating] = React.useState(0);
 
   const theme = useTheme();
 
   const handleAddTodo = () => {
-    // Clear inputs
-    setname('')
-    setDeadline(undefined)
-    setRating(0)
-    setIsPanelActive(false);
-
+    // Create new todo
     const newTodo = {
+      deadline: deadline.toISOString(),
+      completed: false,
       name: name,
-      deadline: deadline,
-      priority: rating,
-      completed: false
+      priority: rating
     };
-    console.log(newTodo);
+  
+    // const newToday = today;
+    // newToday.items = [...today.items, newTodo];
+    // console.log(newToday)
+    today.items.push(newTodo)
 
-    let instance = axios.create({
-      baseURL: "https://explife-backend.fly.dev/"
-    });
+    utils.updateTodo(today._id, today);
 
-    // instance
-    //   .post("/lists/:id", newTodo)
-    //   .then(() => {
-
-    //     // Refresh list
-    //     getTodos()
-    //   })
-    //   .catch((error) => {
-    //     console.log(error)
-    //   })
+    // Clear inputs
+    setname('');
+    setDeadline(undefined);
+    setRating(0);
+    setIsPanelActive(false);
   };
+
   return (
     <View>
       <BottomSheet

@@ -10,7 +10,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Checkbox from 'expo-checkbox';
 import { DataTable } from 'react-native-paper';
 
-export default function TodoList({ todos, setIsPanelActive, setViewingTodo }) {
+export default function TodoList({ today, todos, setIsPanelActive, setViewingTodo }) {
   return (
     <SafeAreaView>
       <ScrollView bounces={false}>

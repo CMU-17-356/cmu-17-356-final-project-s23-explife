@@ -1,12 +1,13 @@
 import axios from 'axios'
 
 let instance = axios.create({
-  baseURL: "https://explife-backend.fly.dev/"
+  baseURL: "https://explife-backend.fly.dev"
 });
 
 /* **************
  List helpers
-*************** */
+ *************** */
+
 export function getAllTodos() {
   return instance.get("/lists")
 };
@@ -20,9 +21,20 @@ export function createTodo(todo) {
 };
 
 export function updateTodo(id, todo) {
-  return instance.post("/lists/" + id, todo)
+  return instance.put("/lists/" + id, todo)
 };
 
 export function deleteTodo(id) {
   return instance.delete("/lists/" + id)
+};
+
+/* **************
+ Function helpers
+*************** */
+export function sameDay(first, second) {
+  return (
+    first.getFullYear() === second.getFullYear() &&
+    first.getMonth() === second.getMonth() &&
+    first.getDate() === second.getDate()
+  );
 };

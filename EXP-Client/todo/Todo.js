@@ -49,7 +49,7 @@ function HeaderText({ todos }) {
   );
 }
 
-function TodoPage({ todos, setViewingTodo }) {
+function TodoPage({ today, todos, setViewingTodo }) {
   const [isPanelActive, setIsPanelActive] = React.useState(false);
   return (
     <View>
@@ -59,21 +59,22 @@ function TodoPage({ todos, setViewingTodo }) {
           <HeaderText todos={todos} />
         </View>
       </Appbar.Header>
-      <TodoList todos={todos} setIsPanelActive={setIsPanelActive} setViewingTodo={setViewingTodo} />
-      <AddTodoMenu isPanelActive={isPanelActive} setIsPanelActive={setIsPanelActive} />
+      <TodoList today={today} todos={todos} setIsPanelActive={setIsPanelActive} setViewingTodo={setViewingTodo} />
+      <AddTodoMenu today={today} isPanelActive={isPanelActive} setIsPanelActive={setIsPanelActive} />
     </View>
   );
 }
 
-export default function Todo({ todos }) {
+export default function Todo({ today, todos }) {
   const [viewingTodo, setViewingTodo] = React.useState(null);
 
+  console.log(today);
   console.log(todos);
 
   return (
     <Provider>
-      {viewingTodo == null && <TodoPage todos={todos} setViewingTodo={setViewingTodo} />}
-      {viewingTodo != null && <TodoItem todo={viewingTodo} setViewingTodo={setViewingTodo} />}
+      {viewingTodo == null && <TodoPage today={today} todos={todos} setViewingTodo={setViewingTodo} />}
+      {viewingTodo != null && <TodoItem today={today} todo={viewingTodo} setViewingTodo={setViewingTodo} />}
     </Provider>
   );
 }
