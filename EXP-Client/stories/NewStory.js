@@ -8,9 +8,8 @@ import {
 } from 'react-native';
 import { BottomSheet } from 'react-native-btr';
 import { en, registerTranslation } from 'react-native-paper-dates';
-// import { withNavigation } from 'react-navigation';
 import { useNavigation } from '@react-navigation/native';
-
+import { FAB } from 'react-native-paper'
 // for date picker
 registerTranslation('en', en);
 
@@ -60,19 +59,13 @@ export default function AddStoryMenu({isPanelActive, setIsPanelActive }) {
               <Text>Are you sure you would like to generate a story for 
                 today's to-do list?</Text>
             </View>
-            <Button
-              title="Create New Story"
-              onPress={
-                () => {
+            <FAB style={styles.button} onPress={() => {
                   setIsPanelActive(false);
                   navigation.navigate("GenerateStory", {date: dateCreated});
-                }
-              }
-            />
-            <Button
-              title="Cancel"
-              onPress={() => setIsPanelActive(false)}
-            />
+                }} label="Create New Story" />
+            <FAB style={styles.button} onPress={() => {
+                  setIsPanelActive(false);
+                }} label="Cancel" />
           </View>
         </SafeAreaView>
       </BottomSheet>
