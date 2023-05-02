@@ -15,36 +15,7 @@ registerTranslation('en', en);
 
 export default function AddStoryMenu({isPanelActive, setIsPanelActive }) {
   const navigation = useNavigation();
-  const [name, setName] = React.useState('');
   const [dateCreated, setDeadline] = React.useState('23rd April 2023'); // Dummy date for testing purposes
-
-  const handleAddTodo = () => {
-    // setIsPanelActive(false);
-    console.log("Creating new story");
-    const newStory = {
-      storyName: name,
-      dateCreated: dateCreated,
-      completed: false
-    };
-    console.log(newStory)
-
-    // Make API call here to update the list model
-
-    // instance
-    //   .post("/lists/:id", newDonut)
-    //   .then(() => {
-    //     // Clear inputs
-    //     setName('')
-    //     setDeadline(new Date())
-    //     setRating(0)
-
-    //     // Refresh list
-    //     getTodos()
-    //   })
-    //   .catch((error) => {
-    //     console.log(error)
-    //   })
-  };
 
   return (
     <View>
@@ -87,5 +58,3 @@ const styles = StyleSheet.create({
     paddingBottom: '5%'
   }
 });
-
-// export default withNavigation(AddStoryMenu);
