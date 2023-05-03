@@ -21,7 +21,7 @@ export function createTodo(todo) {
 };
 
 export function updateTodo(id, todo) {
-  return instance.put("/lists/" + id, todo)
+  return instance.put("/lists/" + id, {items: todo})
 };
 
 export function deleteTodo(id) {

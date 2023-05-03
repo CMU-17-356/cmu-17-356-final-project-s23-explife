@@ -104,7 +104,6 @@ export default function App() {
       setStories(convertToStories(res.data));
       setProgress(res.data);
     });
-    
   };
 
   React.useEffect(() => {
