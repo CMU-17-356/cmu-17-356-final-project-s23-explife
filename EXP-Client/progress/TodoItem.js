@@ -6,7 +6,7 @@ import EditTodoMenu from '../todo/EditTodoMenu'
 import { Appbar, FAB } from 'react-native-paper';
 import { Button, useTheme } from 'react-native-paper';
 
-function DeleteItem({ todo, isDeleting, setIsDeleting, setViewingTodo }) {
+function DeleteItem({ today, todo, isDeleting, setIsDeleting, setViewingTodo }) {
 
   const onDelete = () => {
     setIsDeleting(false);
@@ -73,8 +73,8 @@ export default function TodoItem({ today, todo, setViewingTodo }) {
             onPress={() => console.log('Mark as complete / incomplete')}
           />
         </View>
-        <EditTodoMenu todo={todo} isEditing={isEditing} setIsEditing={setIsEditing} />
-        <DeleteItem todo={todo} isDeleting={isDeleting} setIsDeleting={setIsDeleting} setViewingTodo={setViewingTodo} />
+        <EditTodoMenu today={today} todo={todo} isEditing={isEditing} setIsEditing={setIsEditing} />
+        <DeleteItem today={today} todo={todo} isDeleting={isDeleting} setIsDeleting={setIsDeleting} setViewingTodo={setViewingTodo} />
       </View>
     </View>
   );

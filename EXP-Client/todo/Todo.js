@@ -10,7 +10,11 @@ import AddTodoMenu from './AddTodoMenu';
 import TodoList from './TodoList';
 import TodoItem from '../progress/TodoItem.js';
 
-function Graph({ todos }) {
+function formatDate(date) {
+  return new Date(date).toLocaleDateString('en-us', { year:"numeric", month:"short", day:"numeric"})
+};
+
+function Graph({ today, todos }) {
   const theme = useTheme();
 
   const [completedCount, setCompletedCount] = React.useState(2);
@@ -32,7 +36,7 @@ function Graph({ todos }) {
         style={styles.progressCircle}
         color={theme.colors.primary}
       >
-        <Text style={styles.progressText}>April 1, 2023</Text>
+        <Text style={styles.progressText}>{formatDate(today.date)}</Text>
       </ProgressCircle>
     </View>
   );
@@ -55,7 +59,7 @@ function TodoPage({ today, todos, setViewingTodo }) {
     <View>
       <Appbar.Header mode="large" elevated>
         <View style={styles.progress}>
-          <Graph todos={todos} />
+          <Graph today={today} todos={todos} />
           <HeaderText todos={todos} />
         </View>
       </Appbar.Header>

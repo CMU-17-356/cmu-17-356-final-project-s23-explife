@@ -16,7 +16,7 @@ import axios from "axios";
 registerTranslation('en', en);
 
 export default function AddTodoMenu({ today, isPanelActive, setIsPanelActive }) {
-  const [name, setname] = React.useState("");
+  const [name, setName] = React.useState("");
   const [deadline, setDeadline] = React.useState(undefined);
   const [rating, setRating] = React.useState(0);
 
@@ -25,21 +25,39 @@ export default function AddTodoMenu({ today, isPanelActive, setIsPanelActive }) 
   const handleAddTodo = () => {
     // Create new todo
     const newTodo = {
-      deadline: deadline.toISOString(),
+      deadline: deadline,
       completed: false,
       name: name,
       priority: rating
     };
-  
-    // const newToday = today;
-    // newToday.items = [...today.items, newTodo];
-    // console.log(newToday)
-    today.items.push(newTodo)
 
-    utils.updateTodo(today._id, today);
+    let newToday = {
+      date: today.date,
+      items: [...today.items, newTodo],
+      story: today.story,
+      imageURL: today.imageURL,
+      user: today.user
+    }
+
+    let tester = {
+      date: new Date(),
+      items: [],
+      story: "KJKJADSLKFDSALKJGA",
+      imageURL: "LKJSADELKGLKGDA",
+      user: "LHKJAGDLKJGDALKJAGD"
+    }
+
+    console.log(tester)
+    
+    utils.updateTodo(today._id, tester)
+    // utils.updateTodo(today._id, newToday);
+    
+    utils.getTodo(today._id).then((res) => {
+      console.log(res.data)
+    });
 
     // Clear inputs
-    setname("");
+    setName("");
     setDeadline(undefined);
     setRating(0);
     setIsPanelActive(false);
@@ -59,7 +77,7 @@ export default function AddTodoMenu({ today, isPanelActive, setIsPanelActive }) 
               <TextInput
                 placeholder="Todo Name"
                 value={name}
-                onChangeText={(text) => setname(text)}
+                onChangeText={(text) => setName(text)}
               />
             </View>
             <View>

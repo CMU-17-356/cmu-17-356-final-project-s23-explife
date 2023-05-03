@@ -21,12 +21,25 @@ export function createTodo(todo) {
 };
 
 export function updateTodo(id, todo) {
-  return instance.put("/lists/" + id, todo)
+  return instance.put("/lists/" + id, {items: todo})
 };
 
 export function deleteTodo(id) {
   return instance.delete("/lists/" + id)
 };
+
+/* **************
+ User helpers
+ *************** */
+
+export function getAllUsers() {
+  return instance.get("/users")
+};
+
+export function getUser(id) {
+  return instance.get("/users/" + id)
+};
+
 
 /* **************
  Function helpers
