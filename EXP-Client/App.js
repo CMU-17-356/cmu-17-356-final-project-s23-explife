@@ -78,13 +78,15 @@ function convertToStories(todos) {
 
 export default function App() {
   // Uncomment this to skip Login page
-  // const [user, setUser] = React.useState({firstName: "Test", lastName: "Test", password: "Test", email: "test@example.com"});
+  const [user, setUser] = React.useState({firstName: "Test", lastName: "Test", password: "Test", email: "test@example.com"});
 
-  const [user, setUser] = React.useState();
+  // const [user, setUser] = React.useState();
   const [today, setToday] = React.useState({ items: new Array() });
   const [todos, setTodos] = React.useState([]);
   const [stories, setStories] = React.useState([]);
   const [pastLists, setProgress] = React.useState([]);
+
+  let todayTodos;
 
   const fetchData = () => {
     utils.getAllTodos().then((res) => {
@@ -93,7 +95,7 @@ export default function App() {
         todayTodos = {
           date: new Date(),
           items: [],
-          user: user
+          user: "test"
         };
         utils.createTodo(todayTodos)
       };
@@ -102,6 +104,7 @@ export default function App() {
       setStories(convertToStories(res.data));
       setProgress(res.data);
     });
+    
   };
 
   React.useEffect(() => {
