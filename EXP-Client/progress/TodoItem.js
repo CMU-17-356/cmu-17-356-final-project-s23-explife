@@ -36,7 +36,7 @@ function DeleteItem({ todo, isDeleting, setIsDeleting, setViewingTodo }) {
   )
 }
 
-export default function TodoItem({ todo, setViewingTodo }) {
+export default function TodoItem({ today, todo, setViewingTodo }) {
   const theme = useTheme();
 
   const [isEditing, setIsEditing] = React.useState(false);

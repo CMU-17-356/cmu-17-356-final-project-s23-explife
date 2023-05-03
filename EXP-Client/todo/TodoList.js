@@ -10,7 +10,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Checkbox from 'expo-checkbox';
 import { DataTable } from 'react-native-paper';
 
-export default function TodoList({ todos, setIsPanelActive, setViewingTodo }) {
+export default function TodoList({ today, todos, setIsPanelActive, setViewingTodo }) {
   return (
     <SafeAreaView>
       <ScrollView bounces={false}>
@@ -26,15 +26,17 @@ export default function TodoList({ todos, setIsPanelActive, setViewingTodo }) {
             </DataTable.Row>
           </Pressable>
           {todos.map(({ name, deadline, priority, completed }, index) => (
-            <DataTable.Row key={name} style={styles.entry}>
+            <Pressable key={name} onPress={() => setViewingTodo({ name, deadline, priority, completed })}>
+              <DataTable.Row style={styles.entry}>
               <DataTable.Cell style={{ justifyContent: 'center', flex: 1 }}>
                 <Checkbox value={completed} />
               </DataTable.Cell>
-              <Pressable style={{ flex: 5 }} onPress={() => setViewingTodo({ name, deadline, priority, completed })}>
+              <DataTable.Cell style = {{ flex: 5 }}>
                 <Text multiline style={{ fontSize: 20 }}>{name}</Text>
                 <Text style={{ fontSize: 10 }}>{new Date(deadline).toDateString()}</Text>
-              </Pressable>
+              </DataTable.Cell>
             </DataTable.Row>
+            </Pressable>
           ))}
         </DataTable>
       </ScrollView>
