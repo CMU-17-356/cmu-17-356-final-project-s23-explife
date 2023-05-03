@@ -6,43 +6,16 @@ import {
   SafeAreaView,
   View
 } from 'react-native';
-import { TextInput } from 'react-native-paper';
 import { BottomSheet } from 'react-native-btr';
 import { en, registerTranslation } from 'react-native-paper-dates';
-
+import { useNavigation } from '@react-navigation/native';
+import { FAB } from 'react-native-paper'
 // for date picker
 registerTranslation('en', en);
 
-export default function AddStoryMenu({ isPanelActive, setIsPanelActive }) {
-  const [name, setName] = React.useState('');
-  const [dateCreated, setDeadline] = React.useState();
-
-  const handleAddTodo = () => {
-    setIsPanelActive(false);
-    const newStory = {
-      storyName: name,
-      dateCreated: dateCreated,
-      completed: false
-    };
-    console.log(newStory)
-
-    // Make API call here to update the list model
-
-    // instance
-    //   .post("/lists/:id", newDonut)
-    //   .then(() => {
-    //     // Clear inputs
-    //     setName('')
-    //     setDeadline(new Date())
-    //     setRating(0)
-
-    //     // Refresh list
-    //     getTodos()
-    //   })
-    //   .catch((error) => {
-    //     console.log(error)
-    //   })
-  };
+export default function AddStoryMenu({isPanelActive, setIsPanelActive }) {
+  const navigation = useNavigation();
+  const [dateCreated, setDeadline] = React.useState('23rd April 2023'); // Dummy date for testing purposes
 
   return (
     <View>
@@ -56,16 +29,14 @@ export default function AddStoryMenu({ isPanelActive, setIsPanelActive }) {
             <View>
               <Text>Are you sure you would like to generate a story for 
                 today's to-do list?</Text>
-              <TextInput
-                dense={true}
-                value={name}
-                onChangeText={(text) => setName(text)}
-              />
             </View>
-            <Button
-              title="Create New Story"
-              onPress={handleAddTodo}
-            />
+            <FAB style={styles.button} onPress={() => {
+                  setIsPanelActive(false);
+                  navigation.navigate("GenerateStory", {date: dateCreated});
+                }} label="Create New Story" />
+            <FAB style={styles.button} onPress={() => {
+                  setIsPanelActive(false);
+                }} label="Cancel" />
           </View>
         </SafeAreaView>
       </BottomSheet>

@@ -5,6 +5,8 @@ import Constants from 'expo-constants';
 
 import Todo from './todo/Todo';
 import Stories from './stories/Stories';
+import AddStoryMenu from './stories/NewStory';
+import StoryView from './stories/StoryView';
 import Progress from './progress/Progress';
 import TodoItem from './progress/TodoItem';
 import ArchivedDay from './progress/ArchivedDay';
@@ -12,7 +14,11 @@ import ArchivedDay from './progress/ArchivedDay';
 import Login from './components/Login';
 import Nav from './components/Nav';
 import * as utils from './utils/utils'
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
+
+const Stack = createNativeStackNavigator();
 
 function testingCode() {
   return (
@@ -76,7 +82,7 @@ function convertToStories(todos) {
   })
 };
 
-export default function App() {
+function NavBar() {
   // Uncomment this to skip Login page
   const [user, setUser] = React.useState({firstName: "Test", lastName: "Test", password: "Test", email: "test@example.com"});
 
@@ -131,7 +137,17 @@ export default function App() {
       }
       
     </Provider>
-      
+  );
+};
+
+export default function App() {  
+  return (
+    <NavigationContainer>
+      <Stack.Navigator  initialRouteName="NavBar" >
+        <Stack.Screen name="NavBar" component={NavBar} options={{headerShown: false}}/>
+        <Stack.Screen name = "GenerateStory" component={StoryView} options={{headerShown: false}}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
