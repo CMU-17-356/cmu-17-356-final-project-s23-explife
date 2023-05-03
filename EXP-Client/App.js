@@ -5,13 +5,18 @@ import Constants from 'expo-constants';
 
 import Todo from './todo/Todo';
 import Stories from './stories/Stories';
+import AddStoryMenu from './stories/NewStory';
+import StoryView from './stories/StoryView';
 import Progress from './progress/Progress';
 import TodoItem from './progress/TodoItem';
 import ArchivedDay from './progress/ArchivedDay';
-
 import Nav from './components/Nav';
 import * as utils from './utils/utils'
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
+
+const Stack = createNativeStackNavigator();
 
 function testingCode() {
   return (
@@ -75,7 +80,7 @@ function convertToStories(todos) {
   })
 };
 
-export default function App() {
+function NavBar() {
   const [today, setToday] = React.useState({ items: new Array() });
   const [todos, setTodos] = React.useState([]);
   const [stories, setStories] = React.useState([]);
@@ -104,6 +109,7 @@ export default function App() {
     fetchData()
   }, []);
 
+  console.log(todos);
   return (
     <Provider theme={MD3LightTheme}>
       <View style={styles.nav}>
@@ -113,7 +119,21 @@ export default function App() {
           Progress={<Progress pastLists={pastLists} />}
         />
       </View>
-    </Provider>
+    </Provider>);
+};
+
+export default function App() {
+  // TODO: Do we need a todayList? I think todos is for today but we can clarify
+  // const [todayList, setTodayList] = React.useState([]);
+  
+
+  return (
+    <NavigationContainer>
+      <Stack.Navigator  initialRouteName="NavBar" >
+        <Stack.Screen name="NavBar" component={NavBar} options={{headerShown: false}}/>
+        <Stack.Screen name = "GenerateStory" component={StoryView} options={{headerShown: false}}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
