@@ -116,6 +116,7 @@ function NavBar() {
     fetchData()
   }, []);
 
+  console.log(todos);
   return (
     <Provider theme={MD3LightTheme}>
       {
