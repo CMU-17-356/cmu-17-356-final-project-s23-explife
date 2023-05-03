@@ -84,7 +84,7 @@ app.post("/lists", async (req: Request, res: Response) => {
 // update specific lists
 app.put("/lists/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
-  await List.updateOne({ id }, req.body);
+  await List.updateOne({ _id: id }, req.body);
   const updatedList = await List.findById(id);
   return res.status(200).json(updatedList);
 });
@@ -96,30 +96,6 @@ app.delete("/lists/:id", async (req: Request, res: Response) => {
   return res.status(200).json(deletedList);
 });
 
-/* **************
- List Item endpoints
-*************** */
-// create new listitem
-// app.post("/listItem", async (req: Request, res: Response) => {
-//   const listItem = new ListItem({ ...req.body });
-//   const insertedListItem = await listItem.save();
-//   return res.status(201).json(insertedListItem);
-// });
-
-// // update specific list item
-// app.put("/listItem/:id", async (req: Request, res: Response) => {
-//   const { id } = req.params;
-//   await ListItem.updateOne({ id }, req.body);
-//   const updatedListItem = await ListItem.findById(id);
-//   return res.status(200).json(updatedListItem);
-// });
-
-// // delete specific list item
-// app.delete("/listItem/:id", async (req: Request, res: Response) => {
-//   const { id } = req.params;
-//   const deletedListItem = await ListItem.findByIdAndDelete(id);
-//   return res.status(200).json(deletedListItem);
-// });
 
 
 const start = async () => {
