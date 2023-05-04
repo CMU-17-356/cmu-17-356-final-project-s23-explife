@@ -5,13 +5,29 @@ import StoriesItem from '../stories/StoriesItem'
 import EditTodoMenu from '../todo/EditTodoMenu'
 import { Appbar, FAB } from 'react-native-paper';
 import { Button, useTheme } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
+import * as utils from '../utils/utils';
 
 function DeleteItem({ today, todo, isDeleting, setIsDeleting, setViewingTodo }) {
 
+  const navigation = useNavigation();
+
   const onDelete = () => {
     setIsDeleting(false);
-    console.log(`Deleted ${todo.name}`)
+
+    today.items = today.items.filter((obj) => {
+      return !(
+        obj.name == todo.name &&
+        obj.deadline == todo.deadline &&
+        obj.priority == todo.priority &&
+        obj.completed == todo.completed
+      );
+    });
+    
+    utils.updateTodo(today._id, today.items)
+
     setViewingTodo(null);
+    navigation.navigate("NavBar")
   };
 
   return (
@@ -41,6 +57,34 @@ export default function TodoItem({ today, todo, setViewingTodo }) {
 
   const [isEditing, setIsEditing] = React.useState(false);
   const [isDeleting, setIsDeleting] = React.useState(false);
+  const [isCompleted, setIsCompleted] = React.useState(todo.completed);
+
+  const onComplete = () => {
+    setIsCompleted(!isCompleted);
+    // Create updated todo
+    const updatedTodo = {
+      name: todo.name,
+      deadline: todo.deadline,
+      priority: todo.rating,
+      completed: !isCompleted
+    };
+    
+    const newItems = today.items.filter((obj) => {
+      return !(
+        obj.name == todo.name &&
+        obj.deadline == todo.deadline &&
+        obj.priority == todo.priority &&
+        obj.completed == todo.completed
+      );
+    });
+  
+    newItems.push(updatedTodo);
+  
+    today.items = newItems;
+    
+    utils.updateTodo(today._id, today.items);
+    setViewingTodo(null);
+  };
 
   return (
     <View>
@@ -69,8 +113,8 @@ export default function TodoItem({ today, todo, setViewingTodo }) {
           </View>
           <FAB
             small
-            label={todo.completed ? 'Mark as Incomplete' : 'Mark as Complete'}
-            onPress={() => console.log('Mark as complete / incomplete')}
+            label={isCompleted ? 'Mark as Incomplete' : 'Mark as Complete'}
+            onPress={() => onComplete(today, todo)}
           />
         </View>
         <EditTodoMenu today={today} todo={todo} isEditing={isEditing} setIsEditing={setIsEditing} />
