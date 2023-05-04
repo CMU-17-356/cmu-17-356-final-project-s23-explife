@@ -96,14 +96,14 @@ function NavBar() {
 
   const fetchData = () => {
     utils.getAllTodos().then((res) => {
-      let todayTodos = convertToToday(res.data);
+      todayTodos = convertToToday(res.data);
       if (!todayTodos) {
         todayTodos = {
           date: new Date(),
           items: [],
           user: "test"
         };
-        utils.createTodo(todayTodos)
+        utils.createTodo(todayTodos);
       };
       setToday(todayTodos)
       setTodos(todayTodos.items);
@@ -116,7 +116,6 @@ function NavBar() {
     fetchData()
   }, []);
 
-  console.log(todos);
   return (
     <Provider theme={MD3LightTheme}>
       {
