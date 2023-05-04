@@ -18,7 +18,7 @@ import axios from "axios";
 registerTranslation('en', en);
 
 // prob want to get the todo w/ axios instead but need detailed todo info to exist
-export default function EditTodoMenu({ today, todo, isEditing, setIsEditing }) {
+export default function EditTodoMenu({ today, todo, isEditing, setIsEditing, setTodos }) {
 
   const theme = useTheme();
 
@@ -48,16 +48,17 @@ export default function EditTodoMenu({ today, todo, isEditing, setIsEditing }) {
       );
     });
 
-    newItems.push(updatedTodo)
+    newItems.push(updatedTodo);
 
-    todo.name = name
-    todo.deadline = deadline
-    todo.priority = rating
-    todo.completed = isCompleted
+    todo.name = name;
+    todo.deadline = deadline;
+    todo.priority = rating;
+    todo.completed = isCompleted;
 
-    today.items = newItems
+    today.items = newItems;
+    setTodos(newItems);
     
-    utils.updateTodo(today._id, today.items)
+    utils.updateTodo(today._id, today.items);
   };
   return (
     <View>

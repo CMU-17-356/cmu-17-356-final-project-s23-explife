@@ -8,7 +8,7 @@ import { Button, useTheme } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import * as utils from '../utils/utils';
 
-function DeleteItem({ today, todo, isDeleting, setIsDeleting, setViewingTodo }) {
+function DeleteItem({ today, todo, isDeleting, setIsDeleting, setViewingTodo, setTodos }) {
 
   const navigation = useNavigation();
 
@@ -25,6 +25,8 @@ function DeleteItem({ today, todo, isDeleting, setIsDeleting, setViewingTodo }) 
     });
     
     utils.updateTodo(today._id, today.items)
+
+    setTodos(today.items);
 
     setViewingTodo(null);
     navigation.navigate("NavBar")
@@ -52,7 +54,7 @@ function DeleteItem({ today, todo, isDeleting, setIsDeleting, setViewingTodo }) 
   )
 }
 
-export default function TodoItem({ today, todo, setViewingTodo }) {
+export default function TodoItem({ today, todo, setViewingTodo, setTodos }) {
   const theme = useTheme();
 
   const [isEditing, setIsEditing] = React.useState(false);
@@ -79,11 +81,11 @@ export default function TodoItem({ today, todo, setViewingTodo }) {
     });
   
     newItems.push(updatedTodo);
-  
+    
     today.items = newItems;
+    setTodos(newItems);
     
     utils.updateTodo(today._id, today.items);
-    setViewingTodo(null);
   };
 
   return (
@@ -117,8 +119,8 @@ export default function TodoItem({ today, todo, setViewingTodo }) {
             onPress={() => onComplete(today, todo)}
           />
         </View>
-        <EditTodoMenu today={today} todo={todo} isEditing={isEditing} setIsEditing={setIsEditing} />
-        <DeleteItem today={today} todo={todo} isDeleting={isDeleting} setIsDeleting={setIsDeleting} setViewingTodo={setViewingTodo} />
+        <EditTodoMenu today={today} todo={todo} isEditing={isEditing} setIsEditing={setIsEditing} setTodos={setTodos} />
+        <DeleteItem today={today} todo={todo} isDeleting={isDeleting} setIsDeleting={setIsDeleting} setViewingTodo={setViewingTodo} setTodos={setTodos} />
       </View>
     </View>
   );

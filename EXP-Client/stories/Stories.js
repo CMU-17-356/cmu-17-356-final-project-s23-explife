@@ -23,7 +23,6 @@ function StoriesPage({ stories, setViewingStory }) {
 
 export default function Stories({ stories }) {
   const [viewingStory, setViewingStory] = React.useState(null);
-  console.log(stories);
 
   return (
     <Provider>
