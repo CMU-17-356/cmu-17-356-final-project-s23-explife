@@ -17,7 +17,7 @@ export default function StoryList({ stories, setViewingStory }) {
         <DataTable>
           {stories.map((story, index) => {
             return (
-              <Pressable onPress={() => {
+              <Pressable key={index} onPress={() => {
                 setViewingStory(story);
               }}>
                 <DataTable.Row key={story.todoID} style={styles.entry}>
