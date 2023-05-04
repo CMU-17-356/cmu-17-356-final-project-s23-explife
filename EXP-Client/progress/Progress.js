@@ -13,8 +13,8 @@ import { Appbar, List, DataTable } from 'react-native-paper';
 function ProgressItem() {
   return (
     <View>
-      <Text>Completed tasks: your mom</Text>
-      <Text>Unfinished tasks: your dad</Text>
+      <Text>Completed tasks: Finish SES HW</Text>
+      <Text>Unfinished tasks: Wash dirty dishes</Text>
     </View>
   );
 }

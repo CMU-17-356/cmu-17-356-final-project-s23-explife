@@ -21,7 +21,7 @@ export default function StoryList({ stories, setViewingStory }) {
                 setViewingStory({ date, image, story, todoID });
               }}>
                 <Text multiline style={{ fontSize: 20 }}>{story}</Text>
-                <Text style={{ fontSize: 10 }}>{new Date(date).toDateString()}</Text>
+                <Text style={{ fontSize: 20 }} >{new Date(date).toDateString()}</Text>
               </Pressable>
             </DataTable.Row>
           ))}
