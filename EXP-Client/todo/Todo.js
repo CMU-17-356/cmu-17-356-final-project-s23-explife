@@ -9,6 +9,7 @@ import ProgressCircle from 'react-native-progress/Circle';
 import AddTodoMenu from './AddTodoMenu';
 import TodoList from './TodoList';
 import TodoItem from '../progress/TodoItem.js';
+import * as utils from '../utils/utils';
 
 function formatDate(date) {
   return new Date(date).toLocaleDateString('en-us', { year:"numeric", month:"short", day:"numeric"})
@@ -17,26 +18,27 @@ function formatDate(date) {
 function Graph({ today, todos }) {
   const theme = useTheme();
 
-  const [completedCount, setCompletedCount] = React.useState(2);
+  const [completedCount, setCompletedCount] = React.useState(0);
 
-  // TODO: update completed count
-  // React.useEffect(() => {
-  //   let count = 0;
-  //   todos.forEach((todo) => todo.completed ? count + 1 : count);
-  //   setCompletedCount(count);
-  // }, [todos]);
+  React.useEffect(() => {
+    let count = 0;
+    today.items.forEach((todo) => {
+      count = todo.completed ? count + 1 : count
+    });
+    setCompletedCount(count);
+  }, []);
 
   return (
     <View style={styles.graph}>
       <ProgressCircle
         size={80}
-        progress={completedCount / todos.length}
+        progress={completedCount / today.items.length}
         showsText={true}
-        formatText={() => `${Math.round((completedCount / todos.length) * 100)}%`}
+        formatText={() => `${Math.round((completedCount / today.items.length)*100)}%`}
         style={styles.progressCircle}
         color={theme.colors.primary}
       >
-        <Text style={styles.progressText}>{formatDate(today.date)}</Text>
+        <Text>{formatDate(today.date)}</Text>
       </ProgressCircle>
     </View>
   );
@@ -47,6 +49,7 @@ function HeaderText({ todos }) {
     <View style={styles.headerText}>
       <Text style={{ fontSize: 20 }}>Today you have...</Text>
       {todos.map(({ name, deadline, priority, completed }, index) =>
+        !completed &&
         <Text style={{ fontSize: 15 }} key={index}>{name}</Text>
       )}
     </View>
@@ -69,8 +72,24 @@ function TodoPage({ today, todos, setViewingTodo }) {
   );
 }
 
+function convertToToday(todos) {
+  const todayDate = new Date();
+  let todayTodos;
+  todos.forEach((todo, index) => {
+    if (utils.sameDay(new Date(todo.date), todayDate)) {
+      todayTodos = todo;
+    };
+  });
+  return todayTodos;
+};
+
 export default function Todo({ today, todos }) {
   const [viewingTodo, setViewingTodo] = React.useState(null);
+  
+  utils.getAllTodos().then((res) => {
+    let todayTodos = convertToToday(res.data);
+    today = todayTodos;
+  });
 
   console.log(today);
   console.log(todos);

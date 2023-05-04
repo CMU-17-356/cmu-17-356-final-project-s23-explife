@@ -28,14 +28,14 @@ export default function TodoList({ today, todos, setIsPanelActive, setViewingTod
           {todos.map(({ name, deadline, priority, completed }, index) => (
             <Pressable key={name} onPress={() => setViewingTodo({ name, deadline, priority, completed })}>
               <DataTable.Row style={styles.entry}>
-              <DataTable.Cell style={{ justifyContent: 'center', flex: 1 }}>
-                <Checkbox value={completed} />
-              </DataTable.Cell>
-              <DataTable.Cell style = {{ flex: 5 }}>
-                <Text multiline style={{ fontSize: 20 }}>{name}</Text>
-                <Text style={{ fontSize: 10 }}>{new Date(deadline).toDateString()}</Text>
-              </DataTable.Cell>
-            </DataTable.Row>
+                <DataTable.Cell style={{ justifyContent: 'center', flex: 1 }}>
+                  <Checkbox value={completed} />
+                </DataTable.Cell>
+                <DataTable.Cell style = {{ flex: 5 }}>
+                  <Text multiline style={{ fontSize: 20 }}>{name}</Text>
+                  <Text style={{ fontSize: 10 }}>{new Date(deadline).toDateString()}</Text>
+                </DataTable.Cell>
+              </DataTable.Row>
             </Pressable>
           ))}
         </DataTable>
