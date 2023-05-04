@@ -32,8 +32,6 @@ export default function AddTodoMenu({ today, isPanelActive, setIsPanelActive }) 
     };
     
     today.items.push(newTodo)
-
-    console.log(today._id)
     
     utils.updateTodo(today._id, today.items)
 

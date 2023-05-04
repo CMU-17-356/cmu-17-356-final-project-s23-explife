@@ -91,9 +91,6 @@ export default function Todo({ today, todos, setTodos }) {
     today = todayTodos;
   });
 
-  console.log(today);
-  console.log(todos);
-
   return (
     <Provider>
       {viewingTodo == null && <TodoPage today={today} todos={todos} setViewingTodo={setViewingTodo} setTodos={setTodos} />}

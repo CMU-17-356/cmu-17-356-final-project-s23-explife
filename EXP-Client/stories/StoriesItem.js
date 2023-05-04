@@ -10,8 +10,6 @@ import StoryView from './StoryView'
 export default function StoriesItem({ viewingStory, setViewingStory }) {
   const theme = useTheme();
 
-  console.log("viewingStory is ", viewingStory);
-
   return (
     <View >
       <Appbar.Header elevated>
