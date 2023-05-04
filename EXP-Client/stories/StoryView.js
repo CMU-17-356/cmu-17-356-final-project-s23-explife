@@ -62,7 +62,7 @@ export default function StoryView({ dateCreated }) {
           style={styles.logo}
         />
       </View>
-      <View style={styles.content}>
+      <View style={styles.text}>
         {generatedStory}
       </View>
       <FAB style={styles.button} onPress={onShare} 
