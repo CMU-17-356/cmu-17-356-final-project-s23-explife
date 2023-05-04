@@ -10,17 +10,33 @@ import {
 import { MaterialIcons } from '@expo/vector-icons';
 import { Appbar, List, DataTable } from 'react-native-paper';
 
-function ProgressItem() {
+function ProgressItem({ todo }) {
+
+  const completedObjs = todo.items.filter((obj) => {
+    return obj.completed;
+  });
+  
+  const unfinishedObjs = todo.items.filter((obj) => {
+    return !obj.completed;
+  });
+
+  const completedTasks = !completedObjs ? ["N/A"] : completedObjs.map((obj) => {
+    return obj.name;
+  });
+
+  const unfinishedTasks = !unfinishedObjs ? ["N/A"] : unfinishedObjs.map((obj) => {
+    return obj.name;
+  });
+
   return (
     <View>
-      <Text>Completed tasks: Finish SES HW</Text>
-      <Text>Unfinished tasks: Wash dirty dishes</Text>
+      <Text>Completed tasks: {completedTasks.join(', ')}</Text>
+      <Text>Unfinished tasks: {unfinishedTasks.join(', ')}</Text>
     </View>
   );
 }
 
 function ProgressList({ pastLists }) {
-  console.log(pastLists);
   const [expanded, setExpanded] = React.useState(true);
 
   const handlePress = () => setExpanded(!expanded);
@@ -28,13 +44,13 @@ function ProgressList({ pastLists }) {
     <SafeAreaView>
       <ScrollView bounces={false}>
         <List.AccordionGroup>
-          {pastLists.map(({ _id, date }, index) => (
-            <List.Accordion id={_id} key={index} style={styles.entry}
-              title={new Date(date).toDateString()}
+          {pastLists.map((todo, index) => (
+            <List.Accordion id={todo._id} key={index} style={styles.entry}
+              title={new Date(todo.date).toDateString()}
               left={props => <MaterialIcons name="date-range" size={30} color="black" />}
               expanded={expanded}
               onPress={handlePress}>
-              <List.Item title={<ProgressItem />}></List.Item>
+              <List.Item title={<ProgressItem todo={todo} />}></List.Item>
             </List.Accordion>
           ))}
         </List.AccordionGroup>
