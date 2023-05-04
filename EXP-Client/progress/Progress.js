@@ -40,6 +40,7 @@ function ProgressList({ pastLists }) {
   const [expanded, setExpanded] = React.useState(true);
 
   const handlePress = () => setExpanded(!expanded);
+
   return (
     <SafeAreaView>
       <ScrollView bounces={false}>

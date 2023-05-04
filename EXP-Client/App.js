@@ -94,21 +94,45 @@ function NavBar() {
 
   let todayTodos;
 
+  const compareFn = (a, b) => {
+    if (a.date < b.date){
+      return 1;
+    }
+    if (a.date > b.date){
+      return -1;
+    }
+    return 0;
+  };
+
+  const compareFnDeadline = (a, b) => {
+    if (a.deadline < b.deadline){
+      return 1;
+    }
+    if (a.deadline > b.deadline){
+      return -1;
+    }
+    return 0;
+  };
+
   const fetchData = () => {
     utils.getAllTodos().then((res) => {
+      let data = res.data;
+      data.sort(compareFn);
       let todayTodos = convertToToday(res.data);
+      let todayTodoItems = todayTodos.items;
+      todayTodoItems.sort(compareFnDeadline);
       if (!todayTodos) {
         todayTodos = {
           date: new Date(),
           items: [],
           user: "test"
         };
-        utils.createTodo(todayTodos)
+        utils.createTodo(todayTodos);
       };
-      setToday(todayTodos)
+      setToday(todayTodos);
       setTodos(todayTodos.items);
-      setStories(convertToStories(res.data));
-      setProgress(res.data);
+      setStories(convertToStories(data));
+      setProgress(data);
     });
   };
 
@@ -116,7 +140,6 @@ function NavBar() {
     fetchData()
   }, []);
 
-  console.log(todos);
   return (
     <Provider theme={MD3LightTheme}>
       {
