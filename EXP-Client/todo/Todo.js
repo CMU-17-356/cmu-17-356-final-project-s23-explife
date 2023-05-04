@@ -83,7 +83,7 @@ function convertToToday(todos) {
   return todayTodos;
 };
 
-export default function Todo({ today, todos }) {
+export default function Todo({ today, todos, setTodos }) {
   const [viewingTodo, setViewingTodo] = React.useState(null);
   
   utils.getAllTodos().then((res) => {
@@ -96,8 +96,8 @@ export default function Todo({ today, todos }) {
 
   return (
     <Provider>
-      {viewingTodo == null && <TodoPage today={today} todos={todos} setViewingTodo={setViewingTodo} />}
-      {viewingTodo != null && <TodoItem today={today} todo={viewingTodo} setViewingTodo={setViewingTodo} />}
+      {viewingTodo == null && <TodoPage today={today} todos={todos} setViewingTodo={setViewingTodo} setTodos={setTodos} />}
+      {viewingTodo != null && <TodoItem today={today} todo={viewingTodo} setViewingTodo={setViewingTodo} setTodos={setTodos} />}
     </Provider>
   );
 }

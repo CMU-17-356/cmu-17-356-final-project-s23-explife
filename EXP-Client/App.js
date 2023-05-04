@@ -153,7 +153,7 @@ function NavBar() {
         :
           <View style={styles.nav}>
             <Nav
-              Todo={<Todo today={today} todos={todos} />}
+              Todo={<Todo today={today} todos={todos} setTodos={setTodos} />}
               Stories={<Stories stories={stories} />}
               Progress={<Progress pastLists={pastLists} />}
             />
