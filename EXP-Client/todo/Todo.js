@@ -10,7 +10,11 @@ import AddTodoMenu from './AddTodoMenu';
 import TodoList from './TodoList';
 import TodoItem from '../progress/TodoItem.js';
 
-function Graph({ todos }) {
+function formatDate(date) {
+  return new Date(date).toLocaleDateString('en-us', { year:"numeric", month:"short", day:"numeric"})
+};
+
+function Graph({ today, todos }) {
   const theme = useTheme();
 
   const [completedCount, setCompletedCount] = React.useState(2);
@@ -32,7 +36,7 @@ function Graph({ todos }) {
         style={styles.progressCircle}
         color={theme.colors.primary}
       >
-        <Text style={styles.progressText}>April 1, 2023</Text>
+        <Text style={styles.progressText}>{formatDate(today.date)}</Text>
       </ProgressCircle>
     </View>
   );
@@ -49,31 +53,32 @@ function HeaderText({ todos }) {
   );
 }
 
-function TodoPage({ todos, setViewingTodo }) {
+function TodoPage({ today, todos, setViewingTodo }) {
   const [isPanelActive, setIsPanelActive] = React.useState(false);
   return (
     <View>
       <Appbar.Header mode="large" elevated>
         <View style={styles.progress}>
-          <Graph todos={todos} />
+          <Graph today={today} todos={todos} />
           <HeaderText todos={todos} />
         </View>
       </Appbar.Header>
-      <TodoList todos={todos} setIsPanelActive={setIsPanelActive} setViewingTodo={setViewingTodo} />
-      <AddTodoMenu isPanelActive={isPanelActive} setIsPanelActive={setIsPanelActive} />
+      <TodoList today={today} todos={todos} setIsPanelActive={setIsPanelActive} setViewingTodo={setViewingTodo} />
+      <AddTodoMenu today={today} isPanelActive={isPanelActive} setIsPanelActive={setIsPanelActive} />
     </View>
   );
 }
 
-export default function Todo({ todos }) {
+export default function Todo({ today, todos }) {
   const [viewingTodo, setViewingTodo] = React.useState(null);
 
+  console.log(today);
   console.log(todos);
 
   return (
     <Provider>
-      {viewingTodo == null && <TodoPage todos={todos} setViewingTodo={setViewingTodo} />}
-      {viewingTodo != null && <TodoItem todo={viewingTodo} setViewingTodo={setViewingTodo} />}
+      {viewingTodo == null && <TodoPage today={today} todos={todos} setViewingTodo={setViewingTodo} />}
+      {viewingTodo != null && <TodoItem today={today} todo={viewingTodo} setViewingTodo={setViewingTodo} />}
     </Provider>
   );
 }

@@ -10,6 +10,8 @@ import StoryView from './stories/StoryView';
 import Progress from './progress/Progress';
 import TodoItem from './progress/TodoItem';
 import ArchivedDay from './progress/ArchivedDay';
+
+import Login from './components/Login';
 import Nav from './components/Nav';
 import * as utils from './utils/utils'
 import {NavigationContainer} from '@react-navigation/native';
@@ -58,6 +60,17 @@ function testData() {
   return (todos, stories, pastLists)
 };
 
+function convertToToday(todos) {
+  const todayDate = new Date();
+  let todayTodos;
+  todos.forEach((todo, index) => {
+    if (utils.sameDay(new Date(todo.date), todayDate)) {
+      todayTodos = todo;
+    };
+  });
+  return todayTodos;
+};
+
 function convertToStories(todos) {
   return todos.map((todo, index) => {
     return {
@@ -70,44 +83,65 @@ function convertToStories(todos) {
 };
 
 function NavBar() {
+  // Uncomment this to skip Login page
+  const [user, setUser] = React.useState({firstName: "Test", lastName: "Test", password: "Test", email: "test@example.com"});
+
+  // const [user, setUser] = React.useState();
+  const [today, setToday] = React.useState({ items: new Array() });
   const [todos, setTodos] = React.useState([]);
   const [stories, setStories] = React.useState([]);
   const [pastLists, setProgress] = React.useState([]);
 
+  let todayTodos;
 
-  // TODO: Have to make this actually grab the todayList
+  const fetchData = () => {
+    utils.getAllTodos().then((res) => {
+      let todayTodos = convertToToday(res.data);
+      if (!todayTodos) {
+        todayTodos = {
+          date: new Date(),
+          items: [],
+          user: "test"
+        };
+        utils.createTodo(todayTodos)
+      };
+      setToday(todayTodos)
+      setTodos(todayTodos.items);
+      setStories(convertToStories(res.data));
+      setProgress(res.data);
+    });
+  };
+
   React.useEffect(() => {
-    utils.getTodo("644d8897102c5af4806c0e9c").then((res) => {
-      setTodos(res.data.items);
-    })
-
-    utils.getAllTodos().then((res) => {
-      setStories(convertToStories(res.data))
-    })
-
-    utils.getAllTodos().then((res) => {
-      setProgress(res.data)
-    })
+    fetchData()
   }, []);
 
   console.log(todos);
   return (
     <Provider theme={MD3LightTheme}>
-      <View style={styles.nav}>
-        <Nav
-          Todo={<Todo todos={todos} />}
-          Stories={<Stories stories={stories} />}
-          Progress={<Progress pastLists={pastLists} />}
-        />
-      </View>
-    </Provider>);
+      {
+        (user == undefined) 
+        ?
+          <View style={styles.nav}>
+            <Login
+              setUser={setUser}
+            />
+          </View>
+        :
+          <View style={styles.nav}>
+            <Nav
+              Todo={<Todo today={today} todos={todos} />}
+              Stories={<Stories stories={stories} />}
+              Progress={<Progress pastLists={pastLists} />}
+            />
+          </View>
+      }
+      
+    </Provider>
+  );
 };
 
-export default function App() {
-  // TODO: Do we need a todayList? I think todos is for today but we can clarify
-  // const [todayList, setTodayList] = React.useState([]);
-  
-
+export default function App() {  
   return (
     <NavigationContainer>
       <Stack.Navigator  initialRouteName="NavBar" >

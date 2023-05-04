@@ -9,48 +9,60 @@ import {
 import { Button, TextInput, useTheme } from 'react-native-paper';
 import { BottomSheet } from 'react-native-btr';
 import { Rating } from 'react-native-ratings';
+import * as utils from '../utils/utils';
 import axios from "axios";
 
 // for date picker
 registerTranslation('en', en);
 
-export default function AddTodoMenu({ isPanelActive, setIsPanelActive }) {
-  const [name, setname] = React.useState('');
+export default function AddTodoMenu({ today, isPanelActive, setIsPanelActive }) {
+  const [name, setName] = React.useState("");
   const [deadline, setDeadline] = React.useState(undefined);
   const [rating, setRating] = React.useState(0);
 
   const theme = useTheme();
 
   const handleAddTodo = () => {
-    // Clear inputs
-    setname('')
-    setDeadline(undefined)
-    setRating(0)
-    setIsPanelActive(false);
-
+    // Create new todo
     const newTodo = {
-      name: name,
       deadline: deadline,
-      priority: rating,
-      completed: false
+      completed: false,
+      name: name,
+      priority: rating
     };
-    console.log(newTodo);
 
-    let instance = axios.create({
-      baseURL: "https://explife-backend.fly.dev/"
+    let newToday = {
+      date: today.date,
+      items: [...today.items, newTodo],
+      story: today.story,
+      imageURL: today.imageURL,
+      user: today.user
+    }
+
+    let tester = {
+      date: new Date(),
+      items: [],
+      story: "KJKJADSLKFDSALKJGA",
+      imageURL: "LKJSADELKGLKGDA",
+      user: "LHKJAGDLKJGDALKJAGD"
+    }
+
+    console.log(tester)
+    
+    utils.updateTodo(today._id, tester)
+    // utils.updateTodo(today._id, newToday);
+    
+    utils.getTodo(today._id).then((res) => {
+      console.log(res.data)
     });
 
-    // instance
-    //   .post("/lists/:id", newTodo)
-    //   .then(() => {
-
-    //     // Refresh list
-    //     getTodos()
-    //   })
-    //   .catch((error) => {
-    //     console.log(error)
-    //   })
+    // Clear inputs
+    setName("");
+    setDeadline(undefined);
+    setRating(0);
+    setIsPanelActive(false);
   };
+
   return (
     <View>
       <BottomSheet
@@ -65,7 +77,7 @@ export default function AddTodoMenu({ isPanelActive, setIsPanelActive }) {
               <TextInput
                 placeholder="Todo Name"
                 value={name}
-                onChangeText={(text) => setname(text)}
+                onChangeText={(text) => setName(text)}
               />
             </View>
             <View>
@@ -73,7 +85,7 @@ export default function AddTodoMenu({ isPanelActive, setIsPanelActive }) {
               <DatePickerInput
                 locale="en"
                 value={deadline}
-                onChange={(d) => setDeadline(d)}
+                onChange={(date) => setDeadline(date)}
                 inputMode="start"
               />
             </View>

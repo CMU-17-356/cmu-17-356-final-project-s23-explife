@@ -11,13 +11,14 @@ import { BottomSheet } from 'react-native-btr';
 import { Rating } from 'react-native-ratings';
 
 import { AddTodoMenu } from './AddTodoMenu';
+import * as utils from '../utils/utils';
 import axios from "axios";
 
 // for date picker
 registerTranslation('en', en);
 
 // prob want to get the todo w/ axios instead but need detailed todo info to exist
-export default function EditTodoMenu({ todo, isEditing, setIsEditing }) {
+export default function EditTodoMenu({ today, todo, isEditing, setIsEditing }) {
 
   const theme = useTheme();
 
@@ -41,9 +42,7 @@ export default function EditTodoMenu({ todo, isEditing, setIsEditing }) {
 
     console.log("Edited", name, updatedTodo);
 
-    let instance = axios.create({
-      baseURL: "https://explife-backend.fly.dev"
-    });
+    utils.updateTodo(today._id, )
 
     instance
       .post("/lists/:id", updatedTodo)
@@ -55,6 +54,7 @@ export default function EditTodoMenu({ todo, isEditing, setIsEditing }) {
       .catch((error) => {
         console.log(error)
       })
+      
   };
   return (
     <View>

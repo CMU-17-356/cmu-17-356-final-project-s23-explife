@@ -17,11 +17,11 @@ export default function StoryView({ dateCreated }) {
   const generatedStory = "In a surreal world, Claire used magical soap to do her laundry, a whispering book to solve her math problems, and had a successful workout that caught the attention of flying unicorns. She felt fulfilled and grateful for the magical experiences and knew that anything was possible. As she lay in bed, Claire felt a sense of wonder and joy, surrounded by a world filled with magic and enchantment."
   const route = useRoute();
   const onShare = async () => {
-
+  console.log(images.image1)
     try {
       const result = await Share.share({
         message: generatedStory,
-        url: images.image1,
+        url: images.image1
         // title: "Story"
       });
     } catch (error) {
@@ -36,13 +36,12 @@ export default function StoryView({ dateCreated }) {
       <Appbar.Header elevated>
         <Appbar.Content title={dateCreated} />
       </Appbar.Header>
-
-      <View style={styles.header}>
+      <View>
         <Image
-          // accessibilityLabel="AI Generated Image"
+          accessibilityLabel="AI Generated Image"
           source={require('../assets/GeneratedImage.png')}
-          // resizeMode="contain"
-          // style={styles.logo}
+          resizeMode="contain"
+          style={styles.logo}
         />
       </View>
       <Text>
@@ -57,42 +56,67 @@ export default function StoryView({ dateCreated }) {
   );
 }
 
+// const styles = StyleSheet.create({
+//   header: {
+//     height: 80,
+//     backgroundColor: '#D9D9D9',
+//     flexDirection: 'row',
+//     borderBottomWidth: 1
+//   },
+//   headerText: {
+//     paddingLeft: '5%',
+//     justifyContent: 'center'
+//   },
+//   menu: {
+//     position: 'absolute',
+//     bottom: 0,
+//     backgroundColor: '#00ff00',
+//   },
+//   popup: {
+//     paddingRight: '5%',
+//     paddingLeft: '5%',
+//   },
+//   bottomNavigationView: {
+//     backgroundColor: '#fff',
+//     width: '100%',
+//     height: 250,
+//     paddingTop: '5%'
+//   },
+//   content: {
+//     height: "100%"
+//   },
+//   checkbox: {
+//     width: '10%',
+//     alignItems: 'center',
+//   },
+//   entry: {
+//     alignItems: 'center',
+//     minHeight: 75,
+//     flexDirection: 'row'
+//   },
+// });
+
 const styles = StyleSheet.create({
+  app: {
+    marginHorizontal: "auto",
+    maxWidth: 500
+  },
+  logo: {
+    height: 80
+  },
   header: {
-    height: 80,
-    backgroundColor: '#D9D9D9',
-    flexDirection: 'row',
-    borderBottomWidth: 1
+    padding: 20
   },
-  headerText: {
-    paddingLeft: '5%',
-    justifyContent: 'center'
+  text: {
+    lineHeight: 16,
+    fontSize: 20,
+    marginVertical: 16,
+    textAlign: "center"
   },
-  menu: {
-    position: 'absolute',
-    bottom: 0,
-    backgroundColor: '#00ff00',
+  link: {
+    color: "#1B95E0"
   },
-  popup: {
-    paddingRight: '5%',
-    paddingLeft: '5%',
-  },
-  bottomNavigationView: {
-    backgroundColor: '#fff',
-    width: '100%',
-    height: 250,
-    paddingTop: '5%'
-  },
-  content: {
-    height: "100%"
-  },
-  checkbox: {
-    width: '10%',
-    alignItems: 'center',
-  },
-  entry: {
-    alignItems: 'center',
-    minHeight: 75,
-    flexDirection: 'row'
-  },
+  code: {
+    fontFamily: "monospace, monospace"
+  }
 });
