@@ -1,6 +1,8 @@
 import React from "react";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, Share, StyleSheet, Text, View } from "react-native";
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { Appbar, FAB } from 'react-native-paper'
+import images from '../assets/GeneratedImageBase64'
 
 function Heading({date}) {
   return (
@@ -10,68 +12,104 @@ function Heading({date}) {
   );
 }
 
-export default function StoryView() {
+export default function StoryView({ dateCreated }) {
   const navigation = useNavigation();
+  const generatedStory = 
+    <Text>
+      In a surreal world, Claire used magical soap to do her laundry, 
+      a whispering book to solve her math problems, and had a successful 
+      workout that caught the attention of flying unicorns. She felt 
+      fulfilled and grateful for the magical experiences and knew that 
+      anything was possible. As she lay in bed, Claire felt a sense of 
+      wonder and joy, surrounded by a world filled with magic and enchantment.
+    </Text>
   const route = useRoute();
+  const onShare = async () => {
+
+    try {
+      const result = await Share.share({
+        message: generatedStory,
+        url: images.image1,
+        title: "Story"
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+    
+
   return (
-    <View style={styles.app}>
-      <View style={styles.progress}>
-        <Heading date={route.params.date} /> 
-      </View>
+    <View style={styles.content}>
+      <Appbar.Header elevated>
+        <Appbar.Content title={dateCreated} />
+      </Appbar.Header>
+
       <View style={styles.header}>
         <Image
           accessibilityLabel="AI Generated Image"
-          source={require('../assets/favicon.png')}
+          source={require('../assets/GeneratedImage.png')}
           resizeMode="contain"
           style={styles.logo}
         />
       </View>
-      
-      <Text style={styles.text}>
-        AI Generated story text
-      </Text>
-      <Pressable onPress={() => {}} style={buttonStyles.button}>
-        <Text style={buttonStyles.text}>Share Your Story</Text>
-      </Pressable>
+      <View style={styles.content}>
+        {generatedStory}
+      </View>
+      <FAB style={styles.button} onPress={onShare} 
+        label="Share Your Story!" />
+      <FAB style={styles.button} onPress={() => { 
+        navigation.navigate("NavBar");
+      }} label="Return" />
     </View>
-    );
+  );
 }
 
 const styles = StyleSheet.create({
-  app: {
-    marginHorizontal: "auto",
-    maxWidth: 500
-  },
-  logo: {
-    height: 80
-  },
   header: {
-    padding: 20
+    height: 80,
+    backgroundColor: '#D9D9D9',
+    flexDirection: 'row',
+    borderBottomWidth: 1
   },
-  text: {
-    lineHeight: 16,
-    fontSize: 20,
-    marginVertical: 16,
-    textAlign: "center"
+  headerText: {
+    paddingLeft: '5%',
+    justifyContent: 'center'
   },
-  link: {
-    color: "#1B95E0"
+  menu: {
+    position: 'absolute',
+    bottom: 0,
+    backgroundColor: '#00ff00',
   },
-  code: {
-    fontFamily: "monospace, monospace"
-  }
-});
-
-const buttonStyles = StyleSheet.create({
-  button: {
-    backgroundColor: "#D9D9D9",
-    borderRadius: 2
+  popup: {
+    paddingRight: '5%',
+    paddingLeft: '5%',
   },
-  text: {
-    color: "black",
-    fontWeight: "500",
-    padding: 8,
-    textAlign: "center",
-    textTransform: "uppercase"
-  }
+  bottomNavigationView: {
+    backgroundColor: '#fff',
+    width: '100%',
+    height: 250,
+    paddingTop: '5%'
+  },
+  content: {
+    height: "100%"
+  },
+  checkbox: {
+    width: '10%',
+    alignItems: 'center',
+  },
+  entry: {
+    alignItems: 'center',
+    minHeight: 75,
+    flexDirection: 'row'
+  },
 });
