@@ -30,31 +30,12 @@ export default function AddTodoMenu({ today, isPanelActive, setIsPanelActive }) 
       name: name,
       priority: rating
     };
-
-    let newToday = {
-      date: today.date,
-      items: [...today.items, newTodo],
-      story: today.story,
-      imageURL: today.imageURL,
-      user: today.user
-    }
-
-    let tester = {
-      date: new Date(),
-      items: [],
-      story: "KJKJADSLKFDSALKJGA",
-      imageURL: "LKJSADELKGLKGDA",
-      user: "LHKJAGDLKJGDALKJAGD"
-    }
-
-    console.log(tester)
     
-    utils.updateTodo(today._id, tester)
-    // utils.updateTodo(today._id, newToday);
+    today.items.push(newTodo)
+
+    console.log(today._id)
     
-    utils.getTodo(today._id).then((res) => {
-      console.log(res.data)
-    });
+    utils.updateTodo(today._id, today.items)
 
     // Clear inputs
     setName("");

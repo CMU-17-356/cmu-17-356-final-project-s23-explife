@@ -28,33 +28,36 @@ export default function EditTodoMenu({ today, todo, isEditing, setIsEditing }) {
   const [isCompleted, setIsCompleted] = useState(todo.completed);
   const [rating, setRating] = React.useState(todo.priority);
 
-  console.log(name, deadline, isCompleted, rating);
-
   const handleEditTodo = () => {
     setIsEditing(false);
 
+    // Create updated todo
     const updatedTodo = {
       name: name,
       deadline: deadline,
       priority: rating,
       completed: isCompleted
     };
+    
+    const newItems = today.items.filter((obj) => {
+      return !(
+        obj.name == todo.name &&
+        obj.deadline == todo.deadline &&
+        obj.priority == todo.priority &&
+        obj.completed == todo.completed
+      );
+    });
 
-    console.log("Edited", name, updatedTodo);
+    newItems.push(updatedTodo)
 
-    utils.updateTodo(today._id, )
+    todo.name = name
+    todo.deadline = deadline
+    todo.priority = rating
+    todo.completed = isCompleted
 
-    instance
-      .post("/lists/:id", updatedTodo)
-      .then(() => {
-
-        // Refresh list
-        getTodos()
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-      
+    today.items = newItems
+    
+    utils.updateTodo(today._id, today.items)
   };
   return (
     <View>
