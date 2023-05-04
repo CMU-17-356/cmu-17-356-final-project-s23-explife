@@ -15,7 +15,7 @@ function StoriesPage({ stories, setViewingStory }) {
       </Appbar.Header>
       <StoryList stories={stories} setViewingStory={setViewingStory} />
       <FAB style={styles.button} icon="plus" onPress={() => setIsPanelActive(true)} label="Create Today's Story" />
-      <AddStoryMenu isPanelActive={isPanelActive} setIsPanelActive={setIsPanelActive} />
+      <AddStoryMenu isPanelActive={isPanelActive} setIsPanelActive={setIsPanelActive} setViewingStory={setViewingStory} />
     </View>
   );
 }
@@ -28,7 +28,7 @@ export default function Stories({ stories }) {
   return (
     <Provider>
       {viewingStory == null && <StoriesPage stories={stories} setViewingStory={setViewingStory} />}
-      {viewingStory != null && <StoriesItem story={viewingStory} setViewingStory={setViewingStory} />}
+      {viewingStory != null && <StoriesItem viewingStory={viewingStory} setViewingStory={setViewingStory} />}
     </Provider>
   );
 }

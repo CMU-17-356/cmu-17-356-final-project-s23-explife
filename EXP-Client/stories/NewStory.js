@@ -8,20 +8,13 @@ import {
 } from 'react-native';
 import { BottomSheet } from 'react-native-btr';
 import { en, registerTranslation } from 'react-native-paper-dates';
-import { useNavigation } from '@react-navigation/native';
 import { FAB } from 'react-native-paper'
 // for date picker
 registerTranslation('en', en);
 
-export default function AddStoryMenu({isPanelActive, setIsPanelActive }) {
-  function formatDate(date) {
-    return new Date(date).toLocaleDateString('en-us', { year:"numeric", month:"short", day:"numeric"})
-  };
+export default function AddStoryMenu({ isPanelActive, setIsPanelActive, setViewingStory }) {
 
-
-  const navigation = useNavigation();
   const todayDate = new Date();
-  const [dateCreated, setDeadline] = React.useState("4th May 2023");
 
   return (
     <View>
@@ -33,16 +26,16 @@ export default function AddStoryMenu({isPanelActive, setIsPanelActive }) {
         <SafeAreaView style={styles.bottomNavigationView}>
           <View style={styles.popup}>
             <View>
-              <Text>Are you sure you would like to generate a story for 
+              <Text>Are you sure you would like to generate a story for
                 today's to-do list?</Text>
             </View>
             <FAB style={styles.button} onPress={() => {
-                  setIsPanelActive(false);
-                  navigation.navigate("GenerateStory", {date: dateCreated});
-                }} label="Create New Story" />
+              setIsPanelActive(false);
+              setViewingStory({ date: todayDate });
+            }} label="Create New Story" />
             <FAB style={styles.button} onPress={() => {
-                  setIsPanelActive(false);
-                }} label="Cancel" />
+              setIsPanelActive(false);
+            }} label="Cancel" />
           </View>
         </SafeAreaView>
       </BottomSheet>

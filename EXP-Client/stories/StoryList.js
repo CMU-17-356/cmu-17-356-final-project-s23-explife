@@ -10,21 +10,24 @@ import {
 import { DataTable } from 'react-native-paper';
 
 export default function StoryList({ stories, setViewingStory }) {
-  console.log("stories is ", stories)
+  console.log("stories is ", stories);
+
   return (
     <SafeAreaView>
       <ScrollView bounces={false}>
         <DataTable>
-          {stories.map(({ date, image, story, todoID }, index) => (
-            <DataTable.Row key={todoID} style={styles.entry}>
+          {stories.map((story, index) => {
+            console.log("currently vlewing:", story);
+            return (
               <Pressable onPress={() => {
-                setViewingStory({ date, image, story, todoID });
+                setViewingStory(story);
               }}>
-                <Text multiline style={{ fontSize: 20 }}>{story}</Text>
-                <Text style={{ fontSize: 20 }} >{new Date(date).toDateString()}</Text>
+                <DataTable.Row key={story.todoID} style={styles.entry}>
+                  <Text style={{ fontSize: 20 }} >{new Date(story.date).toDateString()}</Text>
+                </DataTable.Row>
               </Pressable>
-            </DataTable.Row>
-          ))}
+            )
+          })}
         </DataTable>
       </ScrollView>
     </SafeAreaView >

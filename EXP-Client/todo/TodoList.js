@@ -4,7 +4,7 @@ import {
   SafeAreaView,
   ScrollView,
   Pressable,
-  StyleSheet
+  StyleSheet, View
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Checkbox from 'expo-checkbox';
@@ -31,9 +31,11 @@ export default function TodoList({ today, todos, setIsPanelActive, setViewingTod
                 <DataTable.Cell style={{ justifyContent: 'center', flex: 1 }}>
                   <Checkbox value={completed} />
                 </DataTable.Cell>
-                <DataTable.Cell style = {{ flex: 5 }}>
-                  <Text multiline style={{ fontSize: 20 }}>{name}</Text>
-                  <Text style={{ fontSize: 10 }}>{new Date(deadline).toDateString()}</Text>
+                <DataTable.Cell style={{ flex: 5 }}>
+                  <View>
+                    <Text multiline style={{ fontSize: 20 }}>{name}</Text>
+                    <Text style={{ fontSize: 10 }}>{new Date(deadline).toDateString()}</Text>
+                  </View>
                 </DataTable.Cell>
               </DataTable.Row>
             </Pressable>
