@@ -1,12 +1,10 @@
 import React from "react";
 import { Image, Pressable, Share, StyleSheet, Text, View } from "react-native";
-import { useNavigation, useRoute } from '@react-navigation/native';
 import { Appbar, FAB } from 'react-native-paper'
 import images from '../assets/GeneratedImageBase64'
 
 export default function StoryView() {
-  const navigation = useNavigation();
-  const route = useRoute();
+
   const generatedStory = "In a surreal world, Claire used magical soap to do her laundry, a whispering book to solve her math problems, and had a successful workout that caught the attention of flying unicorns. She felt fulfilled and grateful for the magical experiences and knew that anything was possible. As she lay in bed, Claire felt a sense of wonder and joy, surrounded by a world filled with magic and enchantment."
   const onShare = async () => {
     try {
@@ -20,33 +18,22 @@ export default function StoryView() {
     }
   };
 
-    
-
   return (
-    <View style={styles.content}>
-      <Appbar.Header elevated>
-        <Appbar.Content title = {route.params.date} />
-      </Appbar.Header>
-      <View>
+    <View styles={styles.content}>
+      <View style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: 20, paddingBottom: 20 }}>
         <Image
           accessibilityLabel="AI Generated Image"
           source={require('../assets/GeneratedImage.png')}
           resizeMode="contain"
-          style={styles.logo}
         />
       </View>
       <View>
-      <View style={[styles.balloon, {backgroundColor: '#D9D9D9'}]}>
-        <Text style={{paddingTop: 5, color: 'black'}}>
-            "In a surreal world, Claire used magical soap to do her laundry, a whispering book to solve her math problems, and had a successful workout that caught the attention of flying unicorns. She felt fulfilled and grateful for the magical experiences and knew that anything was possible. As she lay in bed, Claire felt a sense of wonder and joy, surrounded by a world filled with magic and enchantment."
+        <Text>
+          "In a surreal world, Claire used magical soap to do her laundry, a whispering book to solve her math problems, and had a successful workout that caught the attention of flying unicorns. She felt fulfilled and grateful for the magical experiences and knew that anything was possible. As she lay in bed, Claire felt a sense of wonder and joy, surrounded by a world filled with magic and enchantment."
         </Text>
       </View>
-      </View>
-      <FAB style={styles.button} onPress={onShare} 
+      <FAB onPress={onShare} style={{marginTop: 20}}
         label="Share Your Story!" />
-      <FAB style={styles.button} onPress={() => { 
-        navigation.navigate("NavBar");
-      }} label="Return" />
     </View>
   );
 }
@@ -57,27 +44,7 @@ const styles = StyleSheet.create({
     maxWidth: 500
   },
   logo: {
-    height: 350
+    display: 'flex',
+    justifyContent: 'center'
   },
-  header: {
-    padding: 20
-  },
-  text: {
-    lineHeight: 16,
-    fontSize: 20,
-    marginVertical: 16,
-    textAlign: "center"
-  },
-  link: {
-    color: "#1B95E0"
-  },
-  code: {
-    fontFamily: "monospace, monospace"
-  },
-  textBubble: {
-    paddingHorizontal: 15,
-    paddingTop: 10,
-    paddingBottom: 15,
-    borderRadius: 20,
- }
 });
