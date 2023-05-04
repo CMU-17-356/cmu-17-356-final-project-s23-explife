@@ -14,15 +14,7 @@ function Heading({date}) {
 
 export default function StoryView({ dateCreated }) {
   const navigation = useNavigation();
-  const generatedStory = 
-    <Text>
-      In a surreal world, Claire used magical soap to do her laundry, 
-      a whispering book to solve her math problems, and had a successful 
-      workout that caught the attention of flying unicorns. She felt 
-      fulfilled and grateful for the magical experiences and knew that 
-      anything was possible. As she lay in bed, Claire felt a sense of 
-      wonder and joy, surrounded by a world filled with magic and enchantment.
-    </Text>
+  const generatedStory = "In a surreal world, Claire used magical soap to do her laundry, a whispering book to solve her math problems, and had a successful workout that caught the attention of flying unicorns. She felt fulfilled and grateful for the magical experiences and knew that anything was possible. As she lay in bed, Claire felt a sense of wonder and joy, surrounded by a world filled with magic and enchantment."
   const route = useRoute();
   const onShare = async () => {
 
@@ -30,17 +22,8 @@ export default function StoryView({ dateCreated }) {
       const result = await Share.share({
         message: generatedStory,
         url: images.image1,
-        title: "Story"
+        // title: "Story"
       });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
     } catch (error) {
       alert(error.message);
     }
@@ -56,15 +39,15 @@ export default function StoryView({ dateCreated }) {
 
       <View style={styles.header}>
         <Image
-          accessibilityLabel="AI Generated Image"
+          // accessibilityLabel="AI Generated Image"
           source={require('../assets/GeneratedImage.png')}
-          resizeMode="contain"
-          style={styles.logo}
+          // resizeMode="contain"
+          // style={styles.logo}
         />
       </View>
-      <View style={styles.text}>
-        {generatedStory}
-      </View>
+      <Text>
+      "In a surreal world, Claire used magical soap to do her laundry, a whispering book to solve her math problems, and had a successful workout that caught the attention of flying unicorns. She felt fulfilled and grateful for the magical experiences and knew that anything was possible. As she lay in bed, Claire felt a sense of wonder and joy, surrounded by a world filled with magic and enchantment."
+      </Text>
       <FAB style={styles.button} onPress={onShare} 
         label="Share Your Story!" />
       <FAB style={styles.button} onPress={() => { 
