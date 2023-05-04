@@ -10,4 +10,4 @@
 
   `expo start`
 
-* Either press "w" to start the web version or scan the QR code on the Expo Go mobile application to run it there
+* Either press "w" to start the web version or scan the QR code on the Expo Go mobile application to run it there.
