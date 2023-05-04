@@ -1,40 +1,54 @@
 import React from "react";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, Share, StyleSheet, Text, View } from "react-native";
 import { useNavigation, useRoute } from '@react-navigation/native';
-
-function Heading({date}) {
-  return (
-    <View style={styles.headerText}>
-      <Text style={{ fontSize: 20 }}>{date}</Text>
-    </View>
-  );
-}
+import { Appbar, FAB } from 'react-native-paper'
+import images from '../assets/GeneratedImageBase64'
 
 export default function StoryView() {
   const navigation = useNavigation();
   const route = useRoute();
+  const generatedStory = "In a surreal world, Claire used magical soap to do her laundry, a whispering book to solve her math problems, and had a successful workout that caught the attention of flying unicorns. She felt fulfilled and grateful for the magical experiences and knew that anything was possible. As she lay in bed, Claire felt a sense of wonder and joy, surrounded by a world filled with magic and enchantment."
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message: generatedStory,
+        url: "https://flic.kr/p/2oxMtL7",
+        title: "See Claire's funny story for the day!"
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+    
+
   return (
-    <View style={styles.app}>
-      <View style={styles.progress}>
-        <Heading date={route.params.date} /> 
-      </View>
-      <View style={styles.header}>
+    <View style={styles.content}>
+      <Appbar.Header elevated>
+        <Appbar.Content title = {route.params.date} />
+      </Appbar.Header>
+      <View>
         <Image
           accessibilityLabel="AI Generated Image"
-          source={require('../assets/favicon.png')}
+          source={require('../assets/GeneratedImage.png')}
           resizeMode="contain"
           style={styles.logo}
         />
       </View>
-      
-      <Text style={styles.text}>
-        AI Generated story text
-      </Text>
-      <Pressable onPress={() => {}} style={buttonStyles.button}>
-        <Text style={buttonStyles.text}>Share Your Story</Text>
-      </Pressable>
+      <View>
+      <View style={[styles.balloon, {backgroundColor: '#D9D9D9'}]}>
+        <Text style={{paddingTop: 5, color: 'black'}}>
+            "In a surreal world, Claire used magical soap to do her laundry, a whispering book to solve her math problems, and had a successful workout that caught the attention of flying unicorns. She felt fulfilled and grateful for the magical experiences and knew that anything was possible. As she lay in bed, Claire felt a sense of wonder and joy, surrounded by a world filled with magic and enchantment."
+        </Text>
+      </View>
+      </View>
+      <FAB style={styles.button} onPress={onShare} 
+        label="Share Your Story!" />
+      <FAB style={styles.button} onPress={() => { 
+        navigation.navigate("NavBar");
+      }} label="Return" />
     </View>
-    );
+  );
 }
 
 const styles = StyleSheet.create({
@@ -43,7 +57,7 @@ const styles = StyleSheet.create({
     maxWidth: 500
   },
   logo: {
-    height: 80
+    height: 350
   },
   header: {
     padding: 20
@@ -59,19 +73,11 @@ const styles = StyleSheet.create({
   },
   code: {
     fontFamily: "monospace, monospace"
-  }
-});
-
-const buttonStyles = StyleSheet.create({
-  button: {
-    backgroundColor: "#D9D9D9",
-    borderRadius: 2
   },
-  text: {
-    color: "black",
-    fontWeight: "500",
-    padding: 8,
-    textAlign: "center",
-    textTransform: "uppercase"
-  }
+  textBubble: {
+    paddingHorizontal: 15,
+    paddingTop: 10,
+    paddingBottom: 15,
+    borderRadius: 20,
+ }
 });
