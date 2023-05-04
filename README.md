@@ -1,13 +1,13 @@
-Running our application using Expo:
+## Running our application using Expo:
 
-Install the Expo CLI:
+* Install the Expo CLI:
 
-`npm install -g expo-cli`
+  `npm install -g expo-cli`
 
-Go into the EXP-Client folder and run
+* Go into the EXP-Client folder and run
 
-`cd EXP-Client`
+  `cd EXP-Client`
 
-`expo start`
+  `expo start`
 
-Either press "w" to start the web version or scan the QR code on the Expo Go mobile application to run it there
+* Either press "w" to start the web version or scan the QR code on the Expo Go mobile application to run it there
