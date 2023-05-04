@@ -4,25 +4,16 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { Appbar, FAB } from 'react-native-paper'
 import images from '../assets/GeneratedImageBase64'
 
-function Heading({date}) {
-  return (
-    <View style={styles.headerText}>
-      <Text style={{ fontSize: 20 }}>{date}</Text>
-    </View>
-  );
-}
-
-export default function StoryView({ dateCreated }) {
+export default function StoryView() {
   const navigation = useNavigation();
-  const generatedStory = "In a surreal world, Claire used magical soap to do her laundry, a whispering book to solve her math problems, and had a successful workout that caught the attention of flying unicorns. She felt fulfilled and grateful for the magical experiences and knew that anything was possible. As she lay in bed, Claire felt a sense of wonder and joy, surrounded by a world filled with magic and enchantment."
   const route = useRoute();
+  const generatedStory = "In a surreal world, Claire used magical soap to do her laundry, a whispering book to solve her math problems, and had a successful workout that caught the attention of flying unicorns. She felt fulfilled and grateful for the magical experiences and knew that anything was possible. As she lay in bed, Claire felt a sense of wonder and joy, surrounded by a world filled with magic and enchantment."
   const onShare = async () => {
-  console.log(images.image1)
     try {
       const result = await Share.share({
         message: generatedStory,
-        url: images.image1
-        // title: "Story"
+        url: "https://flic.kr/p/2oxMtL7",
+        title: "See Claire's funny story for the day!"
       });
     } catch (error) {
       alert(error.message);
@@ -34,7 +25,7 @@ export default function StoryView({ dateCreated }) {
   return (
     <View style={styles.content}>
       <Appbar.Header elevated>
-        <Appbar.Content title={dateCreated} />
+        <Appbar.Content title = {route.params.date} />
       </Appbar.Header>
       <View>
         <Image
@@ -44,9 +35,13 @@ export default function StoryView({ dateCreated }) {
           style={styles.logo}
         />
       </View>
-      <Text>
-      "In a surreal world, Claire used magical soap to do her laundry, a whispering book to solve her math problems, and had a successful workout that caught the attention of flying unicorns. She felt fulfilled and grateful for the magical experiences and knew that anything was possible. As she lay in bed, Claire felt a sense of wonder and joy, surrounded by a world filled with magic and enchantment."
-      </Text>
+      <View>
+      <View style={[styles.balloon, {backgroundColor: '#D9D9D9'}]}>
+        <Text style={{paddingTop: 5, color: 'black'}}>
+            "In a surreal world, Claire used magical soap to do her laundry, a whispering book to solve her math problems, and had a successful workout that caught the attention of flying unicorns. She felt fulfilled and grateful for the magical experiences and knew that anything was possible. As she lay in bed, Claire felt a sense of wonder and joy, surrounded by a world filled with magic and enchantment."
+        </Text>
+      </View>
+      </View>
       <FAB style={styles.button} onPress={onShare} 
         label="Share Your Story!" />
       <FAB style={styles.button} onPress={() => { 
@@ -56,53 +51,13 @@ export default function StoryView({ dateCreated }) {
   );
 }
 
-// const styles = StyleSheet.create({
-//   header: {
-//     height: 80,
-//     backgroundColor: '#D9D9D9',
-//     flexDirection: 'row',
-//     borderBottomWidth: 1
-//   },
-//   headerText: {
-//     paddingLeft: '5%',
-//     justifyContent: 'center'
-//   },
-//   menu: {
-//     position: 'absolute',
-//     bottom: 0,
-//     backgroundColor: '#00ff00',
-//   },
-//   popup: {
-//     paddingRight: '5%',
-//     paddingLeft: '5%',
-//   },
-//   bottomNavigationView: {
-//     backgroundColor: '#fff',
-//     width: '100%',
-//     height: 250,
-//     paddingTop: '5%'
-//   },
-//   content: {
-//     height: "100%"
-//   },
-//   checkbox: {
-//     width: '10%',
-//     alignItems: 'center',
-//   },
-//   entry: {
-//     alignItems: 'center',
-//     minHeight: 75,
-//     flexDirection: 'row'
-//   },
-// });
-
 const styles = StyleSheet.create({
   app: {
     marginHorizontal: "auto",
     maxWidth: 500
   },
   logo: {
-    height: 80
+    height: 350
   },
   header: {
     padding: 20
@@ -118,5 +73,11 @@ const styles = StyleSheet.create({
   },
   code: {
     fontFamily: "monospace, monospace"
-  }
+  },
+  textBubble: {
+    paddingHorizontal: 15,
+    paddingTop: 10,
+    paddingBottom: 15,
+    borderRadius: 20,
+ }
 });

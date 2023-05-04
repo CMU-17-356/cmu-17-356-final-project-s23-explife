@@ -14,8 +14,14 @@ import { FAB } from 'react-native-paper'
 registerTranslation('en', en);
 
 export default function AddStoryMenu({isPanelActive, setIsPanelActive }) {
+  function formatDate(date) {
+    return new Date(date).toLocaleDateString('en-us', { year:"numeric", month:"short", day:"numeric"})
+  };
+
+
   const navigation = useNavigation();
-  const [dateCreated, setDeadline] = React.useState('23rd April 2023'); // Dummy date for testing purposes
+  const todayDate = new Date();
+  const [dateCreated, setDeadline] = React.useState("4th May 2023");
 
   return (
     <View>
